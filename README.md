@@ -1,13 +1,5 @@
 # FungiDNA-FM
 
-Code accompanying the paper **“FungiDNA: a genomic foundation model pretrained
-on diverse fungal whole genomes.”**
-
-This repository is a *reproducibility companion*: every script here maps onto a
-specific section, figure or supplementary table of the paper. It is not a
-general-purpose library — see [Known limitations](#known-limitations) before
-you try to run anything.
-
 ## Model at a glance
 
 | | |
