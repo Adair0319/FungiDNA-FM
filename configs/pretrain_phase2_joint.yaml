@@ -1,0 +1,44 @@
+# ── Phase 2: Joint MLM + Contrastive Pretraining ──
+
+# Paths
+filtered_fasta_dir: "data/processed/phase2_filtered/"
+tokenizer_path: "data/processed/bpe_fungi.model"
+phase1_checkpoint: "checkpoints/phase1_mlm/final_model.pt"
+resume_backbone: "checkpoints/phase2_joint/backbone_final.pt"
+resume_step: 16000
+output_dir: "checkpoints/phase2_joint/"
+snapshot_matrix_path: "data/processed/snapshot_matrix.pt"
+
+# Dataset
+window_size: 8192
+stride: 8192
+max_seq_len: 4096
+n_species: 8
+k_per_species: 4
+num_species: 735
+seed: 42
+
+# Optimization
+lr_backbone: 1.0e-4
+lr_projection: 5.0e-4
+warmup_steps: 5000
+total_steps: 40000
+gradient_accumulation_steps: 13
+
+# Early-stop (resume from 16k, eval starts at 17k)
+min_steps: 0
+eval_every: 1000
+early_stop_patience: 5
+early_stop_min_delta: 0.0
+
+# Lambda scheduler
+lambda_max: 0.5
+
+# Weighted CL (toggle for ablation)
+use_weighted_cl: false
+
+# Logging
+wandb_project: "fungi-dna"
+wandb_run: "phase2-joint-r2"
+log_every: 25
+save_every: 500
