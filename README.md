@@ -8,8 +8,6 @@ representations that transfer to five downstream tasks: representation
 clustering, taxonomic classification, coding-potential prediction, splice-site
 classification, and biosynthetic-gene-cluster (BGC) boundary regression.
 
-Companion repository for the paper *"FungiDNA: a genomic foundation model
-pretrained on diverse fungal whole genomes."*
 
 ## Model at a glance
 
