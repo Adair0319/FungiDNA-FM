@@ -160,20 +160,6 @@ Download the assemblies and GFF3 annotations from MycoCosm by portal ID, then
 run the scripts in [`data_prep/`](data_prep/). CD-HIT (Fu et al. 2012) is
 required for the coding-potential dataset and is not vendored here.
 
-## Known limitations
-
-- **Scripts contain absolute paths from the authors' machine.** Paths rooted at
-	the original working directory appear in 22 of the files here, mostly pointing
-	at dataset and checkpoint locations. They have deliberately not been
-	rewritten, so that the code matches what actually produced the reported
-	numbers. You will need to adjust them for your own layout. Grep for `/home/`
-	to find them.
-- **Derived datasets are not yet released.** A Zenodo deposit is planned. For
-	now, rebuild them from the JGI source with `data_prep/`.
-- **Some scripts retain unreachable exploratory code paths** (DNABERT-2, NT-v2).
-	Those models are not paper baselines and have been removed from the CLI
-	choices; the surrounding code is left as it was when the reported numbers
-	were produced.
 
 ## License
 
