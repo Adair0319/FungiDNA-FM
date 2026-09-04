@@ -1,20 +1,124 @@
 # FungiDNA-FM
 
+A genomic foundation model pretrained on diverse fungal whole genomes.
+
+FungiDNA-FM (113 M parameters) is a hybrid **Mamba2 + self-attention** backbone
+trained on 39.48 Gb from 734 fungal genomes spanning six phyla. It produces
+representations that transfer to five downstream tasks: representation
+clustering, taxonomic classification, coding-potential prediction, splice-site
+classification, and biosynthetic-gene-cluster (BGC) boundary regression.
+
+Companion repository for the paper *"FungiDNA: a genomic foundation model
+pretrained on diverse fungal whole genomes."*
+
 ## Model at a glance
 
-| | |
-|---|---|
-| Backbone | **StripedMamba** — 24 layers as six blocks of (3 × Mamba2 + 1 × self-attention) |
-| Parameters | ~113 M, hidden dim 768 |
-| Mamba2 layers | state dim 128, conv width 4, expansion 2 (inner dim 1,536) |
-| Attention layers | 12 heads × 64 dims, FlashAttention-2, SwiGLU (intermediate 2,048) |
-| Normalisation | RMSNorm throughout, dropout 0, RoPE (base 10,000, up to 131,072 positions) |
-| Tokenizer | SentencePiece **Unigram**, vocab 4,096, ≈ 3 bp per token |
-| Pooling | mean over non-padding positions (not `[CLS]`) |
+|                    |                                                              |
+| ------------------ | ------------------------------------------------------------ |
+| Backbone           | **StripedMamba** — 24 layers as six blocks of (3 × Mamba2 + 1 × self-attention) |
+| Parameters         | ~113 M, hidden dim 768                                       |
+| Mamba2 layers      | state dim 128, conv width 4, expansion 2 (inner dim 1,536)   |
+| Attention layers   | 12 heads × 64 dims, FlashAttention-2, SwiGLU (intermediate 2,048) |
+| Normalisation      | RMSNorm throughout, dropout 0, RoPE (base 10,000, up to 131,072 positions) |
+| Tokenizer          | SentencePiece **Unigram**, vocab 4,096, ≈ 3 bp per token     |
+| Pooling            | mean over non-padding positions (not `[CLS]`)                |
 | Pretraining corpus | 734 fungal genomes, **39.48 Gb**, six phyla (JGI MycoCosm *1000 Fungal Genomes*) |
-| Pretraining | Phase 1 MLM (1,024 / 2,048 / 4,096 bp) → Phase 2 MLM + supervised contrastive (8,192 bp) |
-| Compute | 8 × NVIDIA L20 (46 GB), Python 3.10, PyTorch 2.5.1, CUDA 12.1 |
+| Pretraining        | Phase 1 MLM (1,024 / 2,048 / 4,096 bp) → Phase 2 MLM + supervised contrastive (8,192 bp) |
 
+## Model weights
+
+The pretrained backbone and downstream-task checkpoints are hosted on the
+Hugging Face Hub:
+
+**[https://huggingface.co/Biopotato/FungiDNA-FM](https://huggingface.co/Biopotato/FungiDNA-FM)**
+
+The repository contains:
+
+```
+Adair0319/FungiDNA-FM
+├── backbone_final.pt                    # pretrained backbone
+├── tokenizer/{bpe_fungi.model, .vocab}  # SentencePiece tokenizer
+├── coding_potential/best_model.pt
+├── splice_site/best_model.pt
+├── taxonomy/{phylum,subphylum,class,order,family}/mlp_best.pt
+└── bgc_boundary/best_model.pt
+```
+
+(If your Hugging Face username differs, adjust the URL accordingly. See
+[`docs/weights_manifest.md`](docs/weights_manifest.md) for the exact files and
+their sizes.)
+
+Download the files (e.g. via `git lfs` / `huggingface-cli download` / the Hub
+web UI) to a local directory, then tell the handlers where they live with a
+`~/.config/fungidna/weights.yaml` config:
+
+```bash
+mkdir -p ~/.config/fungidna
+cp configs/weights.example.yaml ~/.config/fungidna/weights.yaml
+# edit the paths to point at your downloaded files
+```
+
+```yaml
+# ~/.config/fungidna/weights.yaml
+backbone: /path/to/backbone_final.pt
+tokenizer: /path/to/tokenizer/bpe_fungi.model
+coding_potential: /path/to/coding_potential/best_model.pt
+splice_site: /path/to/splice_site/best_model.pt
+taxonomy: /path/to/taxonomy/phylum/mlp_best.pt
+bgc_boundary: /path/to/bgc_boundary/best_model.pt
+```
+
+The same paths can be given via environment variables
+(`FUNGIDNA_BACKBONE_WEIGHTS`, `FUNGIDNA_TOKENIZER_WEIGHTS`, and
+`FUNGIDNA_<TASK>_WEIGHTS`).
+
+## Installation
+
+```bash
+conda env create -f environment.yml
+conda activate fungidna
+```
+
+`flash-attn` and `mamba-ssm` need a CUDA toolchain matching your PyTorch build;
+if the conda solve is slow, install the pinned pip wheels from
+`requirements.txt` into a bare Python 3.10 + PyTorch 2.5.1 + CUDA 12.1 env
+instead.
+
+## Quick start
+
+FungiDNA-FM exposes two equivalent entry points that share one validation gate.
+
+**Embedded API:**
+
+```python
+from fungidna.invoke import run_task
+
+report = run_task(file_path="/path/test.fasta", task="coding_potential")
+print(report.to_json())
+```
+
+**Prompt-driven terminal:**
+
+```bash
+python -m fungidna "Please predict the splice sites using /path/test.fasta"
+```
+
+Requests are validated before execution: unsupported tasks, missing files, and
+malformed FASTA/FASTQ inputs return a structured error and never reach the
+model.
+
+## Supported tasks
+
+| Task                     | Canonical name     | Description                                           |
+| ------------------------ | ------------------ | ----------------------------------------------------- |
+| Representation           | `representation`   | 768-d mean-pooled embeddings per sequence             |
+| Taxonomic classification | `taxonomy`         | phylum label per sequence (five-rank heads available) |
+| Coding potential         | `coding_potential` | coding vs non-coding probability per sequence         |
+| Splice site              | `splice_site`      | donor / acceptor / non-site per candidate motif       |
+| BGC boundary             | `bgc_boundary`     | left/right boundary distance in bp                    |
+
+Aliases are accepted (e.g. `"splice site"`, `"taxonomic classification"`,
+`"embeddings"`) and normalised to the canonical names above.
 
 ## Paper → code
 
@@ -32,33 +136,17 @@
 | Methods 2.10 — environment                | [`environment.yml`](environment.yml), [`requirements.txt`](requirements.txt) |                                                              |
 | Figures 2–5                               | [`figures/`](figures/)                                       | Report and figure generators                                 |
 
-Each `experiments/NN_*/` directory has its own README naming the figure and
-table it produces, the dataset it needs, and the commands to run.
-
 ## Repository layout
 
 ```
-fungidna/          core library — model, data, training
+fungidna/          core library — model, data, training, and the invoke workflow
 data_prep/         raw JGI data → per-task datasets
 experiments/       one directory per paper experiment
 baselines/         baseline model definitions and download helper
-configs/           pretraining configs
+configs/           pretraining configs and the weights config template
 figures/           figure and report generators
-docs/              genome list and supporting documentation
-metadata/          taxonomy table consumed by fungidna/data/taxonomy.py
+docs/              genome list, weights manifest, and supporting documentation
 ```
-
-## Installation
-
-```bash
-conda env create -f environment.yml
-conda activate fungidna
-```
-
-`flash-attn` and `mamba-ssm` need a CUDA toolchain matching your PyTorch build;
-if the conda solve is slow, install the pinned pip wheels from
-`requirements.txt` into a bare Python 3.10 + PyTorch 2.5.1 + CUDA 12.1 env
-instead.
 
 ## Data
 
@@ -69,10 +157,23 @@ their phylum, subphylum, class, order and family. One assembly is dropped by
 QC, leaving the 734 genomes reported in the paper.
 
 Download the assemblies and GFF3 annotations from MycoCosm by portal ID, then
-run the scripts in [`data_prep/`](data_prep/).
+run the scripts in [`data_prep/`](data_prep/). CD-HIT (Fu et al. 2012) is
+required for the coding-potential dataset and is not vendored here.
 
-CD-HIT (Fu et al. 2012) is required for the coding-potential dataset and is not
-vendored here.
+## Known limitations
+
+- **Scripts contain absolute paths from the authors' machine.** Paths rooted at
+	the original working directory appear in 22 of the files here, mostly pointing
+	at dataset and checkpoint locations. They have deliberately not been
+	rewritten, so that the code matches what actually produced the reported
+	numbers. You will need to adjust them for your own layout. Grep for `/home/`
+	to find them.
+- **Derived datasets are not yet released.** A Zenodo deposit is planned. For
+	now, rebuild them from the JGI source with `data_prep/`.
+- **Some scripts retain unreachable exploratory code paths** (DNABERT-2, NT-v2).
+	Those models are not paper baselines and have been removed from the CLI
+	choices; the surrounding code is left as it was when the reported numbers
+	were produced.
 
 ## License
 
