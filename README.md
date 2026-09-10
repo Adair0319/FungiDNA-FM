@@ -106,10 +106,13 @@ malformed FASTA/FASTQ inputs return a structured error and never reach the
 model.
 
 **Demo:**
+
 The following demo shows the validation gate, prompt-driven terminal entry point,
 task dispatch, and downstream prediction output.
 
-▶️ Watch the full demo[![FungiDNA-FM Demo](docs/demo.gif)](demo.mp4)
+▶️ Watch the full demo
+
+[![FungiDNA-FM Demo](docs/demo.gif)](demo.mp4)
 
 ## Supported tasks
 
