@@ -1,18 +1,18 @@
 #!/usr/bin/env python
 """End-to-end data preparation for FungiDNA pretraining.
 
-Usage:
-    python scripts/prepare_pretrain_data.py \\
-        --raw_dir ~/yy_projects/fungi_project/1kfg_datasets \\
-        --taxonomy_xlsx fungi_classification.xlsx \\
+Usage (run from the repository root):
+    python data_prep/pretrain/prepare_pretrain_data.py \\
+        --raw_dir /path/to/1kfg_datasets \\
+        --taxonomy_xlsx /path/to/fungi_classification.xlsx \\
         --output_dir data/processed \\
         --phase1_min_len 5000 \\
         --phase2_min_len 50000
 
 Steps:
     1. Scan raw .fasta.gz files → filtered .fasta (Phase 1: ≥5Kb, Phase 2: ≥50Kb)
-    2. Train BPE tokenizer on filtered data
-    3. Report dataset statistics
+    2. Train the Unigram tokenizer on the filtered data
+    3. Write the per-genome index used by the pretraining datasets
 """
 import argparse, sys, os
 from pathlib import Path
