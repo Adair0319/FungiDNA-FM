@@ -23,16 +23,12 @@ _TASK_ALIASES = {
     "taxonomy": "taxonomy",
     "taxonomic classification": "taxonomy",
     "classification": "taxonomy",
-    # cds (formerly "coding_potential", long CDS 300-5000 bp)
+    # cds (long CDS 300-5000 bp)
     "cds": "cds",
-    "coding_potential": "cds",
-    "coding potential": "cds",
-    "coding-potential": "cds",
     # short_cds (<= 300 bp)
     "short_cds": "short_cds",
     "short cds": "short_cds",
     "short-cds": "short_cds",
-    "sorf": "short_cds",
     # splice_site
     "splice_site": "splice_site",
     "splice site": "splice_site",

@@ -5,7 +5,7 @@ from .tasks import normalize_task
 
 _ALIAS_RE = re.compile(
     r"\b(representations?|embeddings?|taxonomic classification|classification|"
-    r"coding[- ]?potential|splice[- ]?sites?|splice|bgc[- ]?boundary|bgc)\b",
+    r"splice[- ]?sites?|splice|bgc[- ]?boundary|bgc)\b",
     re.IGNORECASE,
 )
 _PATH_RE = re.compile(r"(?:^|\s)(/(?:[^\s'\"()]+)?[A-Za-z0-9_./-]+\.(?:fa|fasta|fq|fastq))(?:\s|$)")

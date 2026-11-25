@@ -35,8 +35,7 @@ def test_task_names():
     assert set(CANONICAL_TASKS) == {"embedding", "taxonomy", "cds", "short_cds",
                                     "splice_site", "bgc_boundary"}
     assert normalize_task("representation") == "embedding"
-    assert normalize_task("coding_potential") == "cds"
-    assert normalize_task("sorf") == "short_cds"
+    assert normalize_task("short CDS") == "short_cds"
 
 
 def test_load_checkpoint_shape_check():
