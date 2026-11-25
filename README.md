@@ -157,10 +157,10 @@ repository.
 
 | Note | Path | What is there |
 |---|---|---|
-| S1 — corpus | [`data_prep/`](data_prep/), [`docs/genome_list.tsv`](docs/genome_list.tsv) | genome acquisition, QC, the exact genome list |
+| S1 — corpus | [`data_prep/`](data_prep/) | genome acquisition and QC |
 | S2 — architecture & pretraining | [`fungidna/model/`](fungidna/model/), [`fungidna/training/`](fungidna/training/), [`scripts/`](scripts/), [`configs/`](configs/) | StripedMamba model, Phase 1 / Phase 2 trainers, launchers, configs |
 | S3 — downstream tasks | [`fungidna/invoke/`](fungidna/invoke/) | task handlers and the guarded invocation interface |
-| S4–S6 — evaluation, input/optimisation, masked recovery | [`supplementary/`](supplementary/) | supplementary tables and configuration notes (to be added) |
+| S4–S6 — evaluation, input/optimisation, masked recovery | — | Supplementary Notes and Tables are available with the article |
 
 ## Repository layout
 
@@ -169,17 +169,16 @@ fungidna/          core library — model, data, training, and the invoke workfl
 data_prep/         raw JGI data → pretraining corpus
 scripts/           pretraining launchers (train_phase1.sh, train_phase2_joint.sh)
 configs/           pretraining configs and the weights config template
-docs/              genome list, weights manifest, and supporting documentation
-supplementary/     supplementary tables and notes (to be added)
+docs/              weights manifest and supporting documentation
 ```
 
 ## Data
 
 The genome assemblies and annotations come from the JGI MycoCosm *1000 Fungal
-Genomes* initiative and are **not** redistributed here. The exact set used is
-listed in [`docs/genome_list.tsv`](docs/genome_list.tsv) — 735 portal IDs with
-their phylum, subphylum, class, order and family. One assembly is dropped by
-QC, leaving the 734 genomes reported in the paper.
+Genomes* initiative and are **not** redistributed here. One assembly is dropped
+by QC, leaving the 734 genomes reported in the paper. The portal IDs used, with
+the rank labels as they were fixed when the corpus was built, are available with
+the article.
 
 Download the assemblies and GFF3 annotations from MycoCosm by portal ID, then
 run the scripts in [`data_prep/`](data_prep/).
