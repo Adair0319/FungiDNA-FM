@@ -61,3 +61,6 @@ dist/
 # ── Local agent/process artefacts ──
 .claude/
 .superpowers/
+
+# ── Internal audit material (kept local; never published) ──
+/docs/audit/
