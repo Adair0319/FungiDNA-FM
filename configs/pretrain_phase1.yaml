@@ -1,0 +1,28 @@
+# ── Phase 1: MLM Pretraining Configuration (v2 — no [CLS], grad accum) ──
+
+# Paths
+filtered_fasta_dir: "data/processed/phase1_filtered/"
+tokenizer_path: "data/processed/bpe_fungi.model"
+output_dir: "checkpoints/phase1_mlm/"
+resume_from: null  # set to checkpoint path to resume
+
+# Dataset
+window_sizes: [1024, 2048, 4096]
+stride_fraction: 0.25
+mask_rate: 0.15
+span_mask_fraction: 0.30
+shuffle_buffer_size: 8000
+seed: 42
+
+# Optimization
+lr: 5.0e-4
+warmup_steps: 10000
+total_steps: 200000
+batch_size_per_gpu: 32
+gradient_accumulation_steps: 8
+
+# Logging
+wandb_project: "fungi-dna"
+wandb_run: "phase1-mlm-v2"
+log_every: 50
+save_every: 5000

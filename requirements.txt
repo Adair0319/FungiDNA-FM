@@ -1,0 +1,15 @@
+torch>=2.5.0
+mamba-ssm>=2.2.0
+flash-attn>=2.6.0
+transformers>=4.45.0
+peft>=0.12.0
+datasets>=2.20.0
+sentencepiece>=0.2.0
+biopython>=1.84
+numpy>=1.26.0
+pandas>=2.2.0
+openpyxl>=3.1.0
+scikit-learn>=1.5.0
+pyyaml>=6.0
+tqdm>=4.66.0
+wandb>=0.17.0

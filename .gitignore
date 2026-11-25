@@ -1,0 +1,63 @@
+# ── Data and model weights (never commit; see README for how to obtain) ──
+# Leading slash anchors these to the repo root — an unanchored `data/` would
+# also swallow the fungidna/data/ package.
+/data/
+/checkpoints/
+/baselines/models/
+/dna_foundation_models/
+*.pt
+*.pth
+*.bin
+*.safetensors
+*.parquet
+*.npy
+*.npz
+*.memmap
+tokenized/
+dna_memmap/
+_temp*/
+
+# ── Genome / annotation source files ──
+*.fasta
+*.fa
+*.fna
+*.gff3
+*.gff
+*.gb
+*.bed
+
+# ── Experiment tracking and logs ──
+wandb/
+/logs/
+*.log
+*.out
+nohup.out
+
+# ── Credentials — never commit ──
+cookies
+*.cookie
+.env
+*.pem
+*.key
+
+# ── Build artefacts and scratch ──
+*.whl
+*.zip
+*.gz
+*.tar
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+build/
+dist/
+*.egg-info/
+
+# ── Editor / OS ──
+.DS_Store
+.vscode/
+.idea/
+*.swp
+
+# ── Local agent/process artefacts ──
+.claude/
+.superpowers/

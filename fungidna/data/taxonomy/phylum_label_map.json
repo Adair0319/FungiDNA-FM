@@ -1,0 +1,8 @@
+{
+  "Ascomycota": 0,
+  "Basidiomycota": 1,
+  "Blastocladiomycota": 2,
+  "Chytridiomycota": 3,
+  "Mucoromycota": 4,
+  "Zoopagomycota": 5
+}

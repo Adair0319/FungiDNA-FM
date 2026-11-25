@@ -1,0 +1,37 @@
+# FungiDNA-FM model weights configuration.
+#
+# Copy this file to ~/.config/fungidna/weights.yaml and fill in the absolute
+# paths after downloading the weights (see README "Model weights").
+#
+#   cp configs/weights.example.yaml ~/.config/fungidna/weights.yaml
+#
+# Two variants are supported. Choose ``variant`` when calling the interface
+# (run_task(..., variant="unigram" | "snt")) and point ``backbone`` at the
+# matching checkpoint:
+#
+#   variant = "unigram"  -> backbone: <unigram>/backbone.pt
+#   variant = "snt"      -> backbone: <snt>/backbone.pt
+#
+# ``tokenizer`` is the shared SentencePiece Unigram model (bpe_fungi.model);
+# the single-nucleotide tokenizer does not need a separate file.
+
+variant: unigram
+
+# Tokenizer (SentencePiece Unigram, vocab 4096)
+tokenizer: /path/to/bpe_fungi.model
+
+# Pretrained Phase-2 backbone (match your variant)
+backbone: /path/to/backbone.pt
+
+# Downstream fine-tuned task checkpoints
+cds: /path/to/cds/best_model.pt
+short_cds: /path/to/short_cds/best_model.pt
+splice_site: /path/to/splice_site/best_model.pt
+bgc_boundary: /path/to/bgc_boundary/best_model.pt
+
+# Taxonomy per-rank MLP heads (frozen backbone + MLP probe)
+taxonomy_phylum: /path/to/taxonomy/phylum/mlp_best.pt
+taxonomy_subphylum: /path/to/taxonomy/subphylum/mlp_best.pt
+taxonomy_class: /path/to/taxonomy/class/mlp_best.pt
+taxonomy_order: /path/to/taxonomy/order/mlp_best.pt
+taxonomy_family: /path/to/taxonomy/family/mlp_best.pt
