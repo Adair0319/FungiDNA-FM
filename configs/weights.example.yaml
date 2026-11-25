@@ -1,37 +1,49 @@
 # FungiDNA-FM model weights configuration.
 #
-# Copy this file to ~/.config/fungidna/weights.yaml and fill in the absolute
-# paths after downloading the weights (see README "Model weights").
+# Copy this file to ~/.config/fungidna/weights.yaml and point the paths at the
+# files you downloaded (see README "Model weights"). Select the variant when
+# calling the API — ``variant="unigram"`` or ``variant="snt"`` — and the loader
+# picks the matching ``backbone`` and task checkpoints from that section.
 #
 #   cp configs/weights.example.yaml ~/.config/fungidna/weights.yaml
 #
-# Two variants are supported. Choose ``variant`` when calling the interface
-# (run_task(..., variant="unigram" | "snt")) and point ``backbone`` at the
-# matching checkpoint:
+# The tokenizer is shared: single-nucleotide encoding is algorithmic and needs no
+# file, so both variants read the same SentencePiece model.
 #
-#   variant = "unigram"  -> backbone: <unigram>/backbone.pt
-#   variant = "snt"      -> backbone: <snt>/backbone.pt
-#
-# ``tokenizer`` is the shared SentencePiece Unigram model (bpe_fungi.model);
-# the single-nucleotide tokenizer does not need a separate file.
+# Environment overrides are variant-scoped and take precedence over this file:
+#   FUNGIDNA_UNIGRAM_BACKBONE_WEIGHTS, FUNGIDNA_SNT_BACKBONE_WEIGHTS,
+#   FUNGIDNA_UNIGRAM_CDS_WEIGHTS,      FUNGIDNA_SNT_CDS_WEIGHTS, ...
+# A flat ``backbone:`` key is deliberately NOT honoured — it predates variant
+# support and would make one variant silently load the other's weights.
 
-variant: unigram
+tokenizer: /path/to/tokenizer/bpe_fungi.model
 
-# Tokenizer (SentencePiece Unigram, vocab 4096)
-tokenizer: /path/to/bpe_fungi.model
+unigram:
+  backbone: /path/to/unigram/backbone.pt
 
-# Pretrained Phase-2 backbone (match your variant)
-backbone: /path/to/backbone.pt
+  # Downstream fine-tuned task checkpoints
+  cds: /path/to/unigram/tasks/cds/best_model.pt
+  short_cds: /path/to/unigram/tasks/short_cds/best_model.pt
+  splice_site: /path/to/unigram/tasks/splice_site/best_model.pt
+  bgc_boundary: /path/to/unigram/tasks/bgc_boundary/best_model.pt
 
-# Downstream fine-tuned task checkpoints
-cds: /path/to/cds/best_model.pt
-short_cds: /path/to/short_cds/best_model.pt
-splice_site: /path/to/splice_site/best_model.pt
-bgc_boundary: /path/to/bgc_boundary/best_model.pt
+  # Taxonomy per-rank MLP heads (frozen backbone + MLP probe)
+  taxonomy_phylum: /path/to/unigram/tasks/taxonomy/phylum/mlp_best.pt
+  taxonomy_subphylum: /path/to/unigram/tasks/taxonomy/subphylum/mlp_best.pt
+  taxonomy_class: /path/to/unigram/tasks/taxonomy/class/mlp_best.pt
+  taxonomy_order: /path/to/unigram/tasks/taxonomy/order/mlp_best.pt
+  taxonomy_family: /path/to/unigram/tasks/taxonomy/family/mlp_best.pt
 
-# Taxonomy per-rank MLP heads (frozen backbone + MLP probe)
-taxonomy_phylum: /path/to/taxonomy/phylum/mlp_best.pt
-taxonomy_subphylum: /path/to/taxonomy/subphylum/mlp_best.pt
-taxonomy_class: /path/to/taxonomy/class/mlp_best.pt
-taxonomy_order: /path/to/taxonomy/order/mlp_best.pt
-taxonomy_family: /path/to/taxonomy/family/mlp_best.pt
+snt:
+  backbone: /path/to/snt/backbone.pt
+
+  cds: /path/to/snt/tasks/cds/best_model.pt
+  short_cds: /path/to/snt/tasks/short_cds/best_model.pt
+  splice_site: /path/to/snt/tasks/splice_site/best_model.pt
+  bgc_boundary: /path/to/snt/tasks/bgc_boundary/best_model.pt
+
+  taxonomy_phylum: /path/to/snt/tasks/taxonomy/phylum/mlp_best.pt
+  taxonomy_subphylum: /path/to/snt/tasks/taxonomy/subphylum/mlp_best.pt
+  taxonomy_class: /path/to/snt/tasks/taxonomy/class/mlp_best.pt
+  taxonomy_order: /path/to/snt/tasks/taxonomy/order/mlp_best.pt
+  taxonomy_family: /path/to/snt/tasks/taxonomy/family/mlp_best.pt

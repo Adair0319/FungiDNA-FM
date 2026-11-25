@@ -39,22 +39,39 @@ backbone:
 
 ## Model weights
 
-The pretrained backbone and downstream-task checkpoints are hosted on the
-Hugging Face Hub. The two variants' final Phase-2 checkpoints are:
+Weights are hosted at <https://huggingface.co/Biopotato/FungiDNA-FM>. The two
+variants' final Phase-2 checkpoints are:
 
-- **FungiDNA-FM-SNT**: 33,000 training steps.
-- **FungiDNA-FM-Unigram**: final training step not yet confirmed (see
-  `docs/weights_manifest.md`; do not cite a specific step until verified).
+| Variant | Backbone | Checkpoint |
+|---|---|---|
+| FungiDNA-FM-SNT | `snt/backbone.pt` | final Phase 2 checkpoint, step 33,000 |
+| FungiDNA-FM-Unigram | `unigram/backbone.pt` | final Phase 2 checkpoint, step 16,000 |
 
 Download the files (e.g. via `huggingface-cli download` or the Hub web UI) to a
-local directory, then tell the handlers where they live with a
-`~/.config/fungidna/weights.yaml` config:
+local directory, then point a `~/.config/fungidna/weights.yaml` at them:
 
 ```bash
 mkdir -p ~/.config/fungidna
 cp configs/weights.example.yaml ~/.config/fungidna/weights.yaml
 # edit the paths to point at your downloaded files
 ```
+
+Each variant has its own section, so the loader can never mix their backbones:
+
+```yaml
+tokenizer: /path/to/tokenizer/bpe_fungi.model
+
+unigram:
+  backbone: /path/to/unigram/backbone.pt
+  cds: /path/to/unigram/tasks/cds/best_model.pt
+
+snt:
+  backbone: /path/to/snt/backbone.pt
+  cds: /path/to/snt/tasks/cds/best_model.pt
+```
+
+Environment overrides are variant-scoped, e.g.
+`FUNGIDNA_UNIGRAM_BACKBONE_WEIGHTS` and `FUNGIDNA_SNT_BACKBONE_WEIGHTS`.
 
 ## Installation
 
@@ -70,7 +87,21 @@ instead.
 
 ## Quick start
 
-FungiDNA-FM exposes two equivalent entry points that share one validation gate.
+**Representation — 768-d embedding per sequence:**
+
+```python
+from fungidna.representation import RepresentationModel
+
+model = RepresentationModel(variant="unigram")   # or variant="snt"
+vector = model.embed("ATGGCTAGCTAGCTA")          # (768,)
+matrix = model.embed(["ACGTACGT...", "TTTT..."]) # (n, 768)
+```
+
+Each variant is mean-pooled over its DNA tokens only: no `[CLS]` is added and
+padding is excluded, matching the representation used in the paper. The model
+can also be driven from a FASTA file with `run_task(..., task="embedding")`.
+
+**Task prediction — two equivalent entry points that share one validation gate.**
 
 **Embedded API:**
 

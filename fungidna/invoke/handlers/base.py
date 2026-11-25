@@ -25,6 +25,19 @@ DEFAULT_WEIGHTS_CONFIG = "~/.config/fungidna/weights.yaml"
 BACKBONE_KEY = "backbone"
 TOKENIZER_KEY = "tokenizer"
 
+#: The two released tokenizer variants. Each has its own backbone checkpoint.
+VARIANTS = ("unigram", "snt")
+
+
+def normalize_variant(variant):
+    """Return a validated variant name, raising ``WeightsNotFoundError`` otherwise."""
+    name = (variant or "unigram").strip().lower()
+    if name not in VARIANTS:
+        raise WeightsNotFoundError(
+            name, f"unknown variant {variant!r}; supported: {', '.join(VARIANTS)}"
+        )
+    return name
+
 
 class WeightsNotFoundError(Exception):
     def __init__(self, task, message=None):
@@ -36,36 +49,62 @@ class WeightLoader:
     def __init__(self, registry=None):
         self.registry = dict(registry or {})
 
-    def resolve(self, task, rank=None):
+    def resolve(self, task, rank=None, variant="unigram"):
         """Resolve the checkpoint path for ``task`` (registry → env → YAML).
 
         ``rank``, when given, resolves a per-rank key ``f"{task}_{rank}"``
-        (used by the taxonomy task's per-rank MLP heads).
+        (used by the taxonomy task's per-rank MLP heads). ``variant`` selects the
+        ``unigram``/``snt`` section of the weights config, so the two variants'
+        checkpoints can never be resolved for one another.
         """
         key = task if rank is None else f"{task}_{rank}"
-        return self._resolve_key(key)
+        return self._resolve_key(key, normalize_variant(variant), allow_flat=True)
 
-    def resolve_backbone(self):
-        """Resolve the shared pretrained backbone (registry → env → YAML)."""
-        return self._resolve_key(BACKBONE_KEY)
+    def resolve_backbone(self, variant="unigram"):
+        """Resolve the pretrained backbone for ``variant``.
+
+        Unlike task keys, a flat ````backbone:`` entry is *not* accepted: the
+        weights config predates variant support with a single backbone, and
+        silently reusing it for ``variant="snt"`` would load the Unigram weights.
+        """
+        return self._resolve_key(
+            BACKBONE_KEY, normalize_variant(variant), allow_flat=False
+        )
 
     def resolve_tokenizer(self):
-        """Resolve the SentencePiece ``.model`` path (registry → env → YAML)."""
-        return self._resolve_key(TOKENIZER_KEY)
+        """Resolve the shared SentencePiece ``.model`` path (registry → env → YAML).
 
-    def _resolve_key(self, key):
+        The tokenizer file is shared by both variants; single-nucleotide encoding
+        is algorithmic and needs no file.
+        """
+        return self._resolve_key(TOKENIZER_KEY, variant=None, allow_flat=True)
+
+    def _resolve_key(self, key, variant, allow_flat):
         if key in self.registry:
             return Path(self.registry[key])
-        env_var = f"FUNGIDNA_{key.upper()}_WEIGHTS"
-        env_val = os.environ.get(env_var)
-        if env_val:
-            return Path(env_val)
-        path_from_config = self._resolve_from_config_file(key)
+        if variant is not None:
+            env_var = f"FUNGIDNA_{variant.upper()}_{key.upper()}_WEIGHTS"
+            env_val = os.environ.get(env_var)
+            if env_val:
+                return Path(env_val)
+        if allow_flat:
+            env_val = os.environ.get(f"FUNGIDNA_{key.upper()}_WEIGHTS")
+            if env_val:
+                return Path(env_val)
+        path_from_config = self._resolve_from_config_file(key, variant, allow_flat)
         if path_from_config is not None:
             return Path(path_from_config)
-        raise WeightsNotFoundError(key)
+        where = f"{key!r} for variant {variant!r}" if variant else repr(key)
+        hint = (
+            f"; expected a per-variant entry such as ``{variant}.{key}``"
+            if variant and not allow_flat
+            else ""
+        )
+        raise WeightsNotFoundError(
+            key, f"no checkpoint registered for {where}{hint}"
+        )
 
-    def _resolve_from_config_file(self, key):
+    def _resolve_from_config_file(self, key, variant, allow_flat):
         config_file = Path(
             os.environ.get("FUNGIDNA_WEIGHTS_CONFIG", DEFAULT_WEIGHTS_CONFIG)
         ).expanduser()
@@ -80,7 +119,13 @@ class WeightLoader:
                 f"weights config file {str(config_file)} is unreadable or not "
                 f"valid YAML: {exc}; no checkpoint registered for {key!r}",
             ) from exc
-        if isinstance(data, dict):
+        if not isinstance(data, dict):
+            return None
+        if variant is not None:
+            section = data.get(variant)
+            if isinstance(section, dict) and section.get(key):
+                return section[key]
+        if allow_flat:
             path = data.get(key)
             if path:
                 return path
