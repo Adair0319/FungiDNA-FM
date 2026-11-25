@@ -76,6 +76,41 @@ def train_bpe(
     print(f"BPE model saved to {output_model_path} (vocab={vocab_size})")
 
 
+#: Canonical variant -> token_type mapping (0 = Unigram, 1 = single nucleotide).
+VARIANT_TOKEN_TYPE = {"unigram": 0, "snt": 1}
+
+
+def token_type_for(variant) -> int:
+    """Return the integer ``token_type`` for a variant name.
+
+    Accepts ``"unigram"``/``"snt"`` case-insensitively and ignoring surrounding
+    whitespace. Any other value raises ``ValueError`` rather than silently
+    falling back to a default.
+    """
+    if not isinstance(variant, str):
+        raise ValueError(f"variant must be 'unigram' or 'snt', got {variant!r}")
+    name = variant.strip().lower()
+    if name not in VARIANT_TOKEN_TYPE:
+        raise ValueError(
+            f"variant must be one of {sorted(VARIANT_TOKEN_TYPE)}, got {variant!r}"
+        )
+    return VARIANT_TOKEN_TYPE[name]
+
+
+def encode_window(tokenizer: "DualTokenizer", variant, window: str) -> list[int]:
+    """Tokenize a DNA window for pretraining (no [CLS]) for a given variant."""
+    if token_type_for(variant) == 0:
+        return tokenizer.encode_bpe(window, add_cls=False)
+    return tokenizer.encode_single_nt(window, add_cls=False)
+
+
+def mlm_vocab_size(tokenizer: "DualTokenizer", variant) -> int:
+    """Upper bound (exclusive) for random-token replacement in MLM masking."""
+    if token_type_for(variant) == 0:
+        return tokenizer.bpe_vocab_size
+    return NT_VOCAB_SIZE
+
+
 class DualTokenizer:
     """Dual-tokenizer for BPE (short-range tasks) and single-nucleotide (long-range).
 

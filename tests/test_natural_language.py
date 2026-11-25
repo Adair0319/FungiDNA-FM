@@ -64,9 +64,22 @@ class TestPromptParsing(unittest.TestCase):
 
 class TestCliFlags(unittest.TestCase):
     def test_variant_and_rank_defaults(self):
+        """Flags default to None so text parsing can supply them; the effective
+        defaults (unigram / phylum) are applied when neither source provides a
+        value."""
         args = _build_parser().parse_args(["extract the representation of /tmp/x.fasta"])
-        self.assertEqual(args.variant, "unigram")
-        self.assertEqual(args.rank, "phylum")
+        self.assertIsNone(args.variant)
+        self.assertIsNone(args.rank)
+
+        from fungidna.__main__ import _resolve_options
+        from fungidna.invoke.parser import parse_prompt
+        # Non-taxonomy requests carry no rank at all.
+        parsed = parse_prompt("extract the representation of /tmp/x.fasta")
+        self.assertEqual(_resolve_options(args, parsed), ("unigram", None))
+        # Taxonomy requests fall back to the handler's documented default.
+        tax = "classify the taxonomy of /tmp/x.fasta"
+        self.assertEqual(_resolve_options(_build_parser().parse_args([tax]),
+                                          parse_prompt(tax)), ("unigram", "phylum"))
 
     def test_variant_and_rank_override(self):
         args = _build_parser().parse_args(
