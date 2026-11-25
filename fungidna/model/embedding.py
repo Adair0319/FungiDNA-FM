@@ -6,7 +6,26 @@ from fungidna.model.config import FungiDNAConfig
 
 
 class RotaryPositionEmbedding(nn.Module):
-    """RoPE — shared between Mamba2 and Attention layers."""
+    """Rotary embedding applied to queries and keys in the attention blocks.
+
+    Legacy behaviour, kept because the released checkpoints were trained with
+    it. It differs from textbook RoPE in two ways:
+
+    * the rotation angle is taken from the **head index**, not from the token
+      position: ``apply_rotary`` slices ``cos[:x.shape[-2]]`` where the
+      sequence axis of ``x`` is ``(batch, seq, n_heads, head_dim)``, so
+      ``x.shape[-2]`` is the number of heads. Every head therefore gets a fixed
+      rotation and the attention scores carry no positional signal (sequence
+      order reaches the model through the causal Mamba2 recurrence);
+    * the frequencies are the first ``head_dim / 2`` entries of a
+      ``hidden_size``-based table (``theta ** (-2j / 768)``) rather than a
+      ``head_dim``-based one.
+
+    Pairs are rotated half-split: dimension ``j`` is paired with
+    ``j + head_dim / 2``. Changing any of this changes the function computed by
+    the released weights and would require retraining both pretraining phases;
+    see "Paper–code correspondence" in README.md.
+    """
 
     def __init__(self, dim: int, theta: float = 10000.0, max_seq_len: int = 131072, min_seq_len: int = 1):
         super().__init__()
@@ -52,6 +71,10 @@ class DualTokenEmbedding(nn.Module):
         self.nt_embed = nn.Embedding(config.nt_vocab_size, config.hidden_size, padding_idx=4)
         self.token_type_embed = nn.Embedding(2, config.hidden_size)
         self.cls_token = nn.Parameter(torch.randn(1, 1, config.hidden_size) * 0.02)
+        # LayerNorm, not RMSNorm. Supplementary Note S2 of the paper says
+        # "RMSNorm is used throughout", but the released checkpoints contain
+        # this LayerNorm (weight + bias), so it is kept unchanged; replacing it
+        # would alter the function computed by the published weights.
         self.layer_norm = nn.LayerNorm(config.hidden_size, eps=config.layer_norm_eps)
         self.dropout = nn.Dropout(config.dropout)
         self.rope = RotaryPositionEmbedding(

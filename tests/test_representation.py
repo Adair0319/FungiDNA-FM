@@ -1,14 +1,9 @@
 """Representation (embedding) tests for both tokenizer variants.
 
-The pooling contract under test was verified against the code that produced the
-paper's representation analyses:
-
-* Unigram: ``scripts/umap_clustering_elements.py:287,309,317``
-  ``encode_bpe(seq, add_cls=False)`` -> ``backbone(..., token_type=0, add_cls=False)``
-  -> masked mean over real (non-padding) tokens.
-* SNT: ``scripts/contrastive_representation_eval.py:100-104``
-  ``encode_single_nt(s, add_cls=False)`` -> ``backbone(..., token_type=1, add_cls=False)``
-  -> mean over tokens.
+The pooling contract under test follows Supplementary Note S2 and matches the
+development-repository script that produced the paper's clustering numbers
+(``scripts/checkpoint_ablation.py``: layer index 7, masked mean, no CLS). That
+script is not shipped in this repository.
 
 So *no* [CLS] is involved in representation extraction. (The ``add_cls=True``
 conventions belong to downstream task heads, not to the representation.)

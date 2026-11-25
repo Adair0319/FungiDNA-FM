@@ -5,7 +5,7 @@ This project includes code adapted from the following third-party project.
 ## genomic-jamba
 
 - Project: https://github.com/suzuki-2001/genomic-jamba
-- Version adapted: commit 5f3a673
+- Version adapted: commit 5f3a67395f9d53362d3aaf74b60e1cc92729759b
 - Copyright (c) 2025 Shosuke Suzuki
 - License: MIT
 

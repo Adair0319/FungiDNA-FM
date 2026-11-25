@@ -55,16 +55,25 @@ variant-scoped loader end to end.
 
 ## What is covered
 
+The suite has 16 modules:
+
 | Module | Covers |
 |---|---|
 | `test_core.py` | tokenizer id mapping, model config, task-name normalisation, checkpoint shape checking, label maps |
-| `test_representation.py` | tokenizer contract, per-variant backbone resolution, real-checkpoint loading, single/batch shapes, padding invariance, no-CLS pooling, values finite, absence of a training-module dependency |
+| `test_representation.py` | tokenizer contract, per-variant backbone resolution, real-checkpoint loading, single/batch shapes, padding invariance, layer-8 no-CLS pooling, values finite, absence of a training-module dependency |
 | `test_downstream_tasks.py` | all five tasks × both variants × (taxonomy) all five ranks, against the real checkpoints |
+| `test_natural_language.py` | six-task prompt parsing, CLI flags, one real end-to-end CLI run |
+| `test_parser_variant_rank.py` | variant/rank parsing, ambiguity and unsupported-rank errors, path forms, backward compatibility, CLI precedence |
+| `test_tokenizer_helpers.py` | `token_type_for` / `encode_window` / `mlm_vocab_size`, single source of truth for the variant map, integer-API regression |
+| `test_snt_pretraining.py` | MLM head tying per variant, dataset encoding and masking vocabulary, effective batch per Phase 2 config |
+| `test_phase1_early_stop.py` | evaluation-node rules, two-process Gloo stop broadcast, non-distributed passthrough |
+| `test_documented_deviations.py` | the two documented model-level deviations from the paper: per-head (non-positional) rotary embedding, LayerNorm after the input embedding |
+| `test_bgc_model.py` | BGC boundary model construction |
 | `test_weight_loader.py` | registry → env → YAML precedence, malformed config handling |
 | `test_sequence.py`, `test_validation.py`, `test_api.py`, `test_report.py`, `test_dispatcher.py` | I/O, validation gate, report format, dispatch |
 
-Current status: **77 tests, all passing** in the authors' environment (see the
-verification table below).
+The test suite currently contains **136 unit tests**, all passing in the
+authors' environment (see the verification table below).
 
 ### What the task tests assert, and what they do not
 
@@ -88,20 +97,36 @@ verification table below).
 | `cds`, `short_cds`, `splice_site` | `ClassificationHead(hidden_dim=256)` over `hidden[:, 0]` | `MeanPoolHead(hidden_dim=128)` over `hidden[:, 1:].mean` |
 | `bgc_boundary` | `MeanPoolHead(hidden_dim=128)` over `hidden[:, 1:].mean` | same |
 | `taxonomy` | Linear+BatchNorm MLP over `mean(all positions)` | LayerNorm+Linear MLP over `hidden[:, 1:].mean` |
-| `embedding` (Representation) | masked mean over DNA tokens at **layer 8 of 24** (attention output of the second hybrid block), before `final_norm`, **no CLS** | same layer and pooling, single-nucleotide tokens |
+| `embedding` (Representation) | masked mean over DNA tokens at the output of **layer 8 of 24** (the attention block: attention sub-layer + SwiGLU), before `final_norm`, **no CLS** | same layer and pooling, single-nucleotide tokens |
 
 The `[CLS]` conventions belong to the task heads; the Representation API never
 adds a CLS token.
 
 ## Command line interface
 
-`python -m fungidna "<request>"` recognises only **embedding, taxonomy,
-splice-site and BGC** prompts. It does **not** recognise CDS or short-CDS, and
-it cannot select the variant or the taxonomy rank — it always runs the Unigram
-variant at the default rank (`phylum`).
+`python -m fungidna "<request>"` recognises all six window-level tasks:
+**embedding, taxonomy, CDS/intergenic, short-CDS, splice-site and BGC boundary**.
+The same text may also name the variant and, for taxonomy, the rank.
 
-For CDS, short-CDS, the SNT variant, or a non-default taxonomy rank, call the
-Python API instead:
+- Variant: `unigram`, `snt` or `single-nucleotide`; defaults to `unigram`.
+- Taxonomy ranks: `phylum`, `subphylum`, `class`, `order`, `family`; defaults to
+  `phylum`. Levels the project does not model (`genus`, `species`, `kingdom`, …)
+  are rejected with an explicit error.
+- Naming two different variants, or two different ranks, in one request is
+  rejected as ambiguous.
+- Non-taxonomy tasks carry no rank; an explicit `--rank` on such a request
+  prints a note that the flag is ignored.
+- `--variant` / `--rank` flags take precedence over the request text.
+- Paths containing spaces must be quoted; relative paths are accepted and
+  normalised by the validation layer.
+
+```bash
+python -m fungidna "embedding of x.fasta using SNT"
+python -m fungidna "classify taxonomy at family of genome.fasta using SNT"
+python -m fungidna "predict splice sites in data/sample.fasta" --variant unigram
+```
+
+The same tasks are available from Python with structured arguments:
 
 ```python
 from fungidna.invoke import run_task
@@ -124,7 +149,7 @@ actually checked, and where:
 | End-to-end model tests in a fresh env | **not completed**, because they need `flash-attn` |
 | `environment.yml` as a whole | **not verified**: the file has never been consumed by a single `conda env create`. The `pip: -r requirements.txt` entry is resolved **relative to the directory you run `conda env create` from**, so it must be executed at the repository root. |
 
-All 77 tests pass in the authors' existing environment
+All 136 tests pass in the authors' existing environment
 (`torch 2.5.1`, `triton 3.1.0`, `mamba-ssm 2.3.2.post1` with a local
 `__init__.py` patch, `flash-attn 2.8.3.post1`, `transformers 4.47.0`).
 That environment is **not** reproducible from `requirements.txt` precisely

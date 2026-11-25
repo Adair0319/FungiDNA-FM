@@ -2,24 +2,38 @@
 
 Pooling contract
 ----------------
-Hidden states come from **paper layer 8 of 24** — the attention layer of the
-second hybrid block — taken before the backbone's ``final_norm``, and are
-mean-pooled over real (non-padding) tokens only. No ``[CLS]`` is involved: both
-the tokenizer call and the backbone call use ``add_cls=False``. This matches the
-definition in Supplementary Note S2 and the code that produced the paper's
-representation analyses:
+Hidden states come from **paper layer 8 of 24**, taken before the backbone's
+``final_norm``, and are mean-pooled over real (non-padding) tokens only. No
+``[CLS]`` is involved: both the tokenizer call and the backbone call use
+``add_cls=False``.
 
-* Unigram — ``scripts/umap_clustering_elements.py``::
+"Layer 8" is the module at index 7, which is an *attention block*: the
+attention sub-layer followed by its SwiGLU sub-layer and both residual adds.
+The hook captures the block's output, not the output of the attention op alone.
 
-      ids = tokenizer.encode_bpe(seq, add_cls=False)
-      _ = backbone(input_ids, token_type=0, add_cls=False)
-      pooled = (hidden * mask).sum(1) / mask.sum(1)
+This is the definition used in Supplementary Note S2 and in the development
+scripts that produced the paper's clustering numbers (the adjusted Rand indices
+0.152 at the end of Phase 1 and 0.550 after Phase 2)::
 
-* SNT — ``scripts/contrastive_representation_eval.py``::
+    # scripts/checkpoint_ablation.py (development repository; not shipped here)
+    ATTENTION_LAYER = 7
+    hidden = BLOCK_OUTPUT[1].float()
+    pooled = (hidden * mask).sum(1) / mask.sum(1).clamp(min=1e-9)
 
-      ids = tok.encode_single_nt(s, add_cls=False)
-      h = bb(p, token_type=1, add_cls=False)
-      feats.append(h.float().mean(dim=1))
+The same pooling is used by ``scripts/umap_clustering_elements.py`` (also a
+development script).
+
+The single-nucleotide variant is a different case. The historical SNT
+representation script used the **final** backbone output and averaged over all
+positions including padding::
+
+    # scripts/contrastive_representation_eval.py (development repository)
+    h = bb(p, token_type=1, add_cls=False)
+    feats.append(h.float().mean(dim=1))
+
+No paper figure reports SNT layer-8 embeddings. This class deliberately applies
+the Note S2 definition to both variants; it does not reproduce that historical
+SNT script.
 
 The ``add_cls=True`` conventions belong to downstream task heads (which read
 ``hidden[:, 0]`` or ``hidden[:, 1:].mean``); they are *not* the representation.
@@ -51,7 +65,7 @@ from pathlib import Path
 
 import numpy as np
 
-from fungidna.data.tokenizer import PAD_ID, DualTokenizer
+from fungidna.data.tokenizer import PAD_ID, VARIANT_TOKEN_TYPE, DualTokenizer
 from fungidna.invoke.handlers.base import (
     VARIANTS,
     WeightLoader,
@@ -59,7 +73,7 @@ from fungidna.invoke.handlers.base import (
     load_checkpoint,
 )
 
-_VARIANT_TOKEN_TYPE = {"unigram": 0, "snt": 1}
+_VARIANT_TOKEN_TYPE = VARIANT_TOKEN_TYPE   # single source of truth
 
 #: Note S2: representations are taken "at the output of the attention layer of
 #: the second hybrid block (layer 8 of 24)". With six blocks of

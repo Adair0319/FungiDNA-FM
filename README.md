@@ -31,8 +31,8 @@ backbone:
 | Attention layers | 12 heads × 64 dims, FlashAttention-2, SwiGLU (intermediate 2,048) |
 | Normalisation | RMSNorm in the Mamba2 and attention blocks and before the output; LayerNorm after the input embedding; dropout 0 |
 | Tokenizer | FungiDNA-FM-SNT: single nucleotide (A/C/G/T/N). FungiDNA-FM-Unigram: SentencePiece **Unigram**, vocab 4,096, ≈ **5.6 bp/token** (the file name `bpe_fungi.model` is historical; the model type is Unigram) |
-| Mask token | SentencePiece Unigram mask id = **2** |
-| Representation | mean over non-padding positions at **layer 8 of 24** (attention output of the second hybrid block), before `final_norm`; no `[CLS]` |
+| Mask token | Unigram mask id = **2** — the value used for masked-token replacement at training time. In the SentencePiece vocabulary id 2 holds the `[CLS]` placeholder piece, so the piece name and the masking role differ; the id is what the model was trained with. |
+| Representation | mean over non-padding positions at the output of **layer 8 of 24** (the attention block of the second hybrid block: attention sub-layer + SwiGLU), before `final_norm`; no `[CLS]` |
 | Pretraining corpus | 734 fungal genomes, **39.48 Gb**, six phyla (JGI MycoCosm *1000 Fungal Genomes*) |
 | Pretraining | Phase 1 MLM (1,024 / 2,048 / 4,096 bp) → Phase 2 MLM + supervised contrastive (Unigram 8,192 bp; SNT 4,096 bp) |
 
@@ -128,11 +128,19 @@ vector = model.embed("ATGGCTAGCTAGCTA")          # (768,)
 matrix = model.embed(["ACGTACGT...", "TTTT..."]) # (n, 768)
 ```
 
-Each variant is mean-pooled over its DNA tokens only: no `[CLS]` is added and
-padding is excluded, matching the representation used in the paper. The model
-can also be driven from a FASTA file with `run_task(..., task="embedding")`.
+The vector is the **masked mean of the hidden states at the output of layer 8 of
+24** (the attention block of the second hybrid block — attention sub-layer plus
+SwiGLU — taken before the backbone's `final_norm`), over the DNA tokens only: no
+`[CLS]` is added and padding positions are excluded. This is the definition in
+Supplementary Note S2 and the one used for the clustering numbers in Fig. 1C. Inputs are variable length; sequences are batched only
+with others of the same encoded length, so trailing padding never changes a
+sequence's vector. The model can also be driven from a FASTA file with
+`run_task(..., task="embedding")`.
 
-**Task prediction — two equivalent entry points that share one validation gate.**
+**Task prediction — two entry points.** The Python API takes structured
+arguments (`task`, `variant`, `rank`); the natural-language terminal parses the
+same choices out of free text. Both feed the same validation gate and dispatcher,
+so they differ in how the request is expressed, not in what runs.
 
 **Embedded API:**
 
@@ -160,18 +168,34 @@ Runnable examples: `examples/embed.py` (Representation) and
 **Prompt-driven terminal:**
 
 ```bash
-python -m fungidna "Please predict the splice sites using /path/test.fasta"
+python -m fungidna "embedding of x.fasta using SNT"
+python -m fungidna "classify taxonomy at family of genome.fasta using SNT"
+python -m fungidna "predict splice sites in data/sample.fasta" --variant unigram
 ```
 
-Requests are validated before execution: unsupported tasks, missing files, and
-malformed FASTA/FASTQ inputs return a structured error and never reach the
-model.
+The terminal recognises all six window-level tasks and, from the same text, the
+variant (`unigram`, `snt` or `single-nucleotide`) and — for taxonomy — the rank:
+
+- variant defaults to `unigram`; taxonomy rank defaults to `phylum`;
+- a request naming two different variants, or two different ranks, is rejected
+  with an explicit ambiguity error;
+- a rank the project does not model (`genus`, `species`, `kingdom`, …) is
+  rejected; supported ranks are phylum, subphylum, class, order and family;
+- non-taxonomy tasks carry no rank; passing `--rank` with one of them prints a
+  note that the flag is ignored;
+- explicit `--variant` / `--rank` flags take precedence over the request text;
+- paths containing spaces must be quoted; relative paths are accepted and are
+  normalised by the validation layer before the handler runs.
+
+Requests are validated before execution: unsupported tasks, missing files,
+ambiguous variant/rank requests, and malformed FASTA/FASTQ inputs return a
+structured error and never reach the model.
 
 ## Supported tasks
 
 | Task | Canonical name | Description |
 |---|---|---|
-| Embedding | `embedding` | 768-d mean-pooled embeddings per sequence |
+| Embedding | `embedding` | 768-d embeddings: masked mean of layer 8 (24-layer backbone), DNA tokens only, no `[CLS]` |
 | Taxonomic classification | `taxonomy` | phylum-to-family classification per 10 kb window |
 | CDS / intergenic | `cds` | CDS vs intergenic discrimination (300–5,000 bp) |
 | Short CDS | `short_cds` | short-CDS vs intergenic-ORF discrimination (≤ 300 bp) |
@@ -218,17 +242,42 @@ with the rank labels as they were fixed when the corpus was built, are listed in
 contributing no sequence (0-byte assembly).
 
 Download the assemblies and GFF3 annotations from MycoCosm by portal ID, then
-run the scripts in [`data_prep/`](data_prep/).
+run the pipeline in [`data_prep/`](data_prep/), which builds the pretraining
+corpus (contig filtering, long-contig selection, Unigram tokenizer training).
+See [`data_prep/README.md`](data_prep/README.md) for what is and is not included.
+
+## Paper–code correspondence
+
+The paper is fixed and this repository is the code that produced it. Three
+implementation details do not match the wording of Supplementary Notes S2/S5.
+They are kept as they are because the released checkpoints were trained with
+them, so changing them would change the function the weights compute.
+
+| Item | Paper | This repository |
+|---|---|---|
+| Rotary embedding | "rotary position embeddings (RoPE; Su et al. 2024)" (Note S2) | Per-head fixed rotation, not position-dependent: `apply_rotary` indexes the angle table with the **head** axis, and the frequencies come from a `hidden_size`-based table. Attention scores therefore carry no positional signal; sequence order enters through the causal Mamba2 recurrence. See `fungidna/model/embedding.py`. |
+| Normalisation | "RMSNorm … is used throughout" (Note S2) | RMSNorm in the Mamba2 and attention blocks and before the output, but **LayerNorm** after the input embedding (it carries a bias that is present in the checkpoints). See `fungidna/model/embedding.py`. |
+| Taxonomy probe | "the same MLP head" and "same settings … focal loss … learning rate 1 × 10⁻⁴" (Notes S3, S5) | Two probe heads, matching how each variant was trained. Unigram: Linear→BatchNorm→GELU→Dropout(0.3)→Linear, with BatchNorm and focal loss, as used for the Unigram, public-baseline and random-initialisation runs. SNT: LayerNorm→Linear→GELU→Dropout(0.1)→Linear, trained with cross-entropy at learning rate 1 × 10⁻³; the SNT genome-isolated numbers did use the BatchNorm/focal protocol. See `fungidna/invoke/handlers/taxonomy.py`. |
+
+The released `short_cds` and `splice_site` checkpoints were also trained with a
+different schedule from the one described in Note S5 (5 epochs, 10% warm-up
+followed by cosine decay, no plateau or F1 early stopping). Per-file provenance
+is recorded in [`docs/weights_manifest.md`](docs/weights_manifest.md).
 
 ## Known limitations
 
-- **Scripts contain absolute paths from the authors' machine.** Paths rooted at
-  the original working directory appear in some files, mostly pointing at
-  dataset and checkpoint locations. They have deliberately not been rewritten,
-  so that the code matches what actually produced the reported numbers. You
-  will need to adjust them for your own layout. Grep for `/home/` to find them.
-- **Derived datasets are not yet released.** A deposit is planned. For now,
-  rebuild them from the JGI source with `data_prep/`.
+- **Some scripts contain paths from the authors' machine.** The `data_prep/`
+  shell scripts default to the `~/yy_projects/...` layout, and four test modules
+  default to an absolute checkpoint root from the authors' machine. Every entry point
+  also accepts an explicit argument or environment variable, so neither is
+  needed for normal use; `grep -rn "yy_projects\|/home/" .` finds them.
+- **Downstream dataset construction code is not included.** This repository
+  contains the pretraining corpus pipeline, the model, the training loops and
+  the inference interfaces. The builders for the five downstream datasets
+  (taxonomy windows, CDS/intergenic, short-CDS, splice sites, BGC) are not part
+  of it, so those datasets cannot be rebuilt from this repository alone.
+- **Each released task checkpoint is a single fold.** The paper reports
+  five-fold means ± SD; each published file is one fold of one run.
 
 ## Testing
 
@@ -244,7 +293,7 @@ module covers, and the verification status of the pinned dependencies.
 ## Attribution
 
 The StripedMamba backbone in `fungidna/model/` is adapted from genomic-jamba
-(https://github.com/suzuki-2001/genomic-jamba, commit 5f3a673),
+(https://github.com/suzuki-2001/genomic-jamba, commit 5f3a67395f9d53362d3aaf74b60e1cc92729759b),
 Copyright (c) 2025 Shosuke Suzuki, MIT License. See THIRD_PARTY_NOTICES.md.
 
 ## License
