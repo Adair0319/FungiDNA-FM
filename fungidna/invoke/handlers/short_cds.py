@@ -1,10 +1,18 @@
-"""Short-CDS task: probability that a short sequence (<= 300 bp) is a short CDS."""
+"""Short-CDS task: probability that a short sequence (<= 300 bp) is a short CDS.
+
+Head and pooling differ per variant, matching how each checkpoint was trained:
+
+* Unigram — ``ClassificationHead(hidden_dim=256)`` reading ``hidden[:, 0]``;
+* SNT — ``MeanPoolHead(hidden_dim=128)`` averaging ``hidden[:, 1:]``.
+"""
 import torch
 
 from ..report import Report
 from ..request import Task
 from ..sequence import read_sequences
 from .base import TaskHandler, WeightLoader, load_checkpoint
+
+_NUM_CLASSES = 2
 
 
 class ShortCdsHandler(TaskHandler):
@@ -15,17 +23,21 @@ class ShortCdsHandler(TaskHandler):
 
     def run(self, request):
         variant = getattr(request, "variant", "unigram")
-        ckpt = self.loader.resolve(self.task.value)
+        ckpt = self.loader.resolve(self.task.value, variant=variant)
         tokenizer_path = self.loader.resolve_tokenizer()
 
         from fungidna.model.config import FungiDNAConfig
         from fungidna.model.fungi_dna import FungiDNAForSequenceClassification
+        from fungidna.model.heads import MeanPoolHead
         from fungidna.data.tokenizer import DualTokenizer
 
         tok = DualTokenizer(str(tokenizer_path))
         token_type, is_snt = (1, True) if variant == "snt" else (0, False)
-        model = FungiDNAForSequenceClassification(FungiDNAConfig(), num_classes=2,
+        config = FungiDNAConfig()
+        model = FungiDNAForSequenceClassification(config, num_classes=_NUM_CLASSES,
                                                   token_type=token_type)
+        if is_snt:
+            model.head = MeanPoolHead(config.hidden_size, _NUM_CLASSES)
         skip = () if is_snt else ("nt_embed",)
         load_checkpoint(model, ckpt, unwrap="model", skip_size_mismatch=skip)
         model.eval()

@@ -1,10 +1,13 @@
-"""Taxonomy task: classify sequences at a taxonomic rank using a mean-pooled
-backbone embedding followed by the trained per-rank MLP head.
+"""Taxonomy task: classify sequences at a taxonomic rank using a pooled
+backbone representation followed by the trained per-rank MLP head.
 
-The head is the small MLP saved by ``train_phase2_joint_mlp.py``
-(``net.0`` Linear 768→256, ``net.1`` BatchNorm1d, GELU, Dropout,
-``net.4`` Linear 256→num_classes). The backbone is the shared pretrained
-``backbone_final.pt``. Both are resolved via the weight loader.
+The two variants were trained with different probes and pooling, and the
+handlers reproduce each exactly:
+
+* Unigram — ``Linear(768->256) + BatchNorm1d + GELU + Dropout + Linear`` over
+  ``hidden.mean(dim=1)`` (mean over **all** positions, CLS included);
+* SNT — ``LayerNorm(768) + Linear(768->256) + GELU + Dropout + Linear`` over
+  ``hidden[:, 1:].mean(dim=1)`` (mean over positions after the prepended CLS).
 """
 import json
 from pathlib import Path
@@ -42,14 +45,31 @@ def load_label_map(rank):
     return name_to_id, id_to_name
 
 
-class _TaxonomyHead(nn.Module):
-    """Mean-pooled-768 → 256 → num_classes MLP (matches train_phase2_joint_mlp.py)."""
+class _UnigramTaxonomyHead(nn.Module):
+    """Mean-of-all-positions 768 -> 256 -> num_classes (BatchNorm MLP)."""
 
     def __init__(self, num_classes, hidden_dim=256, dropout=0.3):
         super().__init__()
         self.net = nn.Sequential(
             nn.Linear(768, hidden_dim),
             nn.BatchNorm1d(hidden_dim),
+            nn.GELU(),
+            nn.Dropout(dropout),
+            nn.Linear(hidden_dim, num_classes),
+        )
+
+    def forward(self, x):
+        return self.net(x)
+
+
+class _SntTaxonomyHead(nn.Module):
+    """Mean-of-positions-1: 768 -> 256 -> num_classes (LayerNorm MLP)."""
+
+    def __init__(self, num_classes, hidden_dim=256, dropout=0.1):
+        super().__init__()
+        self.net = nn.Sequential(
+            nn.LayerNorm(768),
+            nn.Linear(768, hidden_dim),
             nn.GELU(),
             nn.Dropout(dropout),
             nn.Linear(hidden_dim, num_classes),
@@ -69,8 +89,8 @@ class TaxonomyHandler(TaskHandler):
         variant = getattr(request, "variant", "unigram")
         token_type, is_snt = (1, True) if variant == "snt" else (0, False)
         rank = getattr(request, "rank", _DEFAULT_RANK)
-        backbone_ckpt = self.loader.resolve_backbone()
-        head_ckpt = self.loader.resolve(self.task.value, rank=rank)
+        backbone_ckpt = self.loader.resolve_backbone(variant=variant)
+        head_ckpt = self.loader.resolve(self.task.value, rank=rank, variant=variant)
         tokenizer_path = self.loader.resolve_tokenizer()
 
         from fungidna.model.config import FungiDNAConfig
@@ -87,10 +107,9 @@ class TaxonomyHandler(TaskHandler):
 
         num_classes = _RANK_NUM_CLASSES.get(rank)
         if num_classes is None:
-            # infer from the head checkpoint's output layer
             state = torch.load(head_ckpt, map_location="cpu", weights_only=True)
             num_classes = state["net.4.weight"].shape[0]
-        head = _TaxonomyHead(num_classes=num_classes)
+        head = (_SntTaxonomyHead if is_snt else _UnigramTaxonomyHead)(num_classes=num_classes)
         load_checkpoint(head, head_ckpt, unwrap=None)  # bare state dict, keys "net.*"
         head.eval()
 
@@ -108,7 +127,8 @@ class TaxonomyHandler(TaskHandler):
                         ids = tok.encode_bpe(window, add_cls=True)
                     x = torch.tensor([ids], dtype=torch.long, device=device)
                     with torch.amp.autocast(device_type=device.type, dtype=torch.bfloat16):
-                        pooled = backbone(x, token_type=token_type).mean(dim=1)
+                        hidden = backbone(x, token_type=token_type)
+                        pooled = (hidden[:, 1:, :] if is_snt else hidden).mean(dim=1)
                     logits = head(pooled.float())  # MLP head is fp32
                     votes.append(int(logits.argmax(dim=1).item()))
                 labels[header] = max(range(num_classes), key=votes.count) if votes else None

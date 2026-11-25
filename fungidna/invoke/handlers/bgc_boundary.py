@@ -16,7 +16,7 @@ class BGCBoundaryHandler(TaskHandler):
     def run(self, request):
         variant = getattr(request, "variant", "unigram")
         token_type, is_snt = (1, True) if variant == "snt" else (0, False)
-        ckpt = self.loader.resolve(self.task.value)
+        ckpt = self.loader.resolve(self.task.value, variant=variant)
         tokenizer_path = self.loader.resolve_tokenizer()
 
         from fungidna.model.config import FungiDNAConfig

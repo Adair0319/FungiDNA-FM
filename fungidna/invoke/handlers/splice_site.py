@@ -1,12 +1,15 @@
 """Splice-site task: classify candidate splice motifs as donor/acceptor/non-site.
 
-Each candidate is a GT/GC (donor) or AG (acceptor) dinucleotide. The model
-classifies the surrounding ±200 bp window into 3 classes (0 donor, 1 acceptor,
-2 non-site). The checkpoint uses a LayerNorm→Linear→GELU→Dropout→Linear head over
-mean-pooled non-CLS tokens, so this handler reproduces that pooling exactly.
+Each candidate is a GT/GC (donor) or AG (acceptor) dinucleotide and is
+classified from its surrounding +/-200 bp window into 3 classes
+(0 donor, 1 acceptor, 2 non-site).
+
+Head and pooling differ per variant, matching the checkpoints:
+
+* Unigram — ``ClassificationHead(hidden_dim=256)`` reading ``hidden[:, 0]``;
+* SNT — ``MeanPoolHead(hidden_dim=128)`` averaging ``hidden[:, 1:]``.
 """
 import torch
-import torch.nn as nn
 
 from ..report import Report
 from ..request import Task
@@ -18,23 +21,6 @@ _WINDOW_HALF = 200           # ±200 bp around the candidate site → 401 bp win
 _NUM_CLASSES = 3             # donor / acceptor / non-site
 
 
-class _UnifiedHead(nn.Module):
-    """LayerNorm → Linear → GELU → Dropout → Linear (matches the trained checkpoint)."""
-
-    def __init__(self, input_dim, num_classes=_NUM_CLASSES, hidden_dim=256, dropout=0.1):
-        super().__init__()
-        self.norm = nn.LayerNorm(input_dim)
-        self.fc1 = nn.Linear(input_dim, hidden_dim)
-        self.act = nn.GELU()
-        self.dropout = nn.Dropout(dropout)
-        self.fc2 = nn.Linear(hidden_dim, num_classes)
-
-    def forward(self, x):
-        x = self.norm(x)
-        x = self.dropout(self.act(self.fc1(x)))
-        return self.fc2(x)
-
-
 class SpliceSiteHandler(TaskHandler):
     task = Task.SPLICE_SITE
 
@@ -44,27 +30,22 @@ class SpliceSiteHandler(TaskHandler):
     def run(self, request):
         variant = getattr(request, "variant", "unigram")
         token_type, is_snt = (1, True) if variant == "snt" else (0, False)
-        ckpt = self.loader.resolve(self.task.value)
+        ckpt = self.loader.resolve(self.task.value, variant=variant)
         tokenizer_path = self.loader.resolve_tokenizer()
 
         from fungidna.model.config import FungiDNAConfig
         from fungidna.model.fungi_dna import FungiDNAForSequenceClassification
+        from fungidna.model.heads import MeanPoolHead
         from fungidna.data.tokenizer import DualTokenizer
 
         tok = DualTokenizer(str(tokenizer_path))
-        model = FungiDNAForSequenceClassification(FungiDNAConfig(), num_classes=_NUM_CLASSES,
+        config = FungiDNAConfig()
+        model = FungiDNAForSequenceClassification(config, num_classes=_NUM_CLASSES,
                                                   token_type=token_type)
-        # Reproduce the training-time head replacement + mean-pool forward.
-        model.head = _UnifiedHead(FungiDNAConfig().hidden_size)
+        if is_snt:
+            model.head = MeanPoolHead(config.hidden_size, _NUM_CLASSES)
         skip = () if is_snt else ("nt_embed",)
         load_checkpoint(model, ckpt, unwrap="model", skip_size_mismatch=skip)
-
-        def forward_meanpool(input_ids):
-            hidden = model.backbone(input_ids, token_type=token_type)
-            pooled = hidden[:, 1:, :].mean(dim=1)  # mean over non-CLS tokens
-            return model.head(pooled)
-
-        model.forward = forward_meanpool
         model.eval()
         device = next(model.parameters()).device
 
