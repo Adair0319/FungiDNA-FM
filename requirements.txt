@@ -1,15 +1,25 @@
-torch>=2.5.0
-mamba-ssm>=2.2.0
-flash-attn>=2.6.0
-transformers>=4.45.0
-peft>=0.12.0
-datasets>=2.20.0
-sentencepiece>=0.2.0
-biopython>=1.84
+# Inference stack for FungiDNA-FM (Representation + downstream tasks).
+#
+# The pins below are the combination checked in this repository; see
+# docs/TESTING.md for exactly what was verified and what was not.
+#
+# Why these pins:
+#   * triton must match the torch 2.5.1 CUDA 12.1 build. Note that triton
+#     < 3.3 has no `triton.set_allocator`, which is why mamba-ssm 2.3.2.post1
+#     fails at import (it eagerly imports Mamba3).
+#   * mamba-ssm 2.3.1 does not import Mamba3, and its Mamba2 implementation is
+#     identical to 2.3.2.post1, so the released checkpoints load unchanged.
+#   * causal-conv1d is an *optional extra* of mamba-ssm, but the fused Mamba2
+#     path needs it at runtime; without it Mamba2 forward raises
+#     "'NoneType' object is not callable".
+#   * mamba-ssm 2.3.x imports transformers.generation.GenerateDecoderOnlyOutput,
+#     which transformers 5.x removed.
+torch==2.5.1
+triton==3.1.0
+mamba-ssm==2.3.1
+causal-conv1d==1.6.2.post1
+flash-attn==2.8.3.post1
+transformers==4.47.0
+sentencepiece==0.2.2
 numpy>=1.26.0
-pandas>=2.2.0
-openpyxl>=3.1.0
-scikit-learn>=1.5.0
 pyyaml>=6.0
-tqdm>=4.66.0
-wandb>=0.17.0

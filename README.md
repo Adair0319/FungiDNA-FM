@@ -79,10 +79,11 @@ conda env create -f environment.yml
 conda activate fungidna
 ```
 
-`flash-attn` and `mamba-ssm` need a CUDA toolchain matching your PyTorch build;
-if the conda solve is slow, install the pinned pip wheels from
-`requirements.txt` into a bare Python 3.10 + PyTorch 2.5.1 + CUDA 12.1 env
-instead.
+`flash-attn` and `mamba-ssm` are built from source and need a CUDA toolchain
+matching your PyTorch build; `environment.yml` installs CUDA 12.1's `nvcc` and
+gcc 12 for that reason. The pinned versions in `requirements.txt` are explained,
+and their verification status documented, in [`docs/TESTING.md`](docs/TESTING.md).
+Inference requires a GPU.
 
 ## Quick start
 
@@ -118,7 +119,12 @@ tax.results["labels_named"]  # {header: predicted category name}
 ```
 
 Set `variant="snt"` for the single-nucleotide variant. The `variant` selects the
-tokenizer, the `token_type` (0 for Unigram, 1 for SNT), and the matching backbone.
+tokenizer, the `token_type` (0 for Unigram, 1 for SNT), and the matching
+backbone *and task checkpoint* — `weights.yaml` keeps a separate `unigram:` and
+`snt:` section so the two variants can never load each other's weights.
+
+Runnable examples: `examples/embed.py` (Representation) and
+`examples/predict_tasks.py` (the five downstream tasks).
 
 **Prompt-driven terminal:**
 
@@ -191,6 +197,17 @@ run the scripts in [`data_prep/`](data_prep/).
   will need to adjust them for your own layout. Grep for `/home/` to find them.
 - **Derived datasets are not yet released.** A deposit is planned. For now,
   rebuild them from the JGI source with `data_prep/`.
+
+## Testing
+
+```bash
+python -m unittest discover -s tests
+```
+
+The model tests require CUDA and the real checkpoints; they skip (never fall
+back to random weights) when either is missing. See
+[`docs/TESTING.md`](docs/TESTING.md) for the environment variables, what each
+module covers, and the verification status of the pinned dependencies.
 
 ## Attribution
 
