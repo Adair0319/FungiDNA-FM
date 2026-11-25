@@ -36,8 +36,11 @@ def main():
         handle.close()
         fasta = handle.name
 
-    report = run_task(file_path=fasta, task=args.task, variant=args.variant,
-                      rank=args.rank)
+    # Rank only exists for taxonomy; other tasks must not carry one.
+    options = {"file_path": fasta, "task": args.task, "variant": args.variant}
+    if args.task == "taxonomy":
+        options["rank"] = args.rank
+    report = run_task(**options)
     print(f"variant : {args.variant}")
     print(f"task    : {args.task}" + (f" (rank={args.rank})" if args.task == "taxonomy" else ""))
     print(report.to_json())
