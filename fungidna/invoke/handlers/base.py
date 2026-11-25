@@ -12,6 +12,7 @@ randomly initialised:
   * the model is cast to the checkpoint's dtype (bf16 vs fp32 differ per task).
 """
 import os
+import sys
 from pathlib import Path
 
 import torch
@@ -211,11 +212,13 @@ def load_checkpoint(model, ckpt_path, unwrap="model", device=None, skip_size_mis
     if skipped:
         print(
             f"[load_checkpoint] {ckpt_path.name}: skipped {len(skipped)} "
-            f"size-mismatched key(s) (explicitly allowed): {skipped}"
+            f"size-mismatched key(s) (explicitly allowed): {skipped}",
+            file=sys.stderr,
         )
     print(
         f"[load_checkpoint] {ckpt_path.name}: loaded {loaded}/{len(model_sd)} "
-        f"model params; missing={len(missing)} unexpected={len(unexpected)}"
+        f"model params; missing={len(missing)} unexpected={len(unexpected)}",
+        file=sys.stderr,
     )
     return loaded, skipped, missing, unexpected
 

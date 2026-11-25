@@ -2,10 +2,12 @@
 
 Pooling contract
 ----------------
-No ``[CLS]`` is involved: both the tokenizer call and the backbone call use
-``add_cls=False``, and the hidden states are mean-pooled over real (non-padding)
-tokens only. This matches the code that produced the paper's representation
-analyses:
+Hidden states come from **paper layer 8 of 24** — the attention layer of the
+second hybrid block — taken before the backbone's ``final_norm``, and are
+mean-pooled over real (non-padding) tokens only. No ``[CLS]`` is involved: both
+the tokenizer call and the backbone call use ``add_cls=False``. This matches the
+definition in Supplementary Note S2 and the code that produced the paper's
+representation analyses:
 
 * Unigram — ``scripts/umap_clustering_elements.py``::
 
@@ -30,6 +32,13 @@ neighbouring positions. Embeddings are therefore computed in groups of equal
 token length, which keeps a sequence's vector independent of the other sequences
 in the same call.
 
+Concurrency
+-----------
+Layer-8 capture uses one instance-level slot (``_layer_output``), so a single
+``RepresentationModel`` instance is **not** thread-safe: concurrent ``embed``
+calls would overwrite each other's captured hidden state. Serial calls on one
+instance are the supported usage; use one instance per thread otherwise.
+
 Device
 ------
 The backbone uses ``flash-attn`` and ``mamba-ssm`` kernels; both are CUDA-only,
@@ -51,6 +60,13 @@ from fungidna.invoke.handlers.base import (
 )
 
 _VARIANT_TOKEN_TYPE = {"unigram": 0, "snt": 1}
+
+#: Note S2: representations are taken "at the output of the attention layer of
+#: the second hybrid block (layer 8 of 24)". With six blocks of
+#: (3 × Mamba2 + 1 × attention), paper layer *L* is ``layers[L - 1]``, so layer 8
+#: is the AttentionBlock at index 7 — the last layer of the second block. The
+#: output is taken *before* the backbone's ``final_norm``.
+REPRESENTATION_LAYER_INDEX = 7
 
 
 class RepresentationModel:
@@ -112,6 +128,24 @@ class RepresentationModel:
             device=self.device,
         )
         self.backbone.eval()
+
+        # Capture layer 8 without changing the backbone's public interface. The
+        # hook only stores the module output; it is reset before every forward so
+        # a later call can never read a stale tensor.
+        self._layer_output = None
+        self.backbone.layers[REPRESENTATION_LAYER_INDEX].register_forward_hook(
+            self._capture_layer_output
+        )
+
+    def _capture_layer_output(self, module, inputs, output):
+        self._layer_output = output
+
+    @property
+    def last_layer_output(self):
+        """Hidden state of paper layer 8 from the most recent ``embed`` call."""
+        if self._layer_output is None:
+            raise RuntimeError("no forward pass has been run yet")
+        return self._layer_output
 
     # ── public API ──────────────────────────────────────────────────────────
     def embed(self, sequences):
@@ -176,8 +210,14 @@ class RepresentationModel:
 
         amp_device = self.device.type
         amp_dtype = torch.bfloat16 if amp_device == "cuda" else torch.float32
+        self._layer_output = None
         with torch.no_grad(), torch.amp.autocast(device_type=amp_device, dtype=amp_dtype):
-            hidden = self.backbone(padded, token_type=self.token_type, add_cls=False)
+            self.backbone(padded, token_type=self.token_type, add_cls=False)
+        hidden = self._layer_output
+        if hidden is None:  # pragma: no cover - hook must fire on every forward
+            raise RuntimeError(
+                f"layer {REPRESENTATION_LAYER_INDEX} output was not captured"
+            )
 
         hidden = hidden.float()
         pooled = (hidden * mask.unsqueeze(-1)).sum(dim=1) / mask.sum(

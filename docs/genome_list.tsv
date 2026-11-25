@@ -1,0 +1,736 @@
+portal_id	phylum	subphylum	class	order	family	included_in_corpus	exclusion_reason
+Aaoar1	Ascomycota	Pezizomycotina	Dothideomycetes	Pleosporales	Dacampiaceae	yes	
+Acema1	Ascomycota	Pezizomycotina	Leotiomycetes	Helotiales	Vibrisseaceae	yes	
+Achstr1	Ascomycota	Pezizomycotina	Sordariomycetes	Sordariales	Chaetomiaceae	yes	
+Aciaci1	Ascomycota	Pezizomycotina	Pezizomycetes	Pezizales	Amplistromataceae	yes	
+AcreTS7_1	Ascomycota	Pezizomycotina	Sordariomycetes	Hypocreales	Incertae sedis	yes	
+Acrmed1	Ascomycota	Pezizomycotina	Dothideomycetes	Pleosporales	Morosphaeriaceae	yes	
+Acrvag1	Ascomycota	Pezizomycotina	Dothideomycetes	Pleosporales	Morosphaeriaceae	yes	
+Alikh1	Ascomycota	Pezizomycotina	Dothideomycetes	Jahnulales	Aliquandostipitaceae	yes	
+Altalt1	Ascomycota	Pezizomycotina	Dothideomycetes	Pleosporales	Pleosporaceae	yes	
+Altro1	Ascomycota	Pezizomycotina	Dothideomycetes	Pleosporales	Pleosporaceae	yes	
+Altsp012_1	Ascomycota	Pezizomycotina	Dothideomycetes	Pleosporales	Pleosporaceae	yes	
+Altsp017_1	Ascomycota	Pezizomycotina	Dothideomycetes	Pleosporales	Pleosporaceae	yes	
+Amnli1	Ascomycota	Pezizomycotina	Dothideomycetes	Pleosporales	Amniculicolaceae	yes	
+Ampqui1	Ascomycota	Pezizomycotina	Dothideomycetes	Pleosporales	Leptosphaeriaceae	yes	
+Amyenc1	Ascomycota	Pezizomycotina	Leotiomycetes	Incertae sedis	Incertae sedis	yes	
+Ant016_1	Ascomycota	Pezizomycotina	Leotiomycetes	Thelebolales	Thelebolaceae	yes	
+Antav1	Ascomycota	Pezizomycotina	Sordariomycetes	Xylariales	Diatrypaceae	yes	
+Apibac1	Ascomycota	Pezizomycotina	Sordariomycetes	Sordariales	Lasiosphaeriaceae	yes	
+Aplpr1	Ascomycota	Pezizomycotina	Dothideomycetes	Botryosphaeriales	Botryosphaeriaceae	yes	
+Apope1	Ascomycota	Pezizomycotina	Sordariomycetes	Sordariales	Lasiosphaeriaceae	yes	
+Aqupat1	Ascomycota	Pezizomycotina	Dothideomycetes	Pleosporales	Morosphaeriaceae	yes	
+Artesp1	Ascomycota	Pezizomycotina	Sordariomycetes	Incertae sedis	Apiosporaceae	yes	
+Artfe1_2	Ascomycota	Saccharomycotina	Saccharomycetes	Saccharomycetales	Saccharomycopsidaceae	yes	
+Ascni1	Ascomycota	Pezizomycotina	Pezizomycetes	Pezizales	Ascodesmidaceae	yes	
+Aulhe2	Ascomycota	Pezizomycotina	Dothideomycetes	Microthyriales	Aulographaceae	yes	
+Bimnz1	Ascomycota	Pezizomycotina	Dothideomycetes	Pleosporales	Montagnulaceae	yes	
+Bissp1	Ascomycota	Pezizomycotina	Leotiomycetes	Helotiales	Helotiaceae	yes	
+Boeex1	Ascomycota	Pezizomycotina	Dothideomycetes	Pleosporales	Didymellaceae	yes	
+Bombar1	Ascomycota	Pezizomycotina	Sordariomycetes	Sordariales	Lasiosphaeriaceae	yes	
+Bombom1	Ascomycota	Pezizomycotina	Sordariomycetes	Sordariales	Lasiosphaeriaceae	yes	
+Botmuc1	Ascomycota	Saccharomycotina	Saccharomycetes	Saccharomycetales	Trigonopsidaceae	yes	
+Brefa1	Ascomycota	Pezizomycotina	Sordariomycetes	Microascales	Ceratocystidaceae	yes	
+Bulin1	Ascomycota	Pezizomycotina	Leotiomycetes	Leotiales	Bulgariaceae	yes	
+Bysci1	Ascomycota	Pezizomycotina	Dothideomycetes	Pleosporales	Massarinaceae	yes	
+Cadosp1	Ascomycota	Pezizomycotina	Leotiomycetes	Helotiales	Incertae sedis	yes	
+Cadsp1	Ascomycota	Pezizomycotina	Leotiomycetes	Helotiales	Incertae sedis	yes	
+Calful1	Ascomycota	Pezizomycotina	Pezizomycetes	Pezizales	Caloscyphaceae	yes	
+Calmar1	Ascomycota	Pezizomycotina	Leotiomycetes	Helotiales	Hyaloscyphaceae	yes	
+Capfu1	Ascomycota	Pezizomycotina	Eurotiomycetes	Chaetothyriales	Herpotrichiellaceae	yes	
+Cepal1_1	Ascomycota	Saccharomycotina	Saccharomycetes	Saccharomycetales	Cephaloascaceae	yes	
+Cepfr1_1	Ascomycota	Saccharomycotina	Saccharomycetes	Saccharomycetales	Cephaloascaceae	yes	
+Cercau1	Ascomycota	Pezizomycotina	Sordariomycetes	Sordariales	Lasiosphaeriaceae	yes	
+Cernew1	Ascomycota	Pezizomycotina	Sordariomycetes	Sordariales	Lasiosphaeriaceae	yes	
+Cersc1	Ascomycota	Pezizomycotina	Sordariomycetes	Sordariales	Lasiosphaeriaceae	yes	
+Cha1176438	Ascomycota	Pezizomycotina	Sordariomycetes	Sordariales	Chaetomiaceae	yes	
+Chafi1	Ascomycota	Pezizomycotina	Sordariomycetes	Sordariales	Chaetomiaceae	yes	
+Chafu1	Ascomycota	Pezizomycotina	Sordariomycetes	Sordariales	Chaetomiaceae	yes	
+Chagl1	Ascomycota	Pezizomycotina	Sordariomycetes	Sordariales	Chaetomiaceae	yes	
+Chahya1	Ascomycota	Pezizomycotina	Leotiomycetes	Helotiales	Incertae sedis	yes	
+Chame1	Ascomycota	Pezizomycotina	Sordariomycetes	Sordariales	Chaetomiaceae	yes	
+ClaNC0930_1	Ascomycota	Pezizomycotina	Eurotiomycetes	Phaeomoniellales	Incertae sedis	yes	
+Clael1	Ascomycota	Pezizomycotina	Dothideomycetes	Pleosporales	Diademaceae	yes	
+Claher1	Ascomycota	Pezizomycotina	Dothideomycetes	Capnodiales	Cladosporiaceae	yes	
+Cloaq1	Ascomycota	Pezizomycotina	Dothideomycetes	Pleosporales	Lindgomycetaceae	yes	
+Cloro1	Ascomycota	Pezizomycotina	Sordariomycetes	Hypocreales	Bionectriaceae	yes	
+Cocba1	Ascomycota	Pezizomycotina	Dothideomycetes	Capnodiales	Coccodiniaceae	yes	
+Cocst1	Ascomycota	Pezizomycotina	Leotiomycetes	Rhytismatales	Rhytismataceae	yes	
+CodFL1790_1	Ascomycota	Pezizomycotina	Sordariomycetes	Chaetosphaeriales	Chaetosphaeriaceae	yes	
+ConPMI546	Ascomycota	Pezizomycotina	Sordariomycetes	Coniochaetales	Coniochaetaceae	yes	
+Corca1	Ascomycota	Pezizomycotina	Dothideomycetes	Pleosporales	Corynesporascaceae	yes	
+Corma2	Ascomycota	Pezizomycotina	Sordariomycetes	Microascales	Halosphaeriaceae	yes	
+Cornip1	Ascomycota	Pezizomycotina	Sordariomycetes	Boliniales	Boliniaceae	yes	
+Crypto1	Ascomycota	Pezizomycotina	Sordariomycetes	Diaporthales	Cryphonectriaceae	yes	
+Cucbe1	Ascomycota	Pezizomycotina	Dothideomycetes	Pleosporales	Cucurbitariaceae	yes	
+Curina1	Ascomycota	Pezizomycotina	Dothideomycetes	Pleosporales	Pleosporaceae	yes	
+Currey1	Ascomycota	Pezizomycotina	Dothideomycetes	Pleosporales	Teichosporaceae	yes	
+Cylol1	Ascomycota	Pezizomycotina	Sordariomycetes	Hypocreales	Nectriaceae	yes	
+Daces1	Ascomycota	Pezizomycotina	Sordariomycetes	Hypocreales	Nectriaceae	yes	
+Dachal1	Ascomycota	Pezizomycotina	Lecanoromycetes	Lecanorales	Dactylosporaceae	yes	
+Dacma1	Ascomycota	Pezizomycotina	Sordariomycetes	Hypocreales	Nectriaceae	yes	
+Daral1	Ascomycota	Pezizomycotina	Dothideomycetes	Pleosporales	Lentitheciaceae	yes	
+Daralp1	Ascomycota	Pezizomycotina	Dothideomycetes	Pleosporales	Lentitheciaceae	yes	
+Darbet1	Ascomycota	Pezizomycotina	Dothideomycetes	Pleosporales	Lentitheciaceae	yes	
+Darga1	Ascomycota	Pezizomycotina	Dothideomycetes	Pleosporales	Lentitheciaceae	yes	
+Darpic1	Ascomycota	Pezizomycotina	Leotiomycetes	Helotiales	Phacidiaceae	yes	
+Decga1	Ascomycota	Pezizomycotina	Dothideomycetes	Pleosporales	Incertae sedis	yes	
+DelFL0756_1	Ascomycota	Pezizomycotina	Dothideomycetes	Venturiales	Incertae sedis	yes	
+Delco1	Ascomycota	Pezizomycotina	Dothideomycetes	Pleosporales	Delitschiaceae	yes	
+Delst1	Ascomycota	Pezizomycotina	Dothideomycetes	Dothideales	Dothioraceae	yes	
+Denna1	Ascomycota	Pezizomycotina	Dothideomycetes	Pleosporales	Torulaceae	yes	
+DiaLGMF1633_1	Ascomycota	Pezizomycotina	Sordariomycetes	Diaporthales	Diaporthaceae	yes	
+DiaPMI573_1	Ascomycota	Pezizomycotina	Sordariomycetes	Diaporthales	Diaporthaceae	yes	
+Diadis1	Ascomycota	Pezizomycotina	Sordariomycetes	Xylariales	Diatrypaceae	yes	
+Diainc1	Ascomycota	Pezizomycotina	Sordariomycetes	Diaporthales	Diaporthaceae	yes	
+Diavoc1	Ascomycota	Pezizomycotina	Sordariomycetes	Diaporthales	Diaporthaceae	yes	
+Didex1	Ascomycota	Pezizomycotina	Dothideomycetes	Pleosporales	Didymellaceae	yes	
+Didsa1	Ascomycota	Pezizomycotina	Dothideomycetes	Pleosporales	Zopfiaceae	yes	
+Disac1	Ascomycota	Pezizomycotina	Dothideomycetes	Capnodiales	Dissoconiaceae	yes	
+Disven1	Ascomycota	Pezizomycotina	Pezizomycetes	Pezizales	Morchellaceae	yes	
+Dotsy1	Ascomycota	Pezizomycotina	Dothideomycetes	Pleosporales	Dothidotthiaceae	yes	
+Elsamp1	Ascomycota	Pezizomycotina	Dothideomycetes	Myriangiales	Elsinoaceae	yes	
+Ememar1	Ascomycota	Pezizomycotina	Sordariomycetes	Hypocreales	Incertae sedis	yes	
+Epini1	Ascomycota	Pezizomycotina	Dothideomycetes	Pleosporales	Didymellaceae	yes	
+Erebi1	Ascomycota	Pezizomycotina	Dothideomycetes	Incertae sedis	Eremomycetaceae	yes	
+Fenfe1	Ascomycota	Pezizomycotina	Dothideomycetes	Pleosporales	Cucurbitariaceae	yes	
+Fitcyp1	Ascomycota	Pezizomycotina	Lecanoromycetes	Ostropales	Stictidaceae	yes	
+Flaful1	Ascomycota	Pezizomycotina	Dothideomycetes	Pleosporales	Incertae sedis	yes	
+Fusco1	Ascomycota	Pezizomycotina	Sordariomycetes	Hypocreales	Nectriaceae	yes	
+Fuseq1	Ascomycota	Pezizomycotina	Sordariomycetes	Hypocreales	Nectriaceae	yes	
+Fusoxy1	Ascomycota	Pezizomycotina	Sordariomycetes	Hypocreales	Nectriaceae	yes	
+Fusoxys1	Ascomycota	Pezizomycotina	Sordariomycetes	Hypocreales	Nectriaceae	yes	
+Fusre1	Ascomycota	Pezizomycotina	Sordariomycetes	Hypocreales	Nectriaceae	yes	
+Fusredo2	Ascomycota	Pezizomycotina	Sordariomycetes	Hypocreales	Nectriaceae	yes	
+Fusso1	Ascomycota	Pezizomycotina	Sordariomycetes	Hypocreales	Nectriaceae	yes	
+Fustr1	Ascomycota	Pezizomycotina	Sordariomycetes	Hypocreales	Nectriaceae	yes	
+Fustri1	Ascomycota	Pezizomycotina	Sordariomycetes	Hypocreales	Nectriaceae	yes	
+Fusven1	Ascomycota	Pezizomycotina	Sordariomycetes	Hypocreales	Nectriaceae	yes	
+Galgeo1	Ascomycota	Saccharomycotina	Saccharomycetes	Saccharomycetales	Dipodascaceae	yes	
+Gelte1	Ascomycota	Pezizomycotina	Sordariomycetes	Sordariales	Sordariaceae	yes	
+Glonio1	Ascomycota	Pezizomycotina	Dothideomycetes	Hysteriales	Hysteriaceae	yes	
+Gnocas1	Ascomycota	Pezizomycotina	Sordariomycetes	Diaporthales	Gnomoniaceae	yes	
+Gymau1	Ascomycota	Pezizomycotina	Eurotiomycetes	Onygenales	Gymnoascaceae	yes	
+Gymci1_1	Ascomycota	Pezizomycotina	Eurotiomycetes	Onygenales	Gymnoascaceae	yes	
+Gyresc1	Ascomycota	Pezizomycotina	Pezizomycetes	Pezizales	Discinaceae	yes	
+Gyrinf1	Ascomycota	Pezizomycotina	Pezizomycetes	Pezizales	Discinaceae	yes	
+HelPMI846_1	Ascomycota	Pezizomycotina	Leotiomycetes	Helotiales	Incertae sedis	yes	
+Helsp1	Ascomycota	Pezizomycotina	Leotiomycetes	Helotiales	Incertae sedis	yes	
+Herpot1_1	Ascomycota	Pezizomycotina	Dothideomycetes	Pleosporales	Melanommataceae	yes	
+Horac1	Ascomycota	Pezizomycotina	Dothideomycetes	Dothideales	Incertae sedis	yes	
+Hyafin1	Ascomycota	Pezizomycotina	Leotiomycetes	Helotiales	Hyaloscyphaceae	yes	
+Hymvar1	Ascomycota	Pezizomycotina	Leotiomycetes	Helotiales	Helotiaceae	yes	
+Hypvin2	Ascomycota	Pezizomycotina	Sordariomycetes	Xylariales	Hypoxylaceae	yes	
+Hypvoc1	Ascomycota	Pezizomycotina	Sordariomycetes	Xylariales	Xylariaceae	yes	
+IlyPMI658_1	Ascomycota	Pezizomycotina	Sordariomycetes	Hypocreales	Nectriaceae	yes	
+Ilyeu1	Ascomycota	Pezizomycotina	Sordariomycetes	Hypocreales	Nectriaceae	yes	
+Ilyro1	Ascomycota	Pezizomycotina	Sordariomycetes	Hypocreales	Bionectriaceae	yes	
+Ilyrob1	Ascomycota	Pezizomycotina	Sordariomycetes	Hypocreales	Nectriaceae	yes	
+Jahaq1	Ascomycota	Pezizomycotina	Dothideomycetes	Jahnulales	Jahnulaceae	yes	
+Kalbru1	Ascomycota	Pezizomycotina	Pezizomycetes	Pezizales	Morchellaceae	yes	
+Kalpfe1	Ascomycota	Pezizomycotina	Pezizomycetes	Pezizales	Pezizaceae	yes	
+Karrh1	Ascomycota	Pezizomycotina	Dothideomycetes	Pleosporales	Montagnulaceae	yes	
+Khuory1	Ascomycota	Pezizomycotina	Sordariomycetes	Trichosphaeriales	Trichosphaeriaceae	yes	
+Krezon1	Ascomycota	Pezizomycotina	Sordariomycetes	Xylariales	Xylariaceae	yes	
+Lacsu1	Ascomycota	Pezizomycotina	Leotiomycetes	Helotiales	Lachnaceae	yes	
+Lashi1	Ascomycota	Pezizomycotina	Sordariomycetes	Sordariales	Lasiosphaeriaceae	yes	
+Lashir1	Ascomycota	Pezizomycotina	Sordariomycetes	Sordariales	Lasiosphaeriaceae	yes	
+Lasmin1	Ascomycota	Pezizomycotina	Sordariomycetes	Sordariales	Lasiosphaeriaceae	yes	
+Lasov1	Ascomycota	Pezizomycotina	Sordariomycetes	Sordariales	Lasiosphaeriaceae	yes	
+LecAK0013_1	Ascomycota	Pezizomycotina	Sordariomycetes	Coniochaetales	Coniochaetaceae	yes	
+Lecmu1	Ascomycota	Pezizomycotina	Sordariomycetes	Hypocreales	Cordycipitaceae	yes	
+Lenfl1	Ascomycota	Pezizomycotina	Dothideomycetes	Pleosporales	Lentitheciaceae	yes	
+Lepmi1	Ascomycota	Pezizomycotina	Dothideomycetes	Pleosporales	Leptosphaeriaceae	yes	
+Lepor2	Ascomycota	Pezizomycotina	Leotiomycetes	Helotiales	Incertae sedis	yes	
+Leppa1	Ascomycota	Pezizomycotina	Dothideomycetes	Incertae sedis	Argynnaceae	yes	
+Leptod1	Ascomycota	Pezizomycotina	Leotiomycetes	Helotiales	Incertae sedis	yes	
+Leuca1	Ascomycota	Pezizomycotina	Pezizomycetes	Pezizales	Helvellaceae	yes	
+Linin1	Ascomycota	Pezizomycotina	Dothideomycetes	Pleosporales	Lindgomycetaceae	yes	
+Linrh1	Ascomycota	Pezizomycotina	Dothideomycetes	Pleosporales	Fenestellaceae	yes	
+Linth1	Ascomycota	Pezizomycotina	Sordariomycetes	Lulworthiales	Lulworthiaceae	yes	
+Lizem1	Ascomycota	Pezizomycotina	Dothideomycetes	Incertae sedis	Pseudoperisporiaceae	yes	
+Lolmi1	Ascomycota	Pezizomycotina	Sordariomycetes	Diaporthales	Diaporthaceae	yes	
+Lophiu1	Ascomycota	Pezizomycotina	Dothideomycetes	Mytilinidiales	Mytilinidiaceae	yes	
+Lopma1	Ascomycota	Pezizomycotina	Dothideomycetes	Pleosporales	Lophiostomataceae	yes	
+Lopmy1	Ascomycota	Pezizomycotina	Dothideomycetes	Mytilinidiales	Mytilinidiaceae	yes	
+Lopni1	Ascomycota	Pezizomycotina	Leotiomycetes	Rhytismatales	Rhytismataceae	yes	
+Lopnit1_1	Ascomycota	Pezizomycotina	Leotiomycetes	Rhytismatales	Rhytismataceae	yes	
+Lopnu1	Ascomycota	Pezizomycotina	Dothideomycetes	Pleosporales	Incertae sedis	yes	
+Loppic1	Ascomycota	Pezizomycotina	Leotiomycetes	Rhytismatales	Rhytismataceae	yes	
+Lorju1	Ascomycota	Pezizomycotina	Leotiomycetes	Helotiales	Loramycetaceae	yes	
+Lorma1	Ascomycota	Pezizomycotina	Leotiomycetes	Helotiales	Loramycetaceae	yes	
+Macan1	Ascomycota	Pezizomycotina	Dothideomycetes	Pleosporales	Diademaceae	yes	
+Macpha1	Ascomycota	Pezizomycotina	Dothideomycetes	Botryosphaeriales	Botryosphaeriaceae	yes	
+MarPMI226	Ascomycota	Pezizomycotina	Sordariomycetes	Hypocreales	Nectriaceae	yes	
+Maseb1	Ascomycota	Pezizomycotina	Dothideomycetes	Pleosporales	Massarinaceae	yes	
+Masph1	Ascomycota	Pezizomycotina	Dothideomycetes	Pleosporales	Incertae sedis	yes	
+Matter1	Ascomycota	Pezizomycotina	Pezizomycetes	Pezizales	Pezizaceae	yes	
+MelPMI1271_1	Ascomycota	Pezizomycotina	Leotiomycetes	Helotiales	Helotiaceae	yes	
+Melpu1	Ascomycota	Pezizomycotina	Dothideomycetes	Pleosporales	Melanommataceae	yes	
+Melsp1	Ascomycota	Pezizomycotina	Sordariomycetes	Diaporthales	Melanconidaceae	yes	
+Melti1	Ascomycota	Pezizomycotina	Sordariomycetes	Melanosporales	Melanosporaceae	yes	
+Meltu1	Ascomycota	Pezizomycotina	Dothideomycetes	Botryosphaeriales	Melanopsaceae	yes	
+Metbi_SCcomb	Ascomycota	Saccharomycotina	Saccharomycetes	Saccharomycetales	Metschnikowiaceae	yes	
+Micbo1	Ascomycota	Pezizomycotina	Sordariomycetes	Xylariales	Hyponectriaceae	yes	
+Micmi1	Ascomycota	Pezizomycotina	Dothideomycetes	Microthyriales	Microthyriaceae	yes	
+Microd1	Ascomycota	Pezizomycotina	Dothideomycetes	Botryosphaeriales	Botryosphaeriaceae	yes	
+Mictr1	Ascomycota	Pezizomycotina	Sordariomycetes	Microascales	Microascaceae	yes	
+Mictri1	Ascomycota	Pezizomycotina	Sordariomycetes	Xylariales	Microdochiaceae	yes	
+Monpu1	Ascomycota	Pezizomycotina	Eurotiomycetes	Eurotiales	Aspergillaceae	yes	
+Monru1	Ascomycota	Pezizomycotina	Eurotiomycetes	Eurotiales	Aspergillaceae	yes	
+Morame1	Ascomycota	Pezizomycotina	Pezizomycetes	Pezizales	Morchellaceae	yes	
+Morana1	Ascomycota	Pezizomycotina	Pezizomycetes	Pezizales	Morchellaceae	yes	
+Morang1	Ascomycota	Pezizomycotina	Pezizomycetes	Pezizales	Morchellaceae	yes	
+Morarb1	Ascomycota	Pezizomycotina	Pezizomycetes	Pezizales	Morchellaceae	yes	
+Morbru1	Ascomycota	Pezizomycotina	Pezizomycetes	Pezizales	Morchellaceae	yes	
+Morbrun1	Ascomycota	Pezizomycotina	Pezizomycetes	Pezizales	Morchellaceae	yes	
+Morco1	Ascomycota	Pezizomycotina	Pezizomycetes	Pezizales	Morchellaceae	yes	
+Morcon1	Ascomycota	Pezizomycotina	Pezizomycetes	Pezizales	Morchellaceae	yes	
+Mordel1	Ascomycota	Pezizomycotina	Pezizomycetes	Pezizales	Morchellaceae	yes	
+Mordim1	Ascomycota	Pezizomycotina	Pezizomycetes	Pezizales	Morchellaceae	yes	
+Mordis1	Ascomycota	Pezizomycotina	Pezizomycetes	Pezizales	Morchellaceae	yes	
+Mordun1	Ascomycota	Pezizomycotina	Pezizomycetes	Pezizales	Morchellaceae	yes	
+Moreoh1	Ascomycota	Pezizomycotina	Pezizomycetes	Pezizales	Morchellaceae	yes	
+Moresc1	Ascomycota	Pezizomycotina	Pezizomycetes	Pezizales	Morchellaceae	yes	
+Morexi1	Ascomycota	Pezizomycotina	Pezizomycetes	Pezizales	Morchellaceae	yes	
+Morfluv1	Ascomycota	Pezizomycotina	Pezizomycetes	Pezizales	Morchellaceae	yes	
+Morgal1	Ascomycota	Pezizomycotina	Pezizomycetes	Pezizales	Morchellaceae	yes	
+Morhis1	Ascomycota	Pezizomycotina	Pezizomycetes	Pezizales	Morchellaceae	yes	
+Morkaki1	Ascomycota	Pezizomycotina	Pezizomycetes	Pezizales	Morchellaceae	yes	
+Morpal1	Ascomycota	Pezizomycotina	Pezizomycetes	Pezizales	Morchellaceae	yes	
+Morper1	Ascomycota	Pezizomycotina	Pezizomycetes	Pezizales	Morchellaceae	yes	
+Morpop1	Ascomycota	Pezizomycotina	Pezizomycetes	Pezizales	Morchellaceae	yes	
+Morpra1	Ascomycota	Pezizomycotina	Pezizomycetes	Pezizales	Morchellaceae	yes	
+Morpul1	Ascomycota	Pezizomycotina	Pezizomycetes	Pezizales	Morchellaceae	yes	
+Morpun1	Ascomycota	Pezizomycotina	Pezizomycetes	Pezizales	Morchellaceae	yes	
+Morruf1	Ascomycota	Pezizomycotina	Pezizomycetes	Pezizales	Morchellaceae	yes	
+Morsem1	Ascomycota	Pezizomycotina	Pezizomycetes	Pezizales	Morchellaceae	yes	
+Morsep1	Ascomycota	Pezizomycotina	Pezizomycetes	Pezizales	Morchellaceae	yes	
+Morste1	Ascomycota	Pezizomycotina	Pezizomycetes	Pezizales	Morchellaceae	yes	
+Mortrid1	Ascomycota	Pezizomycotina	Pezizomycetes	Pezizales	Morchellaceae	yes	
+Morulm1	Ascomycota	Pezizomycotina	Pezizomycetes	Pezizales	Morchellaceae	yes	
+MorvulMes17_1	Ascomycota	Pezizomycotina	Pezizomycetes	Pezizales	Morchellaceae	yes	
+Morvulg1	Ascomycota	Pezizomycotina	Pezizomycetes	Pezizales	Morchellaceae	yes	
+Myrdu1	Ascomycota	Pezizomycotina	Dothideomycetes	Myriangiales	Myriangiaceae	yes	
+Myrian1	Ascomycota	Pezizomycotina	Dothideomycetes	Myriangiales	Myriangiaceae	yes	
+Myrin1	Ascomycota	Pezizomycotina	Sordariomycetes	Hypocreales	Stachybotrys clade	yes	
+Mytre1	Ascomycota	Pezizomycotina	Dothideomycetes	Mytilinidiales	Mytilinidiaceae	yes	
+Myxme1	Ascomycota	Saccharomycotina	Saccharomycetes	Saccharomycetales	Incertae sedis	yes	
+Necsp1	Ascomycota	Pezizomycotina	Sordariomycetes	Hypocreales	Bionectriaceae	yes	
+Neo1551_1	Ascomycota	Pezizomycotina	Sordariomycetes	Xylariales	Sporocadaceae	yes	
+Neobra1	Ascomycota	Pezizomycotina	Dothideomycetes	Botryosphaeriales	Botryosphaeriaceae	yes	
+Neora1	Ascomycota	Pezizomycotina	Sordariomycetes	Hypocreales	Nectriaceae	yes	
+Neucr4830_1	Ascomycota	Pezizomycotina	Sordariomycetes	Sordariales	Sordariaceae	yes	
+Neuhi1	Ascomycota	Pezizomycotina	Sordariomycetes	Sordariales	Sordariaceae	yes	
+Nieex1	Ascomycota	Pezizomycotina	Sordariomycetes	Hypocreales	Niessliaceae	yes	
+OphPMI507_1	Ascomycota	Pezizomycotina	Sordariomycetes	Ophiostomatales	Ophiostomataceae	yes	
+Ophdi1	Ascomycota	Pezizomycotina	Dothideomycetes	Pleosporales	Leptosphaeriaceae	yes	
+Paevar1	Ascomycota	Pezizomycotina	Eurotiomycetes	Eurotiales	Thermoascaceae	yes	
+Parch1	Ascomycota	Pezizomycotina	Dothideomycetes	Pleosporales	Phaeosphaeriaceae	yes	
+Parchr1	Ascomycota	Pezizomycotina	Dothideomycetes	Pleosporales	Phaeosphaeriaceae	yes	
+Parmar1	Ascomycota	Pezizomycotina	Eurotiomycetes	Pyrenulales	Requienellaceae	yes	
+Patat1	Ascomycota	Pezizomycotina	Dothideomycetes	Patellariales	Patellariaceae	yes	
+Pcapi1	Ascomycota	Pezizomycotina	Dothideomycetes	Botryosphaeriales	Phyllostictaceae	yes	
+Pcit11120	Ascomycota	Pezizomycotina	Dothideomycetes	Botryosphaeriales	Phyllostictaceae	yes	
+Pcit120373	Ascomycota	Pezizomycotina	Dothideomycetes	Botryosphaeriales	Phyllostictaceae	yes	
+Pcit122482	Ascomycota	Pezizomycotina	Dothideomycetes	Botryosphaeriales	Phyllostictaceae	yes	
+Pcit122670	Ascomycota	Pezizomycotina	Dothideomycetes	Botryosphaeriales	Phyllostictaceae	yes	
+Pcit129764	Ascomycota	Pezizomycotina	Dothideomycetes	Botryosphaeriales	Phyllostictaceae	yes	
+Pcit131864	Ascomycota	Pezizomycotina	Dothideomycetes	Botryosphaeriales	Phyllostictaceae	yes	
+Pcit141352	Ascomycota	Pezizomycotina	Dothideomycetes	Botryosphaeriales	Phyllostictaceae	yes	
+Pcit16586	Ascomycota	Pezizomycotina	Dothideomycetes	Botryosphaeriales	Phyllostictaceae	yes	
+Pcit17464	Ascomycota	Pezizomycotina	Dothideomycetes	Botryosphaeriales	Phyllostictaceae	yes	
+Penbr2	Ascomycota	Pezizomycotina	Eurotiomycetes	Eurotiales	Aspergillaceae	yes	
+Pencit1	Ascomycota	Pezizomycotina	Eurotiomycetes	Eurotiales	Aspergillaceae	yes	
+Perma1	Ascomycota	Pezizomycotina	Dothideomycetes	Pleosporales	Periconiaceae	yes	
+Pestal1	Ascomycota	Pezizomycotina	Sordariomycetes	Xylariales	Sporocadaceae	yes	
+PhaPMI808	Ascomycota	Pezizomycotina	Dothideomycetes	Pleosporales	Phaeosphaeriaceae	yes	
+PhaeoFL0889_1	Ascomycota	Pezizomycotina	Sordariomycetes	Togniniales	Togniniaceae	yes	
+Phapo1	Ascomycota	Pezizomycotina	Dothideomycetes	Pleosporales	Phaeosphaeriaceae	yes	
+Phcap1	Ascomycota	Pezizomycotina	Dothideomycetes	Botryosphaeriales	Phyllostictaceae	yes	
+Phcapi1	Ascomycota	Pezizomycotina	Dothideomycetes	Botryosphaeriales	Phyllostictaceae	yes	
+Phcit1	Ascomycota	Pezizomycotina	Dothideomycetes	Botryosphaeriales	Phyllostictaceae	yes	
+Phcitr1	Ascomycota	Pezizomycotina	Dothideomycetes	Botryosphaeriales	Phyllostictaceae	yes	
+Phiasp1	Ascomycota	Pezizomycotina	Sordariomycetes	Incertae sedis	Thyridiaceae	yes	
+Phimu1	Ascomycota	Pezizomycotina	Leotiomycetes	Incertae sedis	Incertae sedis	yes	
+Phisc1	Ascomycota	Pezizomycotina	Leotiomycetes	Helotiales	Vibrisseaceae	yes	
+Phomu1	Ascomycota	Pezizomycotina	Dothideomycetes	Pleosporales	Didymellaceae	yes	
+Photr1	Ascomycota	Pezizomycotina	Dothideomycetes	Pleosporales	Leptosphaeriaceae	yes	
+Phy27169	Ascomycota	Pezizomycotina	Dothideomycetes	Botryosphaeriales	Phyllostictaceae	yes	
+Phycap1	Ascomycota	Pezizomycotina	Dothideomycetes	Botryosphaeriales	Phyllostictaceae	yes	
+Phycapi2	Ascomycota	Pezizomycotina	Dothideomycetes	Botryosphaeriales	Phyllostictaceae	yes	
+Phycit1	Ascomycota	Pezizomycotina	Dothideomycetes	Botryosphaeriales	Phyllostictaceae	yes	
+Phycitr1	Ascomycota	Pezizomycotina	Dothideomycetes	Botryosphaeriales	Phyllostictaceae	yes	
+Phycpc1	Ascomycota	Pezizomycotina	Dothideomycetes	Botryosphaeriales	Phyllostictaceae	yes	
+Phypa1	Ascomycota	Pezizomycotina	Dothideomycetes	Botryosphaeriales	Phyllostictaceae	yes	
+Piclef1	Ascomycota	Pezizomycotina	Pezizomycetes	Pezizales	Pyronemataceae	yes	
+Pieho1_1	Ascomycota	Pezizomycotina	Dothideomycetes	Capnodiales	Piedraiaceae	yes	
+Pilidi1	Ascomycota	Pezizomycotina	Sordariomycetes	Diaporthales	Schizoparmaceae	yes	
+PlePMI138_1	Ascomycota	Pezizomycotina	Dothideomycetes	Pleosporales	Pleosporaceae	yes	
+Pleav1	Ascomycota	Pezizomycotina	Dothideomycetes	Incertae sedis	Halojulellaceae	yes	
+Plecto1	Ascomycota	Pezizomycotina	Sordariomycetes	Xylariales	Incertae sedis	yes	
+Plecuc1	Ascomycota	Pezizomycotina	Sordariomycetes	Glomerellales	Plectosphaerellaceae	yes	
+Plecucu2	Ascomycota	Pezizomycotina	Sordariomycetes	Glomerellales	Plectosphaerellaceae	yes	
+Plemel1	Ascomycota	Pezizomycotina	Pezizomycetes	Pezizales	Sarcosomataceae	yes	
+Plesi1	Ascomycota	Pezizomycotina	Dothideomycetes	Pleosporales	Pleomassariaceae	yes	
+Plesp1	Ascomycota	Pezizomycotina	Dothideomycetes	Pleosporales	Incertae sedis	yes	
+Podap1	Ascomycota	Pezizomycotina	Sordariomycetes	Sordariales	Lasiosphaeriaceae	yes	
+Poddi1	Ascomycota	Pezizomycotina	Sordariomycetes	Sordariales	Lasiosphaeriaceae	yes	
+Polci1	Ascomycota	Pezizomycotina	Dothideomycetes	Capnodiales	Capnodiaceae	yes	
+Polfu1	Ascomycota	Pezizomycotina	Dothideomycetes	Pleosporales	Tetraplosphaeriaceae	yes	
+Polsie1	Ascomycota	Pezizomycotina	Leotiomycetes	Helotiales	Hyaloscyphaceae	yes	
+Prola1	Ascomycota	Taphrinomycotina	Taphrinomycetes	Taphrinales	Protomycetaceae	yes	
+Pse1611_1	Ascomycota	Pezizomycotina	Dothideomycetes	Botryosphaeriales	Botryosphaeriaceae	yes	
+Psehy1	Ascomycota	Pezizomycotina	Dothideomycetes	Incertae sedis	Incertae sedis	yes	
+Pseule1	Ascomycota	Pezizomycotina	Dothideomycetes	Capnodiales	Mycosphaerellaceae	yes	
+Pseve2	Ascomycota	Pezizomycotina	Sordariomycetes	Xylariales	Pseudomassariaceae	yes	
+Pursp1	Ascomycota	Pezizomycotina	Sordariomycetes	Hypocreales	Ophiocordycipitaceae	yes	
+Pyrinf1	Ascomycota	Pezizomycotina	Dothideomycetes	Pleosporales	Neopyrenochaetaceae	yes	
+Pyrly1	Ascomycota	Pezizomycotina	Dothideomycetes	Pleosporales	Cucurbitariaceae	yes	
+Rhesp1	Ascomycota	Pezizomycotina	Leotiomycetes	Helotiales	Incertae sedis	yes	
+Rhili1	Ascomycota	Pezizomycotina	Dothideomycetes	Patellariales	Patellariaceae	yes	
+Rhiund1	Ascomycota	Pezizomycotina	Pezizomycetes	Pezizales	Rhizinaceae	yes	
+Rutfi1	Ascomycota	Pezizomycotina	Leotiomycetes	Helotiales	Rutstroemiaceae	yes	
+Sacpr1	Ascomycota	Pezizomycotina	Dothideomycetes	Botryosphaeriales	Saccharataceae	yes	
+Sarco1	Ascomycota	Pezizomycotina	Pezizomycetes	Pezizales	Sarcoscyphaceae	yes	
+Sarcolat1	Ascomycota	Pezizomycotina	Pezizomycetes	Pezizales	Chorioactidaceae	yes	
+Schves1	Ascomycota	Pezizomycotina	Sordariomycetes	Sordariales	Schizotheciaceae	yes	
+Sclsan1	Ascomycota	Pezizomycotina	Lecanoromycetes	Incertae sedis	Coniocybaceae	yes	
+Setho1	Ascomycota	Pezizomycotina	Dothideomycetes	Pleosporales	Phaeosphaeriaceae	yes	
+Sette1	Ascomycota	Pezizomycotina	Dothideomycetes	Pleosporales	Phaeosphaeriaceae	yes	
+Simlam1	Ascomycota	Pezizomycotina	Sordariomycetes	Hypocreales	Cordycipitaceae	yes	
+Sorbr1	Ascomycota	Pezizomycotina	Sordariomycetes	Sordariales	Sordariaceae	yes	
+Sorhu1	Ascomycota	Pezizomycotina	Sordariomycetes	Sordariales	Sordariaceae	yes	
+Sphbr2	Ascomycota	Pezizomycotina	Pezizomycetes	Pezizales	Pyronemataceae	yes	
+Spofi1	Ascomycota	Pezizomycotina	Dothideomycetes	Pleosporales	Sporormiaceae	yes	
+Spola1	Ascomycota	Saccharomycotina	Saccharomycetes	Saccharomycetales	Dipodascaceae	yes	
+Stael1	Ascomycota	Pezizomycotina	Sordariomycetes	Hypocreales	Stachybotryaceae	yes	
+Stagr1	Ascomycota	Pezizomycotina	Sordariomycetes	Hypocreales	Bionectriaceae	yes	
+Stobe1	Ascomycota	Pezizomycotina	Dothideomycetes	Microthyriales	Incertae sedis	yes	
+Sugame1	Ascomycota	Saccharomycotina	Saccharomycetes	Saccharomycetales	Trichomonascaceae	yes	
+Symat1	Ascomycota	Saccharomycotina	Saccharomycetes	Saccharomycetales	Incertae sedis	yes	
+Talpro1	Ascomycota	Pezizomycotina	Eurotiomycetes	Eurotiales	Trichocomaceae	yes	
+TerNC1134_1	Ascomycota	Pezizomycotina	Dothideomycetes	Mycosphaerellales	Teratosphaeriaceae	yes	
+Tercla1	Ascomycota	Pezizomycotina	Pezizomycetes	Pezizales	Terfeziaceae	yes	
+Ternu1	Ascomycota	Pezizomycotina	Dothideomycetes	Mycosphaerellales	Teratosphaeriaceae	yes	
+Theglo1	Ascomycota	Pezizomycotina	Leotiomycetes	Thelebolales	Thelebolaceae	yes	
+Themi1	Ascomycota	Pezizomycotina	Leotiomycetes	Thelebolales	Thelebolaceae	yes	
+ThoPMI491_1	Ascomycota	Pezizomycotina	Sordariomycetes	Chaetosphaeriales	Chaetosphaeriaceae	yes	
+ThyNC0857_1	Ascomycota	Pezizomycotina	Eurotiomycetes	Eurotiales	Aspergillaceae	yes	
+Tirniv1	Ascomycota	Pezizomycotina	Pezizomycetes	Pezizales	Pezizaceae	yes	
+Torra1	Ascomycota	Pezizomycotina	Sordariomycetes	Torpedosporales	Torpedosporaceae	yes	
+Totfu1	Ascomycota	Pezizomycotina	Dothideomycetes	Microthyriales	Microthyriaceae	yes	
+Trepe1	Ascomycota	Pezizomycotina	Dothideomycetes	Incertae sedis	Trematosphaeriaceae	yes	
+Tribi1	Ascomycota	Pezizomycotina	Dothideomycetes	Pleosporales	Phaeotrichaceae	yes	
+Trigu1	Ascomycota	Pezizomycotina	Xylonomycetes	Xylonales	Xylonaceae	yes	
+Trihyb1	Ascomycota	Pezizomycotina	Pezizomycetes	Pezizales	Pyronemataceae	yes	
+Tripara1	Ascomycota	Pezizomycotina	Eurotiomycetes	Eurotiales	Trichocomaceae	yes	
+Tripe1	Ascomycota	Saccharomycotina	Saccharomycetes	Saccharomycetales	Trichomonascaceae	yes	
+Truan1	Ascomycota	Pezizomycotina	Sordariomycetes	Xylariales	Sporocadaceae	yes	
+Tubcan1	Ascomycota	Pezizomycotina	Pezizomycetes	Pezizales	Tuberaceae	yes	
+Tubgib1	Ascomycota	Pezizomycotina	Pezizomycetes	Pezizales	Tuberaceae	yes	
+Tubmel1	Ascomycota	Pezizomycotina	Pezizomycetes	Pezizales	Tuberaceae	yes	
+Tubmes1	Ascomycota	Pezizomycotina	Pezizomycetes	Pezizales	Tuberaceae	yes	
+Usnflo1	Ascomycota	Pezizomycotina	Lecanoromycetes	Lecanorales	Parmeliaceae	yes	
+Valla1	Ascomycota	Pezizomycotina	Sordariomycetes	Hypocreales	Niessliaceae	yes	
+Varpro1	Ascomycota	Pezizomycotina	Sordariomycetes	Microascales	Halosphaeriaceae	yes	
+Vercon1	Ascomycota	Pezizomycotina	Pezizomycetes	Pezizales	Morchellaceae	yes	
+Verdah1	Ascomycota	Pezizomycotina	Sordariomycetes	Glomerellales	Plectosphaerellaceae	yes	
+Veren1	Ascomycota	Pezizomycotina	Dothideomycetes	Pleosporales	Didymosphaeriaceae	yes	
+Wesor1	Ascomycota	Pezizomycotina	Dothideomycetes	Pleosporales	Sporormiaceae	yes	
+Wicdo1	Ascomycota	Saccharomycotina	Saccharomycetes	Saccharomycetales	Trichomonascaceae	yes	
+Wilmi1	Ascomycota	Pezizomycotina	Pezizomycetes	Pezizales	Pyronemataceae	yes	
+XylPMI506	Ascomycota	Pezizomycotina	Sordariomycetes	Xylariales	Incertae sedis	yes	
+XylPMI703_1	Ascomycota	Pezizomycotina	Leotiomycetes	Incertae sedis	Incertae sedis	yes	
+Xylhe1	Ascomycota	Pezizomycotina	Xylonomycetes	Xylonales	Xylonaceae	yes	
+Xylhyp1	Ascomycota	Pezizomycotina	Sordariomycetes	Xylariales	Xylariaceae	yes	
+Zalva1	Ascomycota	Pezizomycotina	Sordariomycetes	Lulworthiales	Lulworthiaceae	yes	
+Zoprh1	Ascomycota	Pezizomycotina	Dothideomycetes	Pleosporales	Zopfiaceae	yes	
+Zyghe1_2	Ascomycota	Saccharomycotina	Saccharomycetes	Saccharomycetales	Trichomonascaceae	yes	
+Abobi1	Basidiomycota	Agaricomycotina	Agaricomycetes	Polyporales	Meruliaceae	yes	
+Acain1	Basidiomycota	Ustilaginomycotina	Exobasidiomycetes	Exobasidiales	Cryptobasidiaceae	yes	
+Agahy1	Basidiomycota	Pucciniomycotina	Agaricostilbomycetes	Agaricostilbales	Agaricostilbaceae	yes	
+AgarPMI687_1	Basidiomycota	Agaricomycotina	Agaricomycetes	Agaricales	Stephanosporaceae	yes	
+Agrpra2	Basidiomycota	Agaricomycotina	Agaricomycetes	Agaricales	Bolbitiaceae	yes	
+Albpec1	Basidiomycota	Agaricomycotina	Agaricomycetes	Polyporales	Incertae sedis	yes	
+Amaapr1	Basidiomycota	Agaricomycotina	Agaricomycetes	Agaricales	Amanitaceae	yes	
+Amarub1	Basidiomycota	Agaricomycotina	Agaricomycetes	Agaricales	Amanitaceae	yes	
+Amycha1	Basidiomycota	Agaricomycotina	Agaricomycetes	Russulales	Amylostereaceae	yes	
+Amylap1_1	Basidiomycota	Agaricomycotina	Agaricomycetes	Polyporales	Fomitopsidaceae	yes	
+Amysub1	Basidiomycota	Agaricomycotina	Agaricomycetes	Agaricales	Amylocorticiaceae	yes	
+Anoalb1	Basidiomycota	Agaricomycotina	Agaricomycetes	Agaricales	Amylocorticiaceae	yes	
+Anobom1	Basidiomycota	Agaricomycotina	Agaricomycetes	Agaricales	Amylocorticiaceae	yes	
+Anokam1	Basidiomycota	Agaricomycotina	Agaricomycetes	Agaricales	Amylocorticiaceae	yes	
+Anomyc1	Basidiomycota	Agaricomycotina	Agaricomycetes	Agaricales	Amylocorticiaceae	yes	
+Antcit1	Basidiomycota	Agaricomycotina	Agaricomycetes	Polyporales	Steccherinaceae	yes	
+Antser1	Basidiomycota	Agaricomycotina	Agaricomycetes	Polyporales	Fomitopsidaceae	yes	
+Aphpse1	Basidiomycota	Agaricomycotina	Agaricomycetes	Agaricales	Pterulaceae	yes	
+Armbor1	Basidiomycota	Agaricomycotina	Agaricomycetes	Agaricales	Physalacriaceae	yes	
+Armect1	Basidiomycota	Agaricomycotina	Agaricomycetes	Agaricales	Physalacriaceae	yes	
+Armfum1	Basidiomycota	Agaricomycotina	Agaricomycetes	Agaricales	Physalacriaceae	yes	
+Armga1	Basidiomycota	Agaricomycotina	Agaricomycetes	Agaricales	Physalacriaceae	yes	
+Armlut1	Basidiomycota	Agaricomycotina	Agaricomycetes	Agaricales	Physalacriaceae	yes	
+Armmel1	Basidiomycota	Agaricomycotina	Agaricomycetes	Agaricales	Physalacriaceae	yes	
+Armnab1	Basidiomycota	Agaricomycotina	Agaricomycetes	Agaricales	Physalacriaceae	yes	
+Armnov1	Basidiomycota	Agaricomycotina	Agaricomycetes	Agaricales	Physalacriaceae	yes	
+Armtab1	Basidiomycota	Agaricomycotina	Agaricomycetes	Agaricales	Physalacriaceae	yes	
+Auramp1	Basidiomycota	Agaricomycotina	Agaricomycetes	Agaricales	Schizophyllaceae	yes	
+Aurvu1	Basidiomycota	Agaricomycotina	Agaricomycetes	Russulales	Auriscalpiaceae	yes	
+Bolcoc1	Basidiomycota	Agaricomycotina	Agaricomycetes	Boletales	Boletaceae	yes	
+Boledp1	Basidiomycota	Agaricomycotina	Agaricomycetes	Boletales	Boletaceae	yes	
+Bolvit1	Basidiomycota	Agaricomycotina	Agaricomycetes	Agaricales	Bolbitiaceae	yes	
+Borrad1	Basidiomycota	Agaricomycotina	Agaricomycetes	Russulales	Stereaceae	yes	
+CerAGI	Basidiomycota	Agaricomycotina	Agaricomycetes	Cantharellales	Ceratobasidiaceae	yes	
+Cercer1	Basidiomycota	Agaricomycotina	Dacrymycetes	Dacrymycetales	Cerinomycetaceae	yes	
+Cercru1	Basidiomycota	Agaricomycotina	Dacrymycetes	Dacrymycetales	Cerinomycetaceae	yes	
+Cersp1	Basidiomycota	Ustilaginomycotina	Exobasidiomycetes	Ceraceosorales	Ceraceosoraceae	yes	
+Cersp5352_1	Basidiomycota	Agaricomycotina	Agaricomycetes	Cantharellales	Ceratobasidiaceae	yes	
+Cervir1	Basidiomycota	Agaricomycotina	Agaricomycetes	Polyporales	Irpicaceae	yes	
+Chapip1	Basidiomycota	Agaricomycotina	Agaricomycetes	Boletales	Boletaceae	yes	
+Chiap1	Basidiomycota	Pucciniomycotina	Agaricostilbomycetes	Agaricostilbales	Chionosphaeraceae	yes	
+Chicu1	Basidiomycota	Pucciniomycotina	Agaricostilbomycetes	Agaricostilbales	Chionosphaeraceae	yes	
+Chopur1	Basidiomycota	Agaricomycotina	Agaricomycetes	Agaricales	Cyphellaceae	yes	
+ClaPMI390	Basidiomycota	Agaricomycotina	Agaricomycetes	Corticiales	Corticiaceae	yes	
+Clapy1	Basidiomycota	Agaricomycotina	Agaricomycetes	Russulales	Auriscalpiaceae	yes	
+Clibor1	Basidiomycota	Agaricomycotina	Agaricomycetes	Polyporales	Hapalopilaceae	yes	
+Conapa1	Basidiomycota	Agaricomycotina	Agaricomycetes	Agaricales	Bolbitiaceae	yes	
+Conol1	Basidiomycota	Agaricomycotina	Agaricomycetes	Boletales	Coniophoraceae	yes	
+Cont1119283	Basidiomycota	Agaricomycotina	Agaricomycetes	Agaricales	Tricholomataceae	yes	
+Copmic2	Basidiomycota	Agaricomycotina	Agaricomycetes	Agaricales	Psathyrellaceae	yes	
+Copph3	Basidiomycota	Agaricomycotina	Agaricomycetes	Agaricales	Psathyrellaceae	yes	
+Corsan2	Basidiomycota	Agaricomycotina	Agaricomycetes	Agaricales	Cortinariaceae	yes	
+Creces1	Basidiomycota	Agaricomycotina	Agaricomycetes	Agaricales	Crepidotaceae	yes	
+Crison1	Basidiomycota	Agaricomycotina	Agaricomycetes	Agaricales	Stephanosporaceae	yes	
+Crudry1	Basidiomycota	Agaricomycotina	Agaricomycetes	Corticiales	Corticiaceae	yes	
+Crula1	Basidiomycota	Agaricomycotina	Agaricomycetes	Agaricales	Nidulariaceae	yes	
+Cryter1	Basidiomycota	Agaricomycotina	Tremellomycetes	Filobasidiales	Incertae sedis	yes	
+Crywi1	Basidiomycota	Agaricomycotina	Tremellomycetes	Filobasidiales	Filobasidiaceae	yes	
+Cyapal1	Basidiomycota	Agaricomycotina	Agaricomycetes	Agaricales	Nidulariaceae	yes	
+Cyaste1	Basidiomycota	Agaricomycotina	Agaricomycetes	Agaricales	Nidulariaceae	yes	
+Cylto1	Basidiomycota	Agaricomycotina	Agaricomycetes	Agaricales	Physalacriaceae	yes	
+Cysmur1	Basidiomycota	Agaricomycotina	Agaricomycetes	Agaricales	Cystostereaceae	yes	
+Cytmel1	Basidiomycota	Agaricomycotina	Agaricomycetes	Polyporales	Meruliaceae	yes	
+Dacruf1	Basidiomycota	Agaricomycotina	Dacrymycetes	Dacrymycetales	Dacrymycetaceae	yes	
+Dactor1	Basidiomycota	Agaricomycotina	Dacrymycetes	Dacrymycetales	Dacrymycetaceae	yes	
+Dactort1	Basidiomycota	Agaricomycotina	Dacrymycetes	Dacrymycetales	Dacrymycetaceae	yes	
+Denbi1	Basidiomycota	Agaricomycotina	Agaricomycetes	Agaricales	Campanellaceae	yes	
+Denmi1	Basidiomycota	Agaricomycotina	Agaricomycetes	Agaricales	Incertae sedis	yes	
+Digmar1	Basidiomycota	Agaricomycotina	Agaricomycetes	Incertae sedis	Incertae sedis	yes	
+Echtin1	Basidiomycota	Agaricomycotina	Agaricomycetes	Russulales	Echinodontiaceae	yes	
+Elmca1	Basidiomycota	Agaricomycotina	Agaricomycetes	Auriculariales	Aporpiaceae	yes	
+Epityp1	Basidiomycota	Agaricomycotina	Agaricomycetes	Russulales	Epitheliaceae	yes	
+Eryha1	Basidiomycota	Pucciniomycotina	Cystobasidiomycetes	Erythrobasidiales	Erythrobasidiaceae	yes	
+Exomac1	Basidiomycota	Ustilaginomycotina	Exobasidiomycetes	Exobasidiales	Exobasidiaceae	yes	
+Exova1	Basidiomycota	Ustilaginomycotina	Exobasidiomycetes	Exobasidiales	Exobasidiaceae	yes	
+Favcal1_2	Basidiomycota	Agaricomycotina	Agaricomycetes	Agaricales	Marasmiaceae	yes	
+Felpe1	Basidiomycota	Agaricomycotina	Tremellomycetes	Tremellales	Cuniculitremaceae	yes	
+Fempez1	Basidiomycota	Agaricomycotina	Dacrymycetes	Dacrymycetales	Dacrymycetaceae	yes	
+Fibin1	Basidiomycota	Agaricomycotina	Tremellomycetes	Tremellales	Sirobasidiaceae	yes	
+Filflo1	Basidiomycota	Agaricomycotina	Tremellomycetes	Filobasidiales	Filobasidiaceae	yes	
+FlaPMI526_1	Basidiomycota	Agaricomycotina	Agaricomycetes	Agaricales	Niaceae	yes	
+Flafl1	Basidiomycota	Agaricomycotina	Agaricomycetes	Polyporales	Irpicaceae	yes	
+Fomro1	Basidiomycota	Agaricomycotina	Agaricomycetes	Polyporales	Fomitopsidaceae	yes	
+Galinc1	Basidiomycota	Agaricomycotina	Agaricomycetes	Corticiales	Corticiaceae	yes	
+Ganads1	Basidiomycota	Agaricomycotina	Agaricomycetes	Polyporales	Polyporaceae	yes	
+Ganleu1	Basidiomycota	Agaricomycotina	Agaricomycetes	Polyporales	Polyporaceae	yes	
+Gaumor1_1	Basidiomycota	Agaricomycotina	Agaricomycetes	Gomphales	Gautieriaceae	yes	
+Geatri1	Basidiomycota	Agaricomycotina	Agaricomycetes	Geastrales	Geastraceae	yes	
+Glocon1	Basidiomycota	Agaricomycotina	Agaricomycetes	Russulales	Incertae sedis	yes	
+Guyne1	Basidiomycota	Agaricomycotina	Agaricomycetes	Agaricales	Physalacriaceae	yes	
+Gymch1	Basidiomycota	Agaricomycotina	Agaricomycetes	Agaricales	Cortinariaceae	yes	
+Helcom1	Basidiomycota	Pucciniomycotina	Atractiellomycetes	Incertae sedis	Incertae sedis	yes	
+Helsul1	Basidiomycota	Agaricomycotina	Agaricomycetes	Gloeophyllales	Gloeophyllaceae	yes	
+Hercor1	Basidiomycota	Agaricomycotina	Agaricomycetes	Russulales	Hericiaceae	yes	
+Hethyg1	Basidiomycota	Ustilaginomycotina	Exobasidiomycetes	Doassansiales	Doassansiaceae	yes	
+Hetpy1	Basidiomycota	Pucciniomycotina	Microbotryomycetes	Heterogastridiales	Heterogastridiaceae	yes	
+Hyabl1	Basidiomycota	Pucciniomycotina	Microbotryomycetes	Heterogastridiales	Heterogastridiaceae	yes	
+Hydfim1	Basidiomycota	Agaricomycotina	Agaricomycetes	Polyporales	Meripilaceae	yes	
+Hydru2	Basidiomycota	Agaricomycotina	Agaricomycetes	Cantharellales	Hydnaceae	yes	
+Hygaur1	Basidiomycota	Agaricomycotina	Agaricomycetes	Boletales	Hygrophoropsidaceae	yes	
+Hygcoc2	Basidiomycota	Agaricomycotina	Agaricomycetes	Agaricales	Hygrophoraceae	yes	
+Hyssto1	Basidiomycota	Agaricomycotina	Agaricomycetes	Hysterangiales	Hysterangiaceae	yes	
+Inolan1	Basidiomycota	Agaricomycotina	Agaricomycetes	Agaricales	Inocybaceae	yes	
+Intcon1_1	Basidiomycota	Agaricomycotina	Agaricomycetes	Incertae sedis	Incertae sedis	yes	
+Iscben1	Basidiomycota	Agaricomycotina	Agaricomycetes	Polyporales	Ischnodermataceae	yes	
+Jamsp1	Basidiomycota	Ustilaginomycotina	Exobasidiomycetes	Microstromatales	Incertae sedis	yes	
+Kavalb1	Basidiomycota	Agaricomycotina	Agaricomycetes	Gomphales	Gomphaceae	yes	
+Kocim1	Basidiomycota	Agaricomycotina	Tremellomycetes	Tremellales	Incertae sedis	yes	
+Kurarg1	Basidiomycota	Agaricomycotina	Agaricomycetes	Corticiales	Corticiaceae	yes	
+Lacaka1	Basidiomycota	Agaricomycotina	Agaricomycetes	Russulales	Russulaceae	yes	
+Laccon1	Basidiomycota	Agaricomycotina	Agaricomycetes	Russulales	Russulaceae	yes	
+Lacdel1	Basidiomycota	Agaricomycotina	Agaricomycetes	Russulales	Russulaceae	yes	
+Lachat1	Basidiomycota	Agaricomycotina	Agaricomycetes	Russulales	Russulaceae	yes	
+Lachen1	Basidiomycota	Agaricomycotina	Agaricomycetes	Russulales	Russulaceae	yes	
+Lacind1	Basidiomycota	Agaricomycotina	Agaricomycetes	Russulales	Russulaceae	yes	
+Lacpsa1	Basidiomycota	Agaricomycotina	Agaricomycetes	Russulales	Russulaceae	yes	
+Lacpse1	Basidiomycota	Agaricomycotina	Agaricomycetes	Russulales	Russulaceae	yes	
+Lacsan1	Basidiomycota	Agaricomycotina	Agaricomycetes	Russulales	Russulaceae	yes	
+Lacsub1	Basidiomycota	Agaricomycotina	Agaricomycetes	Russulales	Russulaceae	yes	
+Lactsubd1	Basidiomycota	Agaricomycotina	Agaricomycetes	Russulales	Russulaceae	yes	
+Lacviv1	Basidiomycota	Agaricomycotina	Agaricomycetes	Russulales	Russulaceae	yes	
+Lacvol1	Basidiomycota	Agaricomycotina	Agaricomycetes	Russulales	Russulaceae	yes	
+Laxbic1	Basidiomycota	Agaricomycotina	Agaricomycetes	Russulales	Gloeocystidiellaceae	yes	
+Lenvul1	Basidiomycota	Agaricomycotina	Agaricomycetes	Russulales	Auriscalpiaceae	yes	
+Lepmol1	Basidiomycota	Agaricomycotina	Agaricomycetes	Polyporales	Irpicaceae	yes	
+Leucr1	Basidiomycota	Pucciniomycotina	Microbotryomycetes	Leucosporidiales	Leucosporidiaceae	yes	
+Leumo1	Basidiomycota	Agaricomycotina	Agaricomycetes	Boletales	Hygrophoropsidaceae	yes	
+Lycper1	Basidiomycota	Agaricomycotina	Agaricomycetes	Agaricales	Lycoperdaceae	yes	
+MecolCla_1	Basidiomycota	Pucciniomycotina	Pucciniomycetes	Pucciniales	Melampsoraceae	yes	
+Meimi1	Basidiomycota	Ustilaginomycotina	Exobasidiomycetes	Exobasidiales	Brachybasidiaceae	yes	
+Melap1finSC_191	Basidiomycota	Pucciniomycotina	Pucciniomycetes	Pucciniales	Melampsoraceae	yes	
+Melbro1	Basidiomycota	Agaricomycotina	Agaricomycetes	Boletales	Melanogastraceae	yes	
+Melen1	Basidiomycota	Ustilaginomycotina	Ustilaginomycetes	Urocystidiales	Melanotaeniaceae	yes	
+Mersum1	Basidiomycota	Agaricomycotina	Agaricomycetes	Polyporales	Meripilaceae	yes	
+Monili2	Basidiomycota	Ustilaginomycotina	Moniliellomycetes	Moniliellales	Moniliellaceae	yes	
+Mrafri1	Basidiomycota	Agaricomycotina	Tremellomycetes	Cystofilobasidiales	Cystofilobasidiaceae	yes	
+Muloch1	Basidiomycota	Agaricomycotina	Agaricomycetes	Russulales	Russulaceae	yes	
+Mutel1	Basidiomycota	Agaricomycotina	Agaricomycetes	Phallales	Phallaceae	yes	
+Myc59_1	Basidiomycota	Agaricomycotina	Agaricomycetes	Agaricales	Tricholomataceae	yes	
+Mycalb1	Basidiomycota	Agaricomycotina	Agaricomycetes	Agaricales	Mycenaceae	yes	
+Mycale1	Basidiomycota	Agaricomycotina	Agaricomycetes	Agaricales	Mycenaceae	yes	
+Mycami1	Basidiomycota	Agaricomycotina	Agaricomycetes	Agaricales	Mycenaceae	yes	
+Mycbel1	Basidiomycota	Agaricomycotina	Agaricomycetes	Agaricales	Tricholomataceae	yes	
+Myccro1	Basidiomycota	Agaricomycotina	Agaricomycetes	Agaricales	Mycenaceae	yes	
+Mycden1	Basidiomycota	Agaricomycotina	Agaricomycetes	Agaricales	Nidulariaceae	yes	
+Mycepi1	Basidiomycota	Agaricomycotina	Agaricomycetes	Agaricales	Mycenaceae	yes	
+Mycfil1	Basidiomycota	Agaricomycotina	Agaricomycetes	Agaricales	Mycenaceae	yes	
+Mycflo1	Basidiomycota	Agaricomycotina	Agaricomycetes	Agaricales	Mycenaceae	yes	
+Mycgale1	Basidiomycota	Agaricomycotina	Agaricomycetes	Agaricales	Tricholomataceae	yes	
+Mychae1	Basidiomycota	Agaricomycotina	Agaricomycetes	Agaricales	Tricholomataceae	yes	
+Myclat1	Basidiomycota	Agaricomycotina	Agaricomycetes	Agaricales	Mycenaceae	yes	
+Myclep1	Basidiomycota	Agaricomycotina	Agaricomycetes	Agaricales	Tricholomataceae	yes	
+Mycmac1	Basidiomycota	Agaricomycotina	Agaricomycetes	Agaricales	Mycenaceae	yes	
+Mycmet1	Basidiomycota	Agaricomycotina	Agaricomycetes	Agaricales	Tricholomataceae	yes	
+Mycoli1	Basidiomycota	Agaricomycotina	Agaricomycetes	Agaricales	Tricholomataceae	yes	
+Mycpol1	Basidiomycota	Agaricomycotina	Agaricomycetes	Agaricales	Mycenaceae	yes	
+Mycpur1	Basidiomycota	Agaricomycotina	Agaricomycetes	Agaricales	Mycenaceae	yes	
+Mycreb1	Basidiomycota	Agaricomycotina	Agaricomycetes	Agaricales	Mycenaceae	yes	
+Mycros1	Basidiomycota	Agaricomycotina	Agaricomycetes	Agaricales	Tricholomataceae	yes	
+Mycrub1	Basidiomycota	Agaricomycotina	Agaricomycetes	Agaricales	Tricholomataceae	yes	
+Mycsan1	Basidiomycota	Agaricomycotina	Agaricomycetes	Agaricales	Mycenaceae	yes	
+Mycvit1	Basidiomycota	Agaricomycotina	Agaricomycetes	Agaricales	Mycenaceae	yes	
+Mycvul1	Basidiomycota	Agaricomycotina	Agaricomycetes	Agaricales	Mycenaceae	yes	
+Naifl1	Basidiomycota	Pucciniomycotina	Classiculomycetes	Classiculales	Classiculaceae	yes	
+Niavib1	Basidiomycota	Agaricomycotina	Agaricomycetes	Agaricales	Niaceae	yes	
+Niddef1	Basidiomycota	Agaricomycotina	Agaricomycetes	Agaricales	Nidulariaceae	yes	
+Nidsp1	Basidiomycota	Agaricomycotina	Agaricomycetes	Agaricales	Nidulariaceae	yes	
+Obbri1	Basidiomycota	Agaricomycotina	Agaricomycetes	Polyporales	Incertae sedis	yes	
+Olipa1	Basidiomycota	Agaricomycotina	Agaricomycetes	Auriculariales	Incertae sedis	yes	
+Panst_KUC8834_1_1	Basidiomycota	Agaricomycotina	Agaricomycetes	Agaricales	Mycenaceae	yes	
+Panst_LUM_1_1	Basidiomycota	Agaricomycotina	Agaricomycetes	Agaricales	Mycenaceae	yes	
+Papla1	Basidiomycota	Agaricomycotina	Tremellomycetes	Tremellales	Rhynchogastremataceae	yes	
+Pauans1	Basidiomycota	Agaricomycotina	Agaricomycetes	Corticiales	Corticiaceae	yes	
+Paxam1	Basidiomycota	Agaricomycotina	Agaricomycetes	Boletales	Paxillaceae	yes	
+Persub1	Basidiomycota	Agaricomycotina	Agaricomycetes	Polyporales	Polyporaceae	yes	
+Phapla1	Basidiomycota	Agaricomycotina	Agaricomycetes	Agaricales	Chromocyphellaceae	yes	
+Phefer1	Basidiomycota	Agaricomycotina	Agaricomycetes	Hymenochaetales	Hymenochaetaceae	yes	
+Pheign1_1	Basidiomycota	Agaricomycotina	Agaricomycetes	Hymenochaetales	Hymenochaetaceae	yes	
+Pheni1	Basidiomycota	Agaricomycotina	Agaricomycetes	Hymenochaetales	Hymenochaetaceae	yes	
+Phevit1	Basidiomycota	Agaricomycotina	Agaricomycetes	Hymenochaetales	Hymenochaetaceae	yes	
+Phlfa1	Basidiomycota	Pucciniomycotina	Atractiellomycetes	Atractiellales	Phleogenaceae	yes	
+Phlsub1	Basidiomycota	Agaricomycotina	Agaricomycetes	Polyporales	Meruliaceae	yes	
+Phohig1	Basidiomycota	Agaricomycotina	Agaricomycetes	Agaricales	Strophariaceae	yes	
+Phosp1	Basidiomycota	Agaricomycotina	Agaricomycetes	Agaricales	Strophariaceae	yes	
+Pilbys1	Basidiomycota	Agaricomycotina	Agaricomycetes	Atheliales	Atheliaceae	yes	
+Pilsph1	Basidiomycota	Agaricomycotina	Agaricomycetes	Atheliales	Atheliaceae	yes	
+Polsqu1	Basidiomycota	Agaricomycotina	Agaricomycetes	Polyporales	Polyporaceae	yes	
+Porchr1	Basidiomycota	Agaricomycotina	Agaricomycetes	Hymenochaetales	Hymenochaetaceae	yes	
+Pormuc1	Basidiomycota	Agaricomycotina	Agaricomycetes	Trechisporales	Hydnodontaceae	yes	
+Pornie1_2	Basidiomycota	Agaricomycotina	Agaricomycetes	Hymenochaetales	Hymenochaetaceae	yes	
+Porspa1	Basidiomycota	Agaricomycotina	Agaricomycetes	Polyporales	Phanerochaetaceae	yes	
+Possti1	Basidiomycota	Agaricomycotina	Agaricomycetes	Polyporales	Dacryobolaceae	yes	
+Ptegra1	Basidiomycota	Agaricomycotina	Agaricomycetes	Agaricales	Pterulaceae	yes	
+Pycful1	Basidiomycota	Agaricomycotina	Agaricomycetes	Polyporales	Incertae sedis	yes	
+Radcon1	Basidiomycota	Agaricomycotina	Agaricomycetes	Agaricales	Pterulaceae	yes	
+Resbic1	Basidiomycota	Agaricomycotina	Agaricomycetes	Hymenochaetales	Incertae sedis	yes	
+Rhanym2_1	Basidiomycota	Ustilaginomycotina	Exobasidiomycetes	Doassansiales	Rhamphosporaceae	yes	
+Rhitru1	Basidiomycota	Agaricomycotina	Agaricomycetes	Boletales	Rhizopogonaceae	yes	
+Rhivi1	Basidiomycota	Agaricomycotina	Agaricomycetes	Boletales	Rhizopogonaceae	yes	
+Rhivul1	Basidiomycota	Agaricomycotina	Agaricomycetes	Boletales	Rhizopogonaceae	yes	
+Rhobu1	Basidiomycota	Agaricomycotina	Agaricomycetes	Agaricales	Omphalotaceae	yes	
+Rhodsp1	Basidiomycota	Ustilaginomycotina	Exobasidiomycetes	Microstromatales	Microstromataceae	yes	
+Rhomi1	Basidiomycota	Pucciniomycotina	Cystobasidiomycetes	Cystobasidiales	Cystobasidiaceae	yes	
+Ricfib1	Basidiomycota	Agaricomycotina	Agaricomycetes	Hymenochaetales	Repetobasidiaceae	yes	
+Ricme1	Basidiomycota	Agaricomycotina	Agaricomycetes	Russulales	Peniophoraceae	yes	
+Rigmic1	Basidiomycota	Agaricomycotina	Agaricomycetes	Polyporales	Coriolaceae	yes	
+Rorror1	Basidiomycota	Agaricomycotina	Agaricomycetes	Agaricales	Mycenaceae	yes	
+Rusbre1	Basidiomycota	Agaricomycotina	Agaricomycetes	Russulales	Russulaceae	yes	
+Ruscom1	Basidiomycota	Agaricomycotina	Agaricomycetes	Russulales	Russulaceae	yes	
+Rusdis1	Basidiomycota	Agaricomycotina	Agaricomycetes	Russulales	Russulaceae	yes	
+Rusear1	Basidiomycota	Agaricomycotina	Agaricomycetes	Russulales	Russulaceae	yes	
+Ruseme1	Basidiomycota	Agaricomycotina	Agaricomycetes	Russulales	Russulaceae	yes	
+Ruseme113_1	Basidiomycota	Agaricomycotina	Agaricomycetes	Russulales	Russulaceae	yes	
+Rusoch1	Basidiomycota	Agaricomycotina	Agaricomycetes	Russulales	Russulaceae	yes	
+Rusrug1	Basidiomycota	Agaricomycotina	Agaricomycetes	Russulales	Russulaceae	yes	
+Rusvin1	Basidiomycota	Agaricomycotina	Agaricomycetes	Russulales	Russulaceae	yes	
+Sacfar1	Basidiomycota	Pucciniomycotina	Atractiellomycetes	Atractiellales	Phleogenaceae	yes	
+Schpa1	Basidiomycota	Agaricomycotina	Agaricomycetes	Hymenochaetales	Schizoporaceae	yes	
+Sclcihr1	Basidiomycota	Agaricomycotina	Agaricomycetes	Boletales	Sclerodermataceae	yes	
+Sclhys1_1	Basidiomycota	Agaricomycotina	Agaricomycetes	Geastrales	Sclerogasteraceae	yes	
+Sclyun1	Basidiomycota	Agaricomycotina	Agaricomycetes	Boletales	Sclerodermataceae	yes	
+Scysp1_1	Basidiomycota	Agaricomycotina	Agaricomycetes	Russulales	Lachnocladiaceae	yes	
+Sepsp1	Basidiomycota	Pucciniomycotina	Pucciniomycetes	Septobasidiales	Septobasidiaceae	yes	
+Serbor1	Basidiomycota	Agaricomycotina	Agaricomycetes	Agaricales	Amylocorticiaceae	yes	
+Sidvul1	Basidiomycota	Agaricomycotina	Agaricomycetes	Hymenochaetales	Rickenellaceae	yes	
+Sirint1	Basidiomycota	Agaricomycotina	Tremellomycetes	Tremellales	Sirobasidiaceae	yes	
+Sisbri1	Basidiomycota	Agaricomycotina	Agaricomycetes	Corticiales	Corticiaceae	yes	
+Sismus1	Basidiomycota	Agaricomycotina	Agaricomycetes	Corticiales	Corticiaceae	yes	
+Sisrad1	Basidiomycota	Agaricomycotina	Agaricomycetes	Corticiales	Corticiaceae	yes	
+Sisser1	Basidiomycota	Agaricomycotina	Agaricomycetes	Corticiales	Corticiaceae	yes	
+Skebig1	Basidiomycota	Agaricomycotina	Agaricomycetes	Polyporales	Incrustoporiaceae	yes	
+Skeste1	Basidiomycota	Agaricomycotina	Agaricomycetes	Polyporales	Incrustoporiaceae	yes	
+Slopil1	Basidiomycota	Pucciniomycotina	Microbotryomycetes	Incertae sedis	Chrysozymaceae	yes	
+Spalat1	Basidiomycota	Agaricomycotina	Agaricomycetes	Polyporales	Sparassidaceae	yes	
+Spogra1_1	Basidiomycota	Pucciniomycotina	Cystobasidiomycetes	Erythrobasidiales	Erythrobasidiaceae	yes	
+Spoli1	Basidiomycota	Pucciniomycotina	Agaricostilbomycetes	Spiculogloeales	Spiculogloeaceae	yes	
+Spopa1	Basidiomycota	Pucciniomycotina	Incertae sedis	Sporidiobolales	Incertae sedis	yes	
+Stepol1	Basidiomycota	Agaricomycotina	Tremellomycetes	Tremellales	Cuniculitremaceae	yes	
+Suibr2	Basidiomycota	Agaricomycotina	Agaricomycetes	Boletales	Suillaceae	yes	
+Suisub1	Basidiomycota	Agaricomycotina	Agaricomycetes	Boletales	Suillaceae	yes	
+Tescy1	Basidiomycota	Ustilaginomycotina	Ustilaginomycetes	Ustilaginales	Cintractiellaceae	yes	
+Thacu1	Basidiomycota	Agaricomycotina	Agaricomycetes	Cantharellales	Ceratobasidiaceae	yes	
+Thega1	Basidiomycota	Agaricomycotina	Agaricomycetes	Thelephorales	Thelephoraceae	yes	
+Tilalb1	Basidiomycota	Ustilaginomycotina	Exobasidiomycetes	Entylomatales	Entylomataceae	yes	
+Tillet1	Basidiomycota	Ustilaginomycotina	Exobasidiomycetes	Entylomatales	Incertae sedis	yes	
+Tilwa1	Basidiomycota	Ustilaginomycotina	Exobasidiomycetes	Entylomatales	Entylomataceae	yes	
+Treen1	Basidiomycota	Agaricomycotina	Tremellomycetes	Tremellales	Naemateliaceae	yes	
+Trich1	Basidiomycota	Agaricomycotina	Tremellomycetes	Tremellales	Trichosporonaceae	yes	
+Trigue1	Basidiomycota	Agaricomycotina	Tremellomycetes	Tremellales	Trichosporonaceae	yes	
+Triol1	Basidiomycota	Agaricomycotina	Tremellomycetes	Tremellales	Trichosporonaceae	yes	
+Tripop1	Basidiomycota	Agaricomycotina	Agaricomycetes	Agaricales	Tricholomataceae	yes	
+Trisp1	Basidiomycota	Pucciniomycotina	Tritirachiomycetes	Tritirachiales	Tritirachiaceae	yes	
+Tul14233_1	Basidiomycota	Agaricomycotina	Agaricomycetes	Cantharellales	Tulasnellaceae	yes	
+Tulcal1571_1	Basidiomycota	Agaricomycotina	Agaricomycetes	Cantharellales	Tulasnellaceae	yes	
+Tulhel1	Basidiomycota	Agaricomycotina	Agaricomycetes	Cantharellales	Tulasnellaceae	yes	
+Tulirr1	Basidiomycota	Agaricomycotina	Agaricomycetes	Cantharellales	Tulasnellaceae	yes	
+Tulsp217B_1	Basidiomycota	Agaricomycotina	Agaricomycetes	Cantharellales	Tulasnellaceae	yes	
+Tulsp5341_1	Basidiomycota	Agaricomycotina	Agaricomycetes	Cantharellales	Tulasnellaceae	yes	
+Tulsp791A_1	Basidiomycota	Agaricomycotina	Agaricomycetes	Cantharellales	Tulasnellaceae	yes	
+Tulsp791B_1	Basidiomycota	Agaricomycotina	Agaricomycetes	Cantharellales	Tulasnellaceae	yes	
+Tulsp812A_1	Basidiomycota	Agaricomycotina	Agaricomycetes	Cantharellales	Tulasnellaceae	no	empty assembly (0 bytes)
+TulspSV61_1	Basidiomycota	Agaricomycotina	Agaricomycetes	Cantharellales	Tulasnellaceae	yes	
+Tylas1	Basidiomycota	Agaricomycotina	Agaricomycetes	Cantharellales	Incertae sedis	yes	
+TyphTRa3160C_1	Basidiomycota	Agaricomycotina	Agaricomycetes	Agaricales	Typhulaceae	yes	
+Uniuni1	Basidiomycota	Agaricomycotina	Dacrymycetes	Dacrymycetales	Dacrymycetaceae	yes	
+Uroocc1	Basidiomycota	Ustilaginomycotina	Ustilaginomycetes	Urocystidiales	Urocystidaceae	yes	
+Uropr1	Basidiomycota	Ustilaginomycotina	Ustilaginomycetes	Urocystidiales	Urocystidaceae	yes	
+Ustgig1	Basidiomycota	Ustilaginomycotina	Ustilaginomycetes	Ustilaginales	Cintractiaceae	yes	
+Ustsp1	Basidiomycota	Ustilaginomycotina	Ustilaginomycetes	Violaceomycetales	Violaceomycetaceae	yes	
+Varmin1	Basidiomycota	Agaricomycotina	Agaricomycetes	Russulales	Lachnocladiaceae	yes	
+Velabi1	Basidiomycota	Agaricomycotina	Agaricomycetes	Gloeophyllales	Gloeophyllaceae	yes	
+Xentul1	Basidiomycota	Agaricomycotina	Agaricomycetes	Russulales	Xenasmataceae	yes	
+Xenvag1	Basidiomycota	Agaricomycotina	Agaricomycetes	Russulales	Xenasmataceae	yes	
+Xerba1	Basidiomycota	Agaricomycotina	Agaricomycetes	Boletales	Boletaceae	yes	
+Xylrem1	Basidiomycota	Agaricomycotina	Agaricomycetes	Hymenochaetales	Schizoporaceae	yes	
+Blabri1	Blastocladiomycota	Incertae sedis	Blastocladiomycetes	Blastocladiales	Blastocladiaceae	yes	
+Catan2	Blastocladiomycota	Incertae sedis	Blastocladiomycetes	Blastocladiales	Catenariaceae	yes	
+Parsed1	Blastocladiomycota	Incertae sedis	Blastocladiomycetes	Blastocladiales	Physodermataceae	yes	
+Blyhe1	Chytridiomycota	Incertae sedis	Chytridiomycetes	Incertae sedis	Incertae sedis	yes	
+Caupr1	Chytridiomycota	Incertae sedis	Chytridiomycetes	Spizellomycetales	Caulochytriaceae	yes	
+Caupr_SCcomb	Chytridiomycota	Incertae sedis	Chytridiomycetes	Spizellomycetales	Caulochytriaceae	yes	
+Chyhya1	Chytridiomycota	Incertae sedis	Chytridiomycetes	Chytridiales	Chytriomycetaceae	yes	
+Chylag1	Chytridiomycota	Incertae sedis	Chytridiomycetes	Chytridiales	Chytridiaceae	yes	
+Chytri1	Chytridiomycota	Incertae sedis	Chytridiomycetes	Chytridiales	Chytriomycetaceae	yes	
+Clapol1_1	Chytridiomycota	Incertae sedis	Chytridiomycetes	Cladochytriales	Cladochytriaceae	yes	
+Clarep1_1	Chytridiomycota	Incertae sedis	Chytridiomycetes	Cladochytriales	Cladochytriaceae	yes	
+Enthel1	Chytridiomycota	Incertae sedis	Chytridiomycetes	Chytridiales	Chytriomycetaceae	yes	
+Entlut1	Chytridiomycota	Incertae sedis	Chytridiomycetes	Chytridiales	Chytriomycetaceae	yes	
+Fimjon1	Chytridiomycota	Incertae sedis	Chytridiomycetes	Spizellomycetales	Powellomycetaceae	yes	
+Gaesem1	Chytridiomycota	Incertae sedis	Chytridiomycetes	Spizellomycetales	Spizellomycetaceae	yes	
+Gervar1	Chytridiomycota	Incertae sedis	Chytridiomycetes	Spizellomycetales	Powellomycetaceae	yes	
+Glopol1	Chytridiomycota	Incertae sedis	Chytridiomycetes	Rhizophydiales	Globomycetaceae	yes	
+Gorhay1	Chytridiomycota	Incertae sedis	Chytridiomycetes	Rhizophydiales	Gorgonomycetaceae	yes	
+Hyacur1	Chytridiomycota	Incertae sedis	Monoblepharidomycetes	Monoblepharidales	Incertae sedis	yes	
+Obemuc1	Chytridiomycota	Incertae sedis	Chytridiomycetes	Chytridiales	Chytriomycetaceae	yes	
+Polagg1_1	Chytridiomycota	Incertae sedis	Chytridiomycetes	Polychytriales	Incertae sedis	yes	
+Powhir1	Chytridiomycota	Incertae sedis	Chytridiomycetes	Spizellomycetales	Powellomycetaceae	yes	
+Triarc1	Chytridiomycota	Incertae sedis	Chytridiomycetes	Spizellomycetales	Spizellomycetaceae	yes	
+Lenpar1	Mucoromycota	Mucoromycotina	Mucoromycetes	Mucorales	Lentamycetaceae	yes	
+Lenzyc1	Mucoromycota	Mucoromycotina	Mucoromycetes	Mucorales	Lentamycetaceae	yes	
+Abscae1	Zoopagomycota	Mucoromycotina	Incertae sedis	Mucorales	Cunninghamellaceae	yes	
+Absrep1	Zoopagomycota	Mucoromycotina	Incertae sedis	Mucorales	Cunninghamellaceae	yes	
+Amyrou1	Zoopagomycota	Mucoromycotina	Incertae sedis	Mucorales	Mucoraceae	yes	
+Bacci1	Zoopagomycota	Mucoromycotina	Incertae sedis	Mucorales	Backusellaceae	yes	
+Baclam1	Zoopagomycota	Mucoromycotina	Incertae sedis	Mucorales	Backusellaceae	yes	
+Basme2finSC	Zoopagomycota	Entomophthoromycotina	Incertae sedis	Entomophthorales	Incertae sedis	yes	
+Basme92_1	Zoopagomycota	Incertae sedis	Incertae sedis	Basidiobolales	Basidiobolaceae	yes	
+Benpoi1	Zoopagomycota	Mucoromycotina	Incertae sedis	Mucorales	Mucoraceae	yes	
+Blatri1	Zoopagomycota	Mucoromycotina	Incertae sedis	Mucorales	Choanephoraceae	yes	
+Blatri_F921_1	Zoopagomycota	Mucoromycotina	Incertae sedis	Mucorales	Choanephoraceae	yes	
+Blatri_F986_2	Zoopagomycota	Mucoromycotina	Incertae sedis	Mucorales	Choanephoraceae	yes	
+Chabre1	Zoopagomycota	Mucoromycotina	Incertae sedis	Mucorales	Chaetocladiaceae	yes	
+Chlpad1	Zoopagomycota	Mucoromycotina	Incertae sedis	Mucorales	Cunninghamellaceae	yes	
+Chocucu1	Zoopagomycota	Mucoromycotina	Incertae sedis	Mucorales	Choanephoraceae	yes	
+Cirumb1	Zoopagomycota	Mucoromycotina	Incertae sedis	Mucorales	Lichtheimiaceae	yes	
+Coemoj1	Zoopagomycota	Kickxellomycotina	Incertae sedis	Kickxellales	Kickxellaceae	yes	
+Coespi1	Zoopagomycota	Kickxellomycotina	Incertae sedis	Kickxellales	Kickxellaceae	yes	
+Cokrec1	Zoopagomycota	Mucoromycotina	Incertae sedis	Mucorales	Mucoraceae	yes	
+Conth1	Zoopagomycota	Entomophthoromycotina	Incertae sedis	Entomophthorales	Ancylistaceae	yes	
+Cunbla1	Zoopagomycota	Mucoromycotina	Incertae sedis	Mucorales	Cunninghamellaceae	yes	
+Cunech1	Zoopagomycota	Mucoromycotina	Incertae sedis	Mucorales	Cunninghamellaceae	yes	
+Dicele1	Zoopagomycota	Mucoromycotina	Incertae sedis	Mucorales	Lichtheimiaceae	yes	
+Dicrob1	Zoopagomycota	Mucoromycotina	Incertae sedis	Mucorales	Lichtheimiaceae	yes	
+DimcrSC1	Zoopagomycota	Kickxellomycotina	Incertae sedis	Dimargaritales	Dimargaritaceae	yes	
+Disdec1	Zoopagomycota	Mortierellomycotina	Incertae sedis	Mortierellales	Mortierellaceae	yes	
+Disorn1	Zoopagomycota	Mortierellomycotina	Incertae sedis	Mortierellales	Mortierellaceae	yes	
+Ellano2	Zoopagomycota	Mucoromycotina	Incertae sedis	Mucorales	Mucoraceae	yes	
+Endsp1	Zoopagomycota	Mucoromycotina	Incertae sedis	Endogonales	Endogonaceae	yes	
+Entech1	Zoopagomycota	Mortierellomycotina	Incertae sedis	Mortierellales	Mortierellaceae	yes	
+Entlig1	Zoopagomycota	Mortierellomycotina	Incertae sedis	Mortierellales	Mortierellaceae	yes	
+Entmai1	Zoopagomycota	Entomophthoromycotina	Incertae sedis	Entomophthorales	Entomophthoraceae	yes	
+Entmec1	Zoopagomycota	Mortierellomycotina	Incertae sedis	Mortierellales	Mortierellaceae	yes	
+Fenlin1	Zoopagomycota	Mucoromycotina	Incertae sedis	Mucorales	Lichtheimiaceae	yes	
+FenlinCB54_1	Zoopagomycota	Mucoromycotina	Incertae sedis	Mucorales	Lichtheimiaceae	yes	
+Gilper1	Zoopagomycota	Mucoromycotina	Incertae sedis	Mucorales	Choanephoraceae	yes	
+Gonbut1	Zoopagomycota	Mucoromycotina	Incertae sedis	Mucorales	Cunninghamellaceae	yes	
+Halrad1	Zoopagomycota	Mucoromycotina	Incertae sedis	Mucorales	Cunninghamellaceae	yes	
+Helpul1	Zoopagomycota	Mucoromycotina	Incertae sedis	Mucorales	Mucoraceae	yes	
+Hesve2finisherSC	Zoopagomycota	Mucoromycotina	Incertae sedis	Mucorales	Cunninghamellaceae	yes	
+Jimfl_AD_1	Zoopagomycota	Mucoromycotina	Incertae sedis	Endogonales	Endogonaceae	yes	
+Jimfl_GMNB39_1	Zoopagomycota	Mucoromycotina	Incertae sedis	Endogonales	Endogonaceae	yes	
+Kicala1	Zoopagomycota	Kickxellomycotina	Incertae sedis	Kickxellales	Kickxellaceae	yes	
+Kircor1	Zoopagomycota	Mucoromycotina	Incertae sedis	Mucorales	Mucoraceae	yes	
+Lichy1	Zoopagomycota	Mucoromycotina	Incertae sedis	Mucorales	Lichtheimiaceae	yes	
+Linpe1	Zoopagomycota	Kickxellomycotina	Incertae sedis	Kickxellales	Kickxellaceae	yes	
+Lobtra1	Zoopagomycota	Mortierellomycotina	Incertae sedis	Mortierellales	Mortierellaceae	yes	
+Marpt1	Zoopagomycota	Kickxellomycotina	Incertae sedis	Kickxellales	Incertae sedis	yes	
+Moramb1	Zoopagomycota	Mortierellomycotina	Incertae sedis	Mortierellales	Mortierellaceae	yes	
+Morel_U14_1	Zoopagomycota	Mortierellomycotina	Incertae sedis	Mortierellales	Mortierellaceae	yes	
+Mormul1	Zoopagomycota	Mortierellomycotina	Incertae sedis	Mortierellales	Mortierellaceae	yes	
+Morsel1	Zoopagomycota	Mortierellomycotina	Incertae sedis	Mortierellales	Mortierellaceae	yes	
+Morwol1	Zoopagomycota	Mortierellomycotina	Incertae sedis	Mortierellales	Mortierellaceae	yes	
+Mucmuc1	Zoopagomycota	Mucoromycotina	Incertae sedis	Mucorales	Mucoraceae	yes	
+Mucpir1	Zoopagomycota	Mucoromycotina	Incertae sedis	Mucorales	Mucoraceae	yes	
+Mycafr1	Zoopagomycota	Mucoromycotina	Incertae sedis	Mucorales	Mycotyphaceae	yes	
+Mycind1	Zoopagomycota	Mucoromycotina	Incertae sedis	Mucorales	Mycotyphaceae	yes	
+Parpar1	Zoopagomycota	Mucoromycotina	Incertae sedis	Mucorales	Mucoraceae	yes	
+Phaart1	Zoopagomycota	Mucoromycotina	Incertae sedis	Mucorales	Lichtheimiaceae	yes	
+Phybla1	Zoopagomycota	Mucoromycotina	Incertae sedis	Mucorales	Phycomycetaceae	yes	
+Pilano1	Zoopagomycota	Mucoromycotina	Incertae sedis	Mucorales	Mucoraceae	yes	
+Pilumb1	Zoopagomycota	Mucoromycotina	Incertae sedis	Mucorales	Pilobolaceae	yes	
+Pincor1_1	Zoopagomycota	Kickxellomycotina	Incertae sedis	Kickxellales	Kickxellaceae	yes	
+Pipcy3_1	Zoopagomycota	Zoopagomycotina	Incertae sedis	Zoopagales	Piptocephalidaceae	yes	
+Piptie1	Zoopagomycota	Zoopagomycotina	Incertae sedis	Zoopagales	Piptocephalidaceae	yes	
+PnitS607_1	Zoopagomycota	Mucoromycotina	Incertae sedis	Mucorales	Phycomycetaceae	yes	
+PnitS608_1	Zoopagomycota	Mucoromycotina	Incertae sedis	Mucorales	Phycomycetaceae	yes	
+PnitS609_1	Zoopagomycota	Mucoromycotina	Incertae sedis	Mucorales	Phycomycetaceae	yes	
+Radspe1	Zoopagomycota	Mucoromycotina	Incertae sedis	Mucorales	Radiomycetaceae	yes	
+Rambr1	Zoopagomycota	Kickxellomycotina	Incertae sedis	Kickxellales	Incertae sedis	yes	
+Rhimi1_1	Zoopagomycota	Mucoromycotina	Incertae sedis	Mucorales	Rhizopodaceae	yes	
+Spiasp1	Zoopagomycota	Kickxellomycotina	Incertae sedis	Kickxellales	Kickxellaceae	yes	
+Spifus1	Zoopagomycota	Mucoromycotina	Incertae sedis	Mucorales	Mucoraceae	yes	
+Spoumb1	Zoopagomycota	Mucoromycotina	Incertae sedis	Mucorales	Rhizopodaceae	yes	
+Synfus1	Zoopagomycota	Zoopagomycotina	Incertae sedis	Zoopagales	Piptocephalidaceae	yes	
+Synplu1	Zoopagomycota	Zoopagomycotina	Incertae sedis	Zoopagales	Piptocephalidaceae	yes	
+Synps1	Zoopagomycota	Zoopagomycotina	Incertae sedis	Zoopagales	Piptocephalidaceae	yes	
+Synrac1	Zoopagomycota	Mucoromycotina	Incertae sedis	Mucorales	Syncephalastraceae	yes	
+Syzme1	Zoopagomycota	Mucoromycotina	Incertae sedis	Mucorales	Rhizopodaceae	yes	
+Thaele1	Zoopagomycota	Mucoromycotina	Incertae sedis	Mucorales	Mucoraceae	yes	
+Thasp1	Zoopagomycota	Zoopagomycotina	Incertae sedis	Zoopagales	Sigmoideomycetaceae	yes	
+Umbelo1	Zoopagomycota	Mucoromycotina	Incertae sedis	Mucorales	Umbelopsidaceae	yes	
+Umbisa1	Zoopagomycota	Mucoromycotina	Incertae sedis	Mucorales	Umbelopsidaceae	yes	
+Umbra1	Zoopagomycota	Mucoromycotina	Incertae sedis	Mucorales	Umbelopsidaceae	yes	
+Umbsp_AD052_1	Zoopagomycota	Mucoromycotina	Incertae sedis	Mucorales	Umbelopsidaceae	yes	
+Zoorad1	Zoopagomycota	Entomophthoromycotina	Incertae sedis	Entomophthorales	Entomophthoraceae	yes	
+Zycmex1	Zoopagomycota	Mucoromycotina	Incertae sedis	Mucorales	Lichtheimiaceae	yes	
+Zyghet1	Zoopagomycota	Mucoromycotina	Incertae sedis	Mucorales	Mucoraceae	yes	

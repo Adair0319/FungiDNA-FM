@@ -1,6 +1,7 @@
 """Phase 1: Masked Language Modeling pretraining on BPE-tokenized fungal genomes."""
 import os, sys, math, yaml
 import torch
+import torch.distributed as dist
 import torch.nn as nn
 from torch.utils.data import DataLoader
 from torch.nn.parallel import DistributedDataParallel as DDP
@@ -31,7 +32,7 @@ from fungidna.data.tokenizer import DualTokenizer
 from fungidna.data.pretrain_dataset import Phase1MLMDataset
 from fungidna.training.distributed import (
     setup_distributed, cleanup_distributed, is_main_process,
-    save_checkpoint, print_rank0,
+    save_checkpoint, print_rank0, should_evaluate, sync_stop_decision,
 )
 
 
@@ -43,9 +44,16 @@ def train_phase1(config_path: str):
     device = torch.device(f"cuda:{rank}")
     print_rank0(f"Phase 1 MLM: {world_size} GPUs, device={device}")
 
+    # ── Variant ──
+    variant = str(cfg.get("variant", "unigram")).lower()
+    if variant not in ("unigram", "snt"):
+        raise ValueError(f"unknown variant {variant!r}; expected 'unigram' or 'snt'")
+    token_type = 1 if variant == "snt" else 0
+    print_rank0(f"Variant: {variant} (token_type={token_type})")
+
     # ── Model ──
     model_cfg = FungiDNAConfig()
-    model = FungiDNAForMLM(model_cfg).to(device).bfloat16()
+    model = FungiDNAForMLM(model_cfg, token_type=token_type).to(device).bfloat16()
     if world_size > 1:
         model = DDP(model, device_ids=[rank], find_unused_parameters=True)
     print_rank0(f"Model: {sum(p.numel() for p in model.parameters()) / 1e6:.1f}M params")
@@ -63,6 +71,7 @@ def train_phase1(config_path: str):
         mask_rate=cfg.get("mask_rate", 0.15),
         span_mask_fraction=cfg.get("span_mask_fraction", 0.30),
         seed=cfg.get("seed", 42) + rank,
+        token_type=token_type,
     )
 
     def pad_collate_fn(batch):
@@ -130,17 +139,32 @@ def train_phase1(config_path: str):
     # ── Training Loop ──
     model.train()
     global_step = start_step
-    total_loss = 0.0
     log_every = cfg.get("log_every", 50)
     save_every = cfg.get("save_every", 5000)
     grad_accum = cfg.get("gradient_accumulation_steps", 1)
     effective_bs = cfg["batch_size_per_gpu"] * world_size * grad_accum
 
+    # Early stop on the MLM-loss plateau. Note S2 reports that both variants
+    # entered Phase 2 once the loss had converged (step 10,000 for SNT and
+    # 60,000 for Unigram), which requires this check to exist.
+    eval_every = cfg.get("eval_every", 2000)
+    min_steps = cfg.get("min_steps", warmup_steps)
+    early_stop_patience = cfg.get("early_stop_patience", 5)
+    early_stop_min_delta = cfg.get("early_stop_min_delta", 0.005)
+    best_loss = float("inf")
+    patience_counter = 0
+    stopped_early = False
+    stop_step = total_steps
+
     print_rank0(f"Starting training: {total_steps} steps, warmup={warmup_steps}, "
                 f"grad_accum={grad_accum}, effective_bs={effective_bs}")
+    print_rank0(f"Early-stop: min_steps={min_steps}, eval_every={eval_every}, "
+                f"patience={early_stop_patience}, min_delta={early_stop_min_delta}")
     optimizer.zero_grad()
     while global_step < total_steps:
         micro_step = 0
+        loss_accum = 0.0
+        n_log_steps = 0
         for batch in dataloader:
             input_ids = batch["input_ids"].to(device)
             labels = batch["labels"].to(device)
@@ -159,18 +183,61 @@ def train_phase1(config_path: str):
                 optimizer.zero_grad()
                 scheduler.step()
 
-                total_loss += loss.item() * grad_accum
+                loss_accum += loss.item() * grad_accum
+                n_log_steps += 1
                 global_step += 1
 
                 if global_step % log_every == 0 and is_main_process():
-                    avg_loss = total_loss / log_every
+                    n = max(n_log_steps, 1)
+                    avg_loss = loss_accum / n
                     lr = scheduler.get_last_lr()[0]
                     print(f"Step {global_step}/{total_steps} | loss={avg_loss:.4f} | "
                           f"grad_norm={grad_norm:.2f} | lr={lr:.2e}")
                     if cfg.get("wandb_project"):
                         wandb.log({"loss": avg_loss, "grad_norm": grad_norm,
                                    "lr": lr, "step": global_step})
-                    total_loss = 0.0
+
+                # ── Early-stop check ──
+                # rank 0 computes the metric and the decision; every rank then
+                # meets at the broadcast below, so no rank leaves the loop early.
+                # The metric is the running training loss (no separate validation
+                # forward), so no DDP forward collective happens here.
+                if should_evaluate(global_step, min_steps, eval_every,
+                                   early_stop_patience):
+                    if is_main_process():
+                        n = max(n_log_steps, 1)
+                        eval_loss = loss_accum / n
+                        is_first_eval = (best_loss == float("inf"))
+                        improvement = 1.0 if is_first_eval else (best_loss - eval_loss) / best_loss
+
+                        if is_first_eval or improvement > early_stop_min_delta:
+                            best_loss = eval_loss
+                            patience_counter = 0
+                            print_rank0(f"  Eval @ step {global_step}: loss={eval_loss:.4f} "
+                                        f"(improved {improvement*100:.1f}%) — reset patience")
+                        else:
+                            patience_counter += 1
+                            print_rank0(f"  Eval @ step {global_step}: loss={eval_loss:.4f} "
+                                        f"(no improvement, patience {patience_counter}/"
+                                        f"{early_stop_patience})")
+
+                        if patience_counter >= early_stop_patience:
+                            print_rank0(f"Early stop triggered at step {global_step} "
+                                        f"(loss plateaued at ~{eval_loss:.4f})")
+                            stopped_early = True
+                            stop_step = global_step
+
+                    # All ranks reach this point at every evaluation node.
+                    stopped_early, stop_step = sync_stop_decision(
+                        stopped_early, stop_step, global_step, device)
+
+                    loss_accum = 0.0
+                    n_log_steps = 0
+                    if stopped_early:
+                        break
+                elif global_step % log_every == 0 and is_main_process():
+                    loss_accum = 0.0
+                    n_log_steps = 0
 
                 if global_step % save_every == 0:
                     save_checkpoint(
@@ -181,14 +248,22 @@ def train_phase1(config_path: str):
                 if global_step >= total_steps:
                     break
 
+        if stopped_early:
+            break
+
     # ── Final Save ──
+    # ``final_model.pt`` is the state at the moment training ended (max steps or
+    # early stop). It is NOT guaranteed to be the lowest-loss checkpoint: there is
+    # no separate best-model checkpoint, and the periodic ``checkpoint-<step>.pt``
+    # files hold the state at their own step.
     save_checkpoint(
         model, optimizer, scheduler, None, global_step,
         os.path.join(cfg["output_dir"], "final_model.pt"), rank,
     )
     if is_main_process() and cfg.get("wandb_project"):
         wandb.finish()
-    print_rank0("Phase 1 MLM training complete.")
+    print_rank0(f"Phase 1 MLM training complete (step {stop_step}/{total_steps}"
+                f"{', early stop' if stopped_early else ''}).")
     cleanup_distributed()
 
 

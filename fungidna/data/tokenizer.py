@@ -16,6 +16,8 @@ SEP_ID = 4
 # Single-nucleotide mapping
 NT_TO_ID = {"A": 5, "C": 6, "G": 7, "T": 8, "N": 9}
 ID_TO_NT = {5: "A", 6: "C", 7: "G", 8: "T", 9: "N"}
+#: Size of the single-nucleotide vocabulary (ids 0-9: pad, CLS, MASK, UNK, SEP, A, C, G, T, N).
+NT_VOCAB_SIZE = 10
 
 
 def train_bpe(

@@ -56,6 +56,21 @@ SNT_CKPT = _path(
 
 CUDA = torch.cuda.is_available()
 
+
+def manual_layer_hidden(model, input_ids, layer_index=7, add_cls=False):
+    """Walk the backbone by hand and return layer ``layer_index`` (before final_norm)."""
+    with torch.no_grad(), torch.amp.autocast(device_type=model.device.type,
+                                             dtype=torch.bfloat16):
+        h, cos, sin = model.backbone.embedding(
+            input_ids, token_type=model.token_type, add_cls=add_cls
+        )
+        for i, layer in enumerate(model.backbone.layers):
+            is_attn = (i + 1) % (model.backbone.config.mamba_per_attention + 1) == 0
+            h = layer(h, cos, sin) if is_attn else layer(h)
+            if i == layer_index:
+                break
+    return h.float()
+
 SEQ_A = "ATGGCTAGCTAGCTAGGCTAACCGGTTACGTAGCTAGCATCGATCGATCGTAGCTAGCTAGCTA"
 SEQ_B = "TTTTAAAACCCCGGGGATCGATCGATCGATCGATCGATCGAAACTGACTG"
 SEQ_C = "GCGCGCGCGCGCGCGCGCGC"
@@ -204,23 +219,19 @@ class TestRepresentationModel(unittest.TestCase):
             np.testing.assert_allclose(alone, mixed, rtol=1e-4, atol=1e-4)
 
     def test_pooling_matches_audited_rule(self):
-        """No [CLS]; masked mean over real tokens (paper representation code)."""
+        """No [CLS]; masked mean over layer-8 tokens (Note S2)."""
         from fungidna.data.tokenizer import DualTokenizer
 
         tok = DualTokenizer(str(TOKENIZER))
-        for model, ck in ((self.uni, UNIGRAM_CKPT), (self.snt, SNT_CKPT)):
-            token_type = 1 if model.variant == "snt" else 0
-            encode = tok.encode_single_nt if token_type else (
-                lambda s: tok.encode_bpe(s, add_cls=False)
-            )
+        for model in (self.uni, self.snt):
+            encode = (tok.encode_single_nt if model.variant == "snt"
+                      else lambda s: tok.encode_bpe(s, add_cls=False))
             ids = torch.tensor([encode(SEQ_A)], dtype=torch.long, device=model.device)
-            with torch.no_grad(), torch.amp.autocast("cuda", dtype=torch.bfloat16):
-                hidden = model.backbone(ids, token_type=token_type, add_cls=False)
-            reference = hidden.float().mean(dim=1)[0].cpu().numpy()
+            reference = manual_layer_hidden(model, ids).mean(dim=1)[0].cpu().numpy()
 
             np.testing.assert_allclose(
                 model.embed(SEQ_A), reference, rtol=1e-4, atol=1e-4,
-                err_msg="embed() must be a plain mean over DNA tokens (no CLS)",
+                err_msg="embed() must be the mean over layer-8 DNA tokens (no CLS)",
             )
 
     def test_cls_pooling_would_differ(self):
@@ -230,9 +241,7 @@ class TestRepresentationModel(unittest.TestCase):
             [DualTokenizer(str(TOKENIZER)).encode_bpe(SEQ_A, add_cls=True)],
             dtype=torch.long, device=model.device,
         )
-        with torch.no_grad(), torch.amp.autocast("cuda", dtype=torch.bfloat16):
-            hidden = model.backbone(ids, token_type=0, add_cls=True)
-        with_cls = hidden.float().mean(dim=1)[0].cpu().numpy()
+        with_cls = manual_layer_hidden(model, ids, add_cls=True).mean(dim=1)[0].cpu().numpy()
         self.assertFalse(np.allclose(model.embed(SEQ_A), with_cls, rtol=1e-3, atol=1e-3))
 
     def test_variants_use_distinct_backbones(self):
@@ -265,6 +274,79 @@ class TestInferenceDoesNotDependOnTraining(unittest.TestCase):
         )
         result = subprocess.run([sys.executable, "-c", code], capture_output=True, text=True)
         self.assertEqual(result.returncode, 0, result.stderr)
+
+
+@unittest.skipUnless(CUDA, "model requires CUDA (flash-attn / mamba-ssm kernels)")
+@unittest.skipUnless(TOKENIZER and UNIGRAM_CKPT and SNT_CKPT, "real checkpoints not available")
+class TestLayer8Representation(unittest.TestCase):
+    """Note S2: representations come from layer 8 of 24 — the attention layer of
+    the second hybrid block — pooled over non-padding positions, before
+    ``final_norm``.
+    """
+
+    LAYER_INDEX = 7  # 0-based index of paper layer 8
+
+    @classmethod
+    def setUpClass(cls):
+        from fungidna.representation import RepresentationModel
+
+        cls.models = {
+            "unigram": RepresentationModel(
+                variant="unigram", tokenizer_path=TOKENIZER, backbone_path=UNIGRAM_CKPT
+            ),
+            "snt": RepresentationModel(
+                variant="snt", tokenizer_path=TOKENIZER, backbone_path=SNT_CKPT
+            ),
+        }
+
+    def _ids(self, model, seq):
+        if model.variant == "snt":
+            return model.tokenizer.encode_single_nt(seq, add_cls=False)
+        return model.tokenizer.encode_bpe(seq, add_cls=False)
+
+    def _manual_layer8(self, model, seq):
+        """Recompute the layer-8 hidden state by walking the backbone by hand."""
+        ids = torch.tensor([self._ids(model, seq)], dtype=torch.long, device=model.device)
+        return manual_layer_hidden(model, ids, layer_index=self.LAYER_INDEX)
+
+    def test_layer_7_is_an_attention_block(self):
+        from fungidna.model.attention_block import AttentionBlock
+
+        for model in self.models.values():
+            self.assertIsInstance(model.backbone.layers[self.LAYER_INDEX], AttentionBlock)
+            self.assertEqual(model.backbone.config.mamba_per_attention, 3)
+
+    def test_captured_hidden_equals_direct_layer8(self):
+        for name, model in self.models.items():
+            model.embed(SEQ_A)
+            captured = model.last_layer_output.float().cpu().numpy()
+            manual = self._manual_layer8(model, SEQ_A).cpu().numpy()
+            np.testing.assert_allclose(
+                captured, manual, rtol=1e-4, atol=1e-4,
+                err_msg=f"{name}: captured hidden state is not layer {self.LAYER_INDEX}",
+            )
+
+    def test_embedding_is_masked_mean_of_layer8(self):
+        for name, model in self.models.items():
+            vec = model.embed(SEQ_A)
+            manual = self._manual_layer8(model, SEQ_A).mean(dim=1)[0].cpu().numpy()
+            np.testing.assert_allclose(
+                vec, manual, rtol=1e-4, atol=1e-4,
+                err_msg=f"{name}: embed() is not the mean of layer {self.LAYER_INDEX}",
+            )
+
+    def test_does_not_use_final_layer(self):
+        for name, model in self.models.items():
+            ids = torch.tensor([self._ids(model, SEQ_A)], dtype=torch.long,
+                               device=model.device)
+            with torch.no_grad(), torch.amp.autocast(device_type=model.device.type,
+                                                     dtype=torch.bfloat16):
+                final = model.backbone(ids, token_type=model.token_type, add_cls=False)
+            final_vec = final.float().mean(dim=1)[0].cpu().numpy()
+            self.assertFalse(
+                np.allclose(model.embed(SEQ_A), final_vec, rtol=1e-3, atol=1e-3),
+                f"{name}: embedding still matches the final-layer output",
+            )
 
 
 if __name__ == "__main__":

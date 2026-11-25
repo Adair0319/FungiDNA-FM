@@ -1,0 +1,55 @@
+# ── Phase 2: Joint MLM + SupCon — Unigram, the run behind the released weights ──
+# Every value here is taken from the W&B run that produced the published
+# Unigram backbone (run c5017r8c, 2026-07-09 → 2026-07-11), which early-stopped
+# at step 16,000:
+#   wandb_old_data/run-20260709_142921-c5017r8c/files/config.yaml
+#
+# Note: the run resumed from the *Phase 2* checkpoint backbone-10000.pt and
+# started at step 10,000 — it did NOT start from the Phase 1 checkpoint with
+# resume_step=0. This is the historical r2 resume artifact and must not be
+# edited to look like a from-scratch run.
+
+variant: unigram
+
+# Paths
+filtered_fasta_dir: "data/processed/phase2_filtered/"
+tokenizer_path: "data/processed/bpe_fungi.model"
+phase1_checkpoint: "checkpoints/phase1_mlm/final_model.pt"
+resume_backbone: "checkpoints/phase2_joint/backbone-10000.pt"
+resume_step: 10000
+output_dir: "checkpoints/phase2_joint/"
+snapshot_matrix_path: "data/processed/snapshot_matrix.pt"
+
+# Dataset
+window_size: 8192
+stride: 8192
+max_seq_len: 4096
+n_species: 8
+k_per_species: 4
+num_species: 735
+seed: 42
+
+# Optimization
+lr_backbone: 1.0e-4
+lr_projection: 5.0e-4
+warmup_steps: 5000
+total_steps: 40000
+gradient_accumulation_steps: 8
+
+# Early stop (observed in the run)
+min_steps: 5000
+eval_every: 2000
+early_stop_patience: 3
+early_stop_min_delta: 0.005
+
+# Lambda scheduler
+lambda_max: 0.5
+
+# Weighted CL (toggle for ablation)
+use_weighted_cl: false
+
+# Logging
+wandb_project: "fungi-dna"
+wandb_run: "phase2-unigram"
+log_every: 25
+save_every: 500

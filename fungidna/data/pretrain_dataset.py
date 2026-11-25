@@ -4,7 +4,7 @@ import torch
 import numpy as np
 from torch.utils.data import IterableDataset, Dataset, Sampler
 
-from fungidna.data.tokenizer import DualTokenizer, MASK_ID, CLS_ID, PAD_ID
+from fungidna.data.tokenizer import DualTokenizer, MASK_ID, CLS_ID, PAD_ID, NT_VOCAB_SIZE
 from fungidna.data.slicing import slice_windows_from_long_contigs, sample_pair_from_contig, sample_negative_from_other_genome
 from fungidna.data.qc_filter import collect_long_contigs, _read_fasta
 
@@ -31,9 +31,13 @@ class Phase1MLMDataset(IterableDataset):
         shuffle_buffer_size: int = 8000,
         use_interleave: bool = True,
         seed: int = 42,
+        token_type: int = 0,
     ):
         self.fasta_dir = Path(filtered_fasta_dir)
         self.tokenizer = tokenizer
+        self.token_type = int(token_type)
+        self.vocab_size = (NT_VOCAB_SIZE if self.token_type == 1
+                           else tokenizer.bpe_vocab_size)
         self.window_sizes = window_sizes or [1024, 2048, 4096]
         self.stride_fraction = stride_fraction
         self.mask_rate = mask_rate
@@ -93,9 +97,9 @@ class Phase1MLMDataset(IterableDataset):
                 masked_ids[pos] = MASK_ID
             elif rand < 0.90:
                 if rng is not None:
-                    masked_ids[pos] = int(rng.integers(5, self.tokenizer.bpe_vocab_size, size=1)[0])
+                    masked_ids[pos] = int(rng.integers(5, self.vocab_size, size=1)[0])
                 else:
-                    masked_ids[pos] = torch.randint(5, self.tokenizer.bpe_vocab_size, (1,)).item()
+                    masked_ids[pos] = torch.randint(5, self.vocab_size, (1,)).item()
 
         return masked_ids, labels
 
@@ -127,11 +131,12 @@ class Phase1MLMDataset(IterableDataset):
                 window_iter = slice_windows_all(fasta_path, window_size, stride, 5000, rng)
 
             for window in window_iter:
-                # BPE tokenize — NO [CLS]
-                token_ids = torch.tensor(
-                    self.tokenizer.encode_bpe(window, add_cls=False),
-                    dtype=torch.long,
-                )
+                # Tokenize — NO [CLS]
+                if self.token_type == 1:
+                    encoded = self.tokenizer.encode_single_nt(window, add_cls=False)
+                else:
+                    encoded = self.tokenizer.encode_bpe(window, add_cls=False)
+                token_ids = torch.tensor(encoded, dtype=torch.long)
                 if len(token_ids) < 10:
                     continue
                 masked_ids, labels = self._mask_tokens(token_ids, rng=rng)
@@ -228,7 +233,7 @@ def apply_span_masking(
     span_mask_fraction: float,
     span_lambda: float = 3.0,
     max_span_len: int = 10,
-    bpe_vocab_size: int = 4096,
+    vocab_size: int = 4096,
     rng: np.random.Generator | None = None,
 ) -> tuple[torch.Tensor, torch.Tensor]:
     """Stateless span-aware masking. Returns (masked_ids, labels). No [CLS] handling.
@@ -276,9 +281,9 @@ def apply_span_masking(
             masked_ids[pos] = MASK_ID
         elif rand < 0.90:
             if rng is not None:
-                masked_ids[pos] = int(rng.integers(5, bpe_vocab_size, size=1)[0])
+                masked_ids[pos] = int(rng.integers(5, vocab_size, size=1)[0])
             else:
-                masked_ids[pos] = torch.randint(5, bpe_vocab_size, (1,)).item()
+                masked_ids[pos] = torch.randint(5, vocab_size, (1,)).item()
 
     return masked_ids, labels
 
@@ -303,9 +308,13 @@ class Phase2JointDataset(Dataset):
         max_seq_len: int = 4096,
         min_contig_length: int = 50000,
         seed: int = 42,
+        token_type: int = 0,
     ):
         self.fasta_dir = Path(filtered_fasta_dir)
         self.tokenizer = tokenizer
+        self.token_type = int(token_type)
+        self.vocab_size = (NT_VOCAB_SIZE if self.token_type == 1
+                           else tokenizer.bpe_vocab_size)
         self.window_size = window_size
         self.stride = stride
         self.max_seq_len = max_seq_len
@@ -364,8 +373,11 @@ class Phase2JointDataset(Dataset):
                 f"{[len(s) for _, s in contigs]}"
             )
 
-        # BPE tokenize, NO [CLS]
-        token_ids = self.tokenizer.encode_bpe(window, add_cls=False)
+        # Tokenize, NO [CLS]
+        if self.token_type == 1:
+            token_ids = self.tokenizer.encode_single_nt(window, add_cls=False)
+        else:
+            token_ids = self.tokenizer.encode_bpe(window, add_cls=False)
         token_ids = token_ids[:self.max_seq_len]  # truncate if too long
 
         # Convert to tensor and pad
@@ -375,6 +387,7 @@ class Phase2JointDataset(Dataset):
         return {
             "clean_ids": clean_ids,
             "species_idx": species_idx,
+            "vocab_size": self.vocab_size,
         }
 
 
@@ -442,7 +455,8 @@ def phase2_collate_fn(batch: list[dict], rng: np.random.Generator | None = None)
     for i in range(len(batch)):
         tok_ids = batch[i]["clean_ids"]
         real_len = (tok_ids != PAD_ID).sum().item()
-        masked, lbls = apply_span_masking(tok_ids[:real_len], mask_rate=0.15, span_mask_fraction=0.30, rng=rng)
+        masked, lbls = apply_span_masking(tok_ids[:real_len], mask_rate=0.15, span_mask_fraction=0.30,
+                                  vocab_size=batch[i].get("vocab_size", 4096), rng=rng)
         # Pad masked_ids and labels back to max_seq_len
         masked_padded = torch.full_like(tok_ids, PAD_ID)
         masked_padded[:real_len] = masked

@@ -1,3 +1,11 @@
+# ── HISTORICAL: Phase 2 r2 resume (NOT the run behind the released weights) ──
+# This file describes the "phase2-joint-r2" attempt that resumed from the
+# Unigram step-16,000 final checkpoint and was killed at step 16,050 without
+# saving. It is kept for traceability only.
+# For the runs that produced the released weights use:
+#   configs/pretrain_phase2_unigram.yaml   (Unigram, run c5017r8c)
+#   configs/pretrain_phase2_snt.yaml       (SNT final, run p0sy8n9s)
+#   configs/pretrain_phase2_snt_stage1.yaml (SNT first 5,500 steps)
 # ── Phase 2: Joint MLM + Contrastive Pretraining ──
 
 # Paths

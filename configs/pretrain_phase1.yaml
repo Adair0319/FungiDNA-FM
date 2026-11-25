@@ -1,4 +1,10 @@
-# ── Phase 1: MLM Pretraining Configuration (v2 — no [CLS], grad accum) ──
+# ── Phase 1: MLM Pretraining Configuration (Unigram variant) ──
+# The published Unigram weights entered Phase 2 at step 60,000 (Note S2), i.e.
+# the 200,000-step setting is an upper limit and early stopping ended the run.
+# `variant` selects the tokenizer path; see configs/pretrain_phase1_snt.yaml for
+# the single-nucleotide variant.
+
+variant: unigram
 
 # Paths
 filtered_fasta_dir: "data/processed/phase1_filtered/"

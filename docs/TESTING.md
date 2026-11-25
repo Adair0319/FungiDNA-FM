@@ -63,7 +63,7 @@ variant-scoped loader end to end.
 | `test_weight_loader.py` | registry → env → YAML precedence, malformed config handling |
 | `test_sequence.py`, `test_validation.py`, `test_api.py`, `test_report.py`, `test_dispatcher.py` | I/O, validation gate, report format, dispatch |
 
-Current status: **55 tests, all passing** in the authors' environment (see the
+Current status: **77 tests, all passing** in the authors' environment (see the
 verification table below).
 
 ### What the task tests assert, and what they do not
@@ -88,7 +88,7 @@ verification table below).
 | `cds`, `short_cds`, `splice_site` | `ClassificationHead(hidden_dim=256)` over `hidden[:, 0]` | `MeanPoolHead(hidden_dim=128)` over `hidden[:, 1:].mean` |
 | `bgc_boundary` | `MeanPoolHead(hidden_dim=128)` over `hidden[:, 1:].mean` | same |
 | `taxonomy` | Linear+BatchNorm MLP over `mean(all positions)` | LayerNorm+Linear MLP over `hidden[:, 1:].mean` |
-| `embedding` (Representation) | masked mean over DNA tokens, **no CLS** | same, single-nucleotide tokens |
+| `embedding` (Representation) | masked mean over DNA tokens at **layer 8 of 24** (attention output of the second hybrid block), before `final_norm`, **no CLS** | same layer and pooling, single-nucleotide tokens |
 
 The `[CLS]` conventions belong to the task heads; the Representation API never
 adds a CLS token.
@@ -124,13 +124,26 @@ actually checked, and where:
 | End-to-end model tests in a fresh env | **not completed**, because they need `flash-attn` |
 | `environment.yml` as a whole | **not verified**: the file has never been consumed by a single `conda env create`. The `pip: -r requirements.txt` entry is resolved **relative to the directory you run `conda env create` from**, so it must be executed at the repository root. |
 
-All 55 tests pass in the authors' existing environment
+All 77 tests pass in the authors' existing environment
 (`torch 2.5.1`, `triton 3.1.0`, `mamba-ssm 2.3.2.post1` with a local
 `__init__.py` patch, `flash-attn 2.8.3.post1`, `transformers 4.47.0`).
 That environment is **not** reproducible from `requirements.txt` precisely
 because of the `mamba-ssm` patch; the pins above are the reproducible
 alternative that avoids patching any third-party file, but the `flash-attn`
 part of it is still unverified.
+
+## Phase 1 checkpoint semantics
+
+- `checkpoint-<step>.pt` — the state at that training step (optimizer,
+  scheduler and step included); written every `save_every` steps.
+- `final_model.pt` — the state at the moment training ended (max steps or early
+  stop).
+- There is **no separate best-model checkpoint**: `final_model.pt` is not
+  guaranteed to be the lowest-validation-loss checkpoint, and the early-stop
+  metric is the running training loss (no separate validation forward).
+- Early stopping is synchronised across DDP ranks: rank 0 decides, the decision
+  is broadcast at every evaluation node, and all ranks leave the loop at the
+  same step. A non-positive `early_stop_patience` disables early stopping.
 
 ## Known limitations
 

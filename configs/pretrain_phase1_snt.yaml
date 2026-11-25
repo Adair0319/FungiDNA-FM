@@ -1,0 +1,43 @@
+# ── Phase 1: MLM Pretraining Configuration (SNT variant) ──
+# Same hyperparameters as the Unigram run; the variant selects single-nucleotide
+# encoding, the nt_embed table and the tied LM head.
+#
+# The published SNT weights entered Phase 2 after early stopping at step 10,000
+# (Note S2). The early-stop block below matches the run log
+# (logs/phase1_single_nt_20261015.log), which recorded
+# "min_steps=5000, eval_every=1000, patience=5, min_delta=0.005".
+
+variant: snt
+
+# Paths
+filtered_fasta_dir: "data/processed/phase1_filtered/"
+tokenizer_path: "data/processed/bpe_fungi.model"   # shared; only the BPE table is absent in this variant
+output_dir: "checkpoints/phase1_mlm_single_nt/"
+resume_from: null
+
+# Dataset
+window_sizes: [1024, 2048, 4096]
+stride_fraction: 0.25
+mask_rate: 0.15
+span_mask_fraction: 0.30
+shuffle_buffer_size: 8000
+seed: 42
+
+# Optimization
+lr: 5.0e-4
+warmup_steps: 10000
+total_steps: 200000
+batch_size_per_gpu: 32
+gradient_accumulation_steps: 8
+
+# Early stopping (observed in the SNT Phase 1 run log)
+min_steps: 5000
+eval_every: 1000
+early_stop_patience: 5
+early_stop_min_delta: 0.005
+
+# Logging
+wandb_project: "fungi-dna"
+wandb_run: "phase1-mlm-snt"
+log_every: 50
+save_every: 5000

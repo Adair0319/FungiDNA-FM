@@ -30,18 +30,27 @@ def mean_pool(hidden: torch.Tensor, attention_mask: torch.Tensor = None) -> torc
 # ═══════════════════════════════════════════════════
 
 class FungiDNAForMLM(nn.Module):
-    """Phase 1: Masked Language Modeling on BPE tokens."""
+    """Phase 1: Masked Language Modeling (Unigram tokens or single nucleotides).
 
-    def __init__(self, config: FungiDNAConfig):
+    ``token_type=0`` selects the 4,096-token Unigram embedding and ties the MLM
+    head to it; ``token_type=1`` selects the single-nucleotide embedding (vocab
+    10) and ties the head to that table instead.
+    """
+
+    def __init__(self, config: FungiDNAConfig, token_type: int = 0):
         super().__init__()
         self.config = config
+        self.token_type = int(token_type)
         self.backbone = StripedMambaBackbone(config)
-        self.lm_head = nn.Linear(config.hidden_size, config.bpe_vocab_size, bias=False)
-        # Tie weights: lm_head shares weights with BPE embedding
-        self.lm_head.weight = self.backbone.embedding.bpe_embed.weight
+        embedding = self.backbone.embedding
+        tied = embedding.bpe_embed if self.token_type == 0 else embedding.nt_embed
+        self.vocab_size = tied.num_embeddings
+        self.lm_head = nn.Linear(config.hidden_size, self.vocab_size, bias=False)
+        # Tie weights: the MLM head shares weights with the active embedding table.
+        self.lm_head.weight = tied.weight
 
     def forward(self, input_ids: torch.Tensor, labels: torch.Tensor = None, add_cls: bool = True):
-        hidden = self.backbone(input_ids, token_type=0, add_cls=add_cls)
+        hidden = self.backbone(input_ids, token_type=self.token_type, add_cls=add_cls)
         if add_cls:
             logits = self.lm_head(hidden[:, 1:, :])  # exclude [CLS]
         else:
@@ -49,7 +58,7 @@ class FungiDNAForMLM(nn.Module):
         loss = None
         if labels is not None:
             loss = F.cross_entropy(
-                logits.reshape(-1, self.config.bpe_vocab_size),
+                logits.reshape(-1, self.vocab_size),
                 labels.reshape(-1),
                 ignore_index=-100,
             )
@@ -132,14 +141,19 @@ class FungiDNAForJointTraining(nn.Module):
     Projection head is randomly initialized.
     """
 
-    def __init__(self, config: FungiDNAConfig, num_species: int = 735):
+    def __init__(self, config: FungiDNAConfig, num_species: int = 735,
+                 token_type: int = 0):
         super().__init__()
         self.config = config
+        self.token_type = int(token_type)
         self.backbone = StripedMambaBackbone(config)
 
-        # LM head (tied with BPE embedding)
-        self.lm_head = nn.Linear(config.hidden_size, config.bpe_vocab_size, bias=False)
-        self.lm_head.weight = self.backbone.embedding.bpe_embed.weight
+        # LM head, tied to the embedding table selected by ``token_type``.
+        embedding = self.backbone.embedding
+        tied = embedding.bpe_embed if self.token_type == 0 else embedding.nt_embed
+        self.vocab_size = tied.num_embeddings
+        self.lm_head = nn.Linear(config.hidden_size, self.vocab_size, bias=False)
+        self.lm_head.weight = tied.weight
 
         # Projection head for contrastive learning
         self.projection = nn.Sequential(
@@ -151,7 +165,7 @@ class FungiDNAForJointTraining(nn.Module):
     @torch.no_grad()
     def encode(self, input_ids: torch.Tensor, attention_mask: torch.Tensor = None) -> torch.Tensor:
         """Encode clean sequences -> L2-normalized embeddings (for Snapshot Matrix)."""
-        hidden = self.backbone(input_ids, token_type=0, add_cls=False)
+        hidden = self.backbone(input_ids, token_type=self.token_type, add_cls=False)
         pooled = mean_pool(hidden, attention_mask)
         z = self.projection(pooled)
         return F.normalize(z, p=2, dim=-1)
@@ -180,12 +194,12 @@ class FungiDNAForJointTraining(nn.Module):
             {"loss": Tensor, "mlm_loss": Tensor, "cl_loss": Tensor}
         """
         # Single backbone forward
-        hidden = self.backbone(input_ids, token_type=0, add_cls=False)
+        hidden = self.backbone(input_ids, token_type=self.token_type, add_cls=False)
 
         # MLM head
         logits = self.lm_head(hidden)  # [batch, seq_len, vocab]
         loss_mlm = F.cross_entropy(
-            logits.reshape(-1, self.config.bpe_vocab_size),
+            logits.reshape(-1, self.vocab_size),
             mlm_labels.reshape(-1),
             ignore_index=-100,
         )
@@ -215,11 +229,11 @@ class FungiDNAForJointTraining(nn.Module):
         batch_weight_matrix: torch.Tensor,
     ) -> dict:
         """Same as forward() but uses weighted_supcon_loss with Snapshot Matrix weights."""
-        hidden = self.backbone(input_ids, token_type=0, add_cls=False)
+        hidden = self.backbone(input_ids, token_type=self.token_type, add_cls=False)
 
         logits = self.lm_head(hidden)
         loss_mlm = F.cross_entropy(
-            logits.reshape(-1, self.config.bpe_vocab_size),
+            logits.reshape(-1, self.vocab_size),
             mlm_labels.reshape(-1),
             ignore_index=-100,
         )

@@ -1,0 +1,53 @@
+# ── Phase 2: Joint MLM + SupCon — SNT, final run (5,500 → 33,000) ──
+# Taken from the W&B run that produced the published SNT backbone
+# (run p0sy8n9s, 2026-10-23), which resumed from the step-5,500 checkpoint and
+# early-stopped at step 33,000:
+#   wandb/run-20261023_005457-p0sy8n9s/files/config.yaml
+#
+# The first 5,500 steps were a separate run with 13 gradient-accumulation steps;
+# see configs/pretrain_phase2_snt_stage1.yaml.
+
+variant: snt
+
+# Paths
+filtered_fasta_dir: "data/processed/phase2_filtered/"
+tokenizer_path: "data/processed/bpe_fungi.model"   # shared; single-nt encoding needs no file
+phase1_checkpoint: "checkpoints/phase1_mlm_single_nt/final_model.pt"
+resume_backbone: "checkpoints/phase2_joint_single_nt/backbone-5500.pt"
+resume_step: 5500
+output_dir: "checkpoints/phase2_joint_single_nt/"
+snapshot_matrix_path: "data/processed/snapshot_matrix.pt"
+
+# Dataset
+window_size: 4096
+stride: 4096
+max_seq_len: 4096
+n_species: 8
+k_per_species: 4
+num_species: 735
+seed: 42
+
+# Optimization
+lr_backbone: 1.0e-4
+lr_projection: 5.0e-4
+warmup_steps: 5000
+total_steps: 40000
+gradient_accumulation_steps: 8
+
+# Early stop (observed in the run)
+min_steps: 5000
+eval_every: 1000
+early_stop_patience: 5
+early_stop_min_delta: 0.005
+
+# Lambda scheduler
+lambda_max: 0.5
+
+# Weighted CL (toggle for ablation)
+use_weighted_cl: false
+
+# Logging
+wandb_project: "fungi-dna"
+wandb_run: "phase2-snt"
+log_every: 25
+save_every: 500

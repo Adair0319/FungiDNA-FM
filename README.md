@@ -32,7 +32,7 @@ backbone:
 | Normalisation | RMSNorm in the Mamba2 and attention blocks and before the output; LayerNorm after the input embedding; dropout 0 |
 | Tokenizer | FungiDNA-FM-SNT: single nucleotide (A/C/G/T/N). FungiDNA-FM-Unigram: SentencePiece **Unigram**, vocab 4,096, ≈ **5.6 bp/token** (the file name `bpe_fungi.model` is historical; the model type is Unigram) |
 | Mask token | SentencePiece Unigram mask id = **2** |
-| Pooling | mean over non-padding positions (not `[CLS]`) |
+| Representation | mean over non-padding positions at **layer 8 of 24** (attention output of the second hybrid block), before `final_norm`; no `[CLS]` |
 | Pretraining corpus | 734 fungal genomes, **39.48 Gb**, six phyla (JGI MycoCosm *1000 Fungal Genomes*) |
 | Pretraining | Phase 1 MLM (1,024 / 2,048 / 4,096 bp) → Phase 2 MLM + supervised contrastive (Unigram 8,192 bp; SNT 4,096 bp) |
 
@@ -100,6 +100,21 @@ matching your PyTorch build; `environment.yml` installs CUDA 12.1's `nvcc` and
 gcc 12 for that reason. The pinned versions in `requirements.txt` are explained,
 and their verification status documented, in [`docs/TESTING.md`](docs/TESTING.md).
 Inference requires a GPU.
+
+**Pretraining (both variants).** The variant is selected by an environment
+variable, so no source edit is needed:
+
+```bash
+VARIANT=unigram bash scripts/train_phase1.sh
+VARIANT=snt     bash scripts/train_phase1.sh
+VARIANT=unigram bash scripts/train_phase2_joint.sh
+VARIANT=snt-stage1 bash scripts/train_phase2_joint.sh   # steps 0-5,500, accum 13
+VARIANT=snt     bash scripts/train_phase2_joint.sh      # resumes at step 5,500
+```
+
+Each variant reads its own config: `configs/pretrain_phase1{,_snt}.yaml` and
+`configs/pretrain_phase2_{unigram,snt,snt_stage1}.yaml`. The values in those
+files come from the W&B runs that produced the released weights.
 
 ## Quick start
 
@@ -178,8 +193,8 @@ repository.
 
 | Note | Path | What is there |
 |---|---|---|
-| S1 — corpus | [`data_prep/`](data_prep/) | genome acquisition and QC |
-| S2 — architecture & pretraining | [`fungidna/model/`](fungidna/model/), [`fungidna/training/`](fungidna/training/), [`scripts/`](scripts/), [`configs/`](configs/) | StripedMamba model, Phase 1 / Phase 2 trainers, launchers, configs |
+| S1 — corpus | [`data_prep/`](data_prep/), [`docs/genome_list.tsv`](docs/genome_list.tsv) | genome acquisition, QC, the 735 portal IDs (734 after QC) |
+| S2 — architecture & pretraining | [`fungidna/model/`](fungidna/model/), [`fungidna/training/`](fungidna/training/), [`scripts/`](scripts/), [`configs/`](configs/) | StripedMamba model, Phase 1 / Phase 2 trainers, per-variant launchers and configs |
 | S3 — downstream tasks | [`fungidna/invoke/`](fungidna/invoke/) | task handlers and the guarded invocation interface |
 | S4–S6 — evaluation, input/optimisation, masked recovery | — | Supplementary Notes and Tables are available with the article |
 
@@ -197,9 +212,10 @@ docs/              weights manifest and supporting documentation
 
 The genome assemblies and annotations come from the JGI MycoCosm *1000 Fungal
 Genomes* initiative and are **not** redistributed here. One assembly is dropped
-by QC, leaving the 734 genomes reported in the paper. The portal IDs used, with
-the rank labels as they were fixed when the corpus was built, are available with
-the article.
+by QC, leaving the 734 genomes reported in the paper. The 735 portal IDs used,
+with the rank labels as they were fixed when the corpus was built, are listed in
+[`docs/genome_list.tsv`](docs/genome_list.tsv); `Tulsp812A_1` is flagged as
+contributing no sequence (0-byte assembly).
 
 Download the assemblies and GFF3 annotations from MycoCosm by portal ID, then
 run the scripts in [`data_prep/`](data_prep/).

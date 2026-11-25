@@ -1,6 +1,13 @@
 #!/bin/bash
-# Phase 2 joint MLM + contrastive pretraining (hyperparameters in configs/pretrain_phase2_joint.yaml).
+# Phase 2 joint MLM + supervised-contrastive pretraining.
+#
+#   VARIANT=unigram  bash scripts/train_phase2_joint.sh  # run behind the released Unigram weights
+#   VARIANT=snt      bash scripts/train_phase2_joint.sh  # SNT, resumed from step 5,500
+#   VARIANT=snt-stage1 bash scripts/train_phase2_joint.sh # SNT, first 5,500 steps (accum 13)
+#
+# The variant selects the config file; no source edit is needed.
 set -euo pipefail
+VARIANT=${VARIANT:-unigram}
 NPROC=${NPROC:-8}
 PORT=${PORT:-29507}
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -10,14 +17,23 @@ export NCCL_P2P_DISABLE=1
 export NCCL_IB_DISABLE=1
 export PYTHONUNBUFFERED=1
 
-if [ ! -f "checkpoints/phase1_mlm/final_model.pt" ]; then
-    echo "Error: Phase 1 checkpoint not found at checkpoints/phase1_mlm/final_model.pt" >&2
-    exit 1
-fi
-mkdir -p checkpoints/phase2_joint
+case "$VARIANT" in
+    unigram)   CONFIG=configs/pretrain_phase2_unigram.yaml ;;
+    snt)       CONFIG=configs/pretrain_phase2_snt.yaml ;;
+    snt-stage1) CONFIG=configs/pretrain_phase2_snt_stage1.yaml ;;
+    *) echo "Error: unknown VARIANT '$VARIANT' (expected unigram|snt|snt-stage1)" >&2; exit 1 ;;
+esac
 
-echo "=== FungiDNA Phase 2: joint MLM + contrastive (see configs/pretrain_phase2_joint.yaml) ==="
+OUT=$(python - "$CONFIG" <<'PY'
+import sys, yaml
+cfg = yaml.safe_load(open(sys.argv[1]))
+print(cfg.get("output_dir", "checkpoints/phase2_joint/"))
+PY
+)
+mkdir -p "$OUT"
+
+echo "=== FungiDNA Phase 2: joint MLM + contrastive (variant=$VARIANT, config=$CONFIG) ==="
 torchrun --nproc_per_node="$NPROC" --master_port="$PORT" \
-    scripts/phase2_launcher.py configs/pretrain_phase2_joint.yaml
+    scripts/phase2_launcher.py "$CONFIG"
 
-echo "Phase 2 complete. Backbone: checkpoints/phase2_joint/backbone_final.pt"
+echo "Phase 2 complete. Backbone: ${OUT}backbone_final.pt"

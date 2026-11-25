@@ -63,9 +63,17 @@ def train_phase2_joint(config_path: str):
     device = torch.device(f"cuda:{rank}")
     print_rank0(f"Phase 2 Joint Training: {world_size} GPUs")
 
+    # ── Variant ──
+    variant = str(cfg.get("variant", "unigram")).lower()
+    if variant not in ("unigram", "snt"):
+        raise ValueError(f"unknown variant {variant!r}; expected 'unigram' or 'snt'")
+    token_type = 1 if variant == "snt" else 0
+    print_rank0(f"Variant: {variant} (token_type={token_type})")
+
     # ── Model ──
     model_cfg = FungiDNAConfig()
-    model = FungiDNAForJointTraining(model_cfg, num_species=cfg.get("num_species", 735))
+    model = FungiDNAForJointTraining(model_cfg, num_species=cfg.get("num_species", 735),
+                                     token_type=token_type)
     model = model.to(device).bfloat16()
 
     # Load backbone weights
@@ -101,6 +109,7 @@ def train_phase2_joint(config_path: str):
         stride=cfg.get("stride", 8192),
         max_seq_len=cfg.get("max_seq_len", 4096),
         seed=cfg.get("seed", 42) + rank,
+        token_type=token_type,
     )
 
     sampler = NKBatchSampler(

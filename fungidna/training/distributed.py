@@ -69,3 +69,34 @@ def log_grad_norm(model: torch.nn.Module, step: int, wandb_run=None) -> float:
     if wandb_run is not None:
         wandb_run.log({"grad_norm": total_norm, "step": step})
     return total_norm
+
+
+def should_evaluate(global_step: int, min_steps: int, eval_every: int,
+                    patience: int) -> bool:
+    """Whether ``global_step`` is an early-stop evaluation node.
+
+    A non-positive ``patience`` (or ``eval_every``) disables early stopping, so
+    no evaluation node is created and no cross-rank synchronisation happens.
+    """
+    if patience <= 0 or eval_every <= 0:
+        return False
+    return global_step >= min_steps and global_step % eval_every == 0
+
+
+def sync_stop_decision(stopped_early: bool, stop_step: int, global_step: int,
+                       device) -> tuple[bool, int]:
+    """Broadcast rank 0's early-stop decision to every rank.
+
+    Must be called by *all* ranks at every evaluation node, before any rank
+    breaks out of the training loop. Returns ``(stopped_early, stop_step)`` with
+    identical values on every rank; ``stop_step`` is set to the shared
+    ``global_step`` when stopping. In non-distributed runs the decision passes
+    through unchanged.
+    """
+    if dist.is_available() and dist.is_initialized():
+        flag = torch.tensor([1 if stopped_early else 0], device=device, dtype=torch.int32)
+        dist.broadcast(flag, src=0)
+        stopped_early = bool(flag.item())
+        if stopped_early:
+            stop_step = global_step
+    return stopped_early, stop_step

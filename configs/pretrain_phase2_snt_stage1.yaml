@@ -1,0 +1,55 @@
+# ── Phase 2: Joint MLM + SupCon — SNT, first stage (steps 0 → 5,500) ──
+# Values from the run log logs/phase2_single_nt_20261018.log:
+#   "Starting training: 40000 steps, warmup=5000, grad_accum=13, effective_bs=3328"
+#   "Early-stop: min_steps=5000, eval_every=1000, patience=5, min_delta=0.005"
+#   "Optimizer: backbone_lr=0.0001, proj_lr=0.0005"
+#   "Checkpoint saved at step 5500"
+# The run crashed at step 5,975; its step-5,500 checkpoint is what
+# configs/pretrain_phase2_snt.yaml resumes from.
+#
+# Effective batch: 8 GPUs × 32 windows/GPU × 13 = 3,328 (Note S2).
+
+variant: snt
+
+# Paths
+filtered_fasta_dir: "data/processed/phase2_filtered/"
+tokenizer_path: "data/processed/bpe_fungi.model"
+phase1_checkpoint: "checkpoints/phase1_mlm_single_nt/final_model.pt"
+resume_backbone: null
+resume_step: 0
+output_dir: "checkpoints/phase2_joint_single_nt/"
+snapshot_matrix_path: "data/processed/snapshot_matrix.pt"
+
+# Dataset
+window_size: 4096
+stride: 4096
+max_seq_len: 4096
+n_species: 8
+k_per_species: 4
+num_species: 735
+seed: 42
+
+# Optimization
+lr_backbone: 1.0e-4
+lr_projection: 5.0e-4
+warmup_steps: 5000
+total_steps: 40000
+gradient_accumulation_steps: 13
+
+# Early stop (observed in the run)
+min_steps: 5000
+eval_every: 1000
+early_stop_patience: 5
+early_stop_min_delta: 0.005
+
+# Lambda scheduler
+lambda_max: 0.5
+
+# Weighted CL (toggle for ablation)
+use_weighted_cl: false
+
+# Logging
+wandb_project: "fungi-dna"
+wandb_run: "phase2-snt-stage1"
+log_every: 25
+save_every: 500
