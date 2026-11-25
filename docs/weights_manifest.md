@@ -1,13 +1,12 @@
 # Weights manifest
 
-Checkpoints used by the released models. Paths are relative to the Hugging Face
-repository <https://huggingface.co/Biopotato/FungiDNA-FM>; nothing here is stored
-in this Git repository.
+Checkpoints used by the released models. The path column gives the layout inside
+the distributed archive; nothing here is stored in this Git repository.
 
-> **Publication status.** The two backbones and the Unigram taxonomy heads are
-> already published at the paths below. The remaining task checkpoints are
-> prepared with the SHA256 values listed here and will be published in the same
-> layout.
+> **Distribution.** The weights are distributed through Google Drive:
+> **download link: To be added.** No file below is currently available from a
+> public URL. Names, sizes and SHA256 are recorded here so a download can be
+> verified once the archive is published.
 
 ## Backbones
 

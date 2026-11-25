@@ -38,16 +38,32 @@ backbone:
 
 ## Model weights
 
-Weights are hosted at <https://huggingface.co/Biopotato/FungiDNA-FM>. The two
-variants' final Phase-2 checkpoints are:
+The checkpoints are distributed through Google Drive:
+**download link: To be added.** They are **not** stored in this Git repository,
+and the link is published only once the upload is complete.
+
+The release contains two backbones and five downstream task models, for both
+variants:
 
 | Variant | Backbone | Checkpoint |
 |---|---|---|
 | FungiDNA-FM-SNT | `snt/backbone.pt` | final Phase 2 checkpoint, step 33,000 |
 | FungiDNA-FM-Unigram | `unigram/backbone.pt` | final Phase 2 checkpoint, step 16,000 |
 
-Download the files (e.g. via `huggingface-cli download` or the Hub web UI) to a
-local directory, then point a `~/.config/fungidna/weights.yaml` at them:
+| Task | Path (per variant) |
+|---|---|
+| taxonomy (5 ranks) | `<variant>/tasks/taxonomy/<rank>/mlp_best.pt` |
+| cds | `<variant>/tasks/cds/best_model.pt` |
+| short_cds | `<variant>/tasks/short_cds/best_model.pt` |
+| splice_site | `<variant>/tasks/splice_site/best_model.pt` |
+| bgc_boundary | `<variant>/tasks/bgc_boundary/best_model.pt` |
+
+`<variant>` is `unigram` or `snt`. The tokenizer
+(`tokenizer/bpe_fungi.model` and `bpe_fungi.vocab`) is shared by both variants.
+File names, byte sizes and SHA256 for every file are listed in
+[`docs/weights_manifest.md`](docs/weights_manifest.md).
+
+After downloading, point a `~/.config/fungidna/weights.yaml` at the files:
 
 ```bash
 mkdir -p ~/.config/fungidna

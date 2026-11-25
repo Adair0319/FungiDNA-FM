@@ -15,9 +15,9 @@ bgc_boundary  MeanPoolHead(128), hidden[:,1:].mean   MeanPoolHead(128), hidden[:
 taxonomy      Linear+BN MLP over mean(all)           LayerNorm+Linear MLP over mean(1:)
 ============  =====================================  ==========================
 
-Real checkpoints are required; set FUNGIDNA_TEST_UNIGRAM_TASKS / _SNT_TASKS
-(FUNGIDNA_TEST_WEIGHTS dir) or rely on the local defaults. Without them the
-tests are skipped rather than run against random weights.
+Real checkpoints are required; set FUNGIDNA_TEST_WEIGHTS to the checkpoint root
+(and optionally FUNGIDNA_TEST_TOKENIZER) or rely on the local defaults. Without
+them the tests are skipped rather than run against random weights.
 """
 import os
 import sys
