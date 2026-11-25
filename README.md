@@ -1,16 +1,15 @@
 # FungiDNA-FM
 
-A genomic foundation model pretrained on diverse fungal whole genomes.
+A DNA language model pretrained on diverse fungal genomes.
 
-FungiDNA-FM (113 M parameters) is a hybrid **Mamba2 + self-attention** backbone
-trained on 39.48 Gb from 734 fungal genomes spanning six phyla. It produces
-embeddings that transfer to five downstream tasks: taxonomy
-classification, CDS/intergenic discrimination, short-CDS discrimination,
-splice-site classification, and biosynthetic-gene-cluster (BGC) boundary
-regression — plus an embedding extraction capability.
+FungiDNA-FM is a StripedMamba (Mamba2 + self-attention) DNA language model
+pretrained on 39.48 Gb from 734 fungal genomes spanning six phyla. It is
+evaluated on taxonomic classification, short-CDS discrimination, window-level
+splice-site classification and BGC boundary-distance regression; CDS-versus-
+intergenic discrimination is reported in the Supplementary Information.
 
-Companion repository for the paper *"FungiDNA: a genomic foundation model
-pretrained on diverse fungal whole genomes."*
+Companion repository for the paper *"FungiDNA-FM: a DNA language model
+pretrained on diverse fungal genomes"* (Fungal Diversity, under review).
 
 ## Variants
 
@@ -30,12 +29,12 @@ backbone:
 | Parameters | ~113 M, hidden dim 768 |
 | Mamba2 layers | state dim 128, conv width 4, expansion 2 (inner dim 1,536) |
 | Attention layers | 12 heads × 64 dims, FlashAttention-2, SwiGLU (intermediate 2,048) |
-| Normalisation | RMSNorm throughout, dropout 0 |
-| Tokenizer | SentencePiece **Unigram**, vocab 4,096, ≈ **5.6 bp/token** |
+| Normalisation | RMSNorm in the Mamba2 and attention blocks and before the output; LayerNorm after the input embedding; dropout 0 |
+| Tokenizer | FungiDNA-FM-SNT: single nucleotide (A/C/G/T/N). FungiDNA-FM-Unigram: SentencePiece **Unigram**, vocab 4,096, ≈ **5.6 bp/token** (the file name `bpe_fungi.model` is historical; the model type is Unigram) |
 | Mask token | SentencePiece Unigram mask id = **2** |
 | Pooling | mean over non-padding positions (not `[CLS]`) |
 | Pretraining corpus | 734 fungal genomes, **39.48 Gb**, six phyla (JGI MycoCosm *1000 Fungal Genomes*) |
-| Pretraining | Phase 1 MLM (1,024 / 2,048 / 4,096 bp) → Phase 2 MLM + supervised contrastive (8,192 bp) |
+| Pretraining | Phase 1 MLM (1,024 / 2,048 / 4,096 bp) → Phase 2 MLM + supervised contrastive (Unigram 8,192 bp; SNT 4,096 bp) |
 
 ## Model weights
 
@@ -192,6 +191,12 @@ run the scripts in [`data_prep/`](data_prep/).
   will need to adjust them for your own layout. Grep for `/home/` to find them.
 - **Derived datasets are not yet released.** A deposit is planned. For now,
   rebuild them from the JGI source with `data_prep/`.
+
+## Attribution
+
+The StripedMamba backbone in `fungidna/model/` is adapted from genomic-jamba
+(https://github.com/suzuki-2001/genomic-jamba, commit 5f3a673),
+Copyright (c) 2025 Shosuke Suzuki, MIT License. See THIRD_PARTY_NOTICES.md.
 
 ## License
 
